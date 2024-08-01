@@ -69,7 +69,7 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
                     </button>
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Don't have an account?
+                    Don&apos;t have an account?
                     <Link href="/sign-up" className="ml-1 text-blue-600 hover:underline">
                         Sign up
                     </Link>
