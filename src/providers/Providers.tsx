@@ -1,5 +1,6 @@
 "use client";
 
+import { deDE } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
 
 // import { NextUIProvider } from "@nextui-org/react";
@@ -12,7 +13,7 @@ export default function Providers(props: React.PropsWithChildren) {
             {/* <ReactQueryProvider>
                 <NextUIProvider>
             */}
-            <ClerkProvider>
+            <ClerkProvider localization={deDE}>
                 {props.children}
             </ClerkProvider>
             {/*  <ToastContainer />
