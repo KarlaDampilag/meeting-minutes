@@ -68,7 +68,7 @@ export async function POST(req: Request) {
             image_url: image_url
         }
 
-        if (evt.type === 'user.updated') {
+        if (evt.type === 'user.updated' || evt.type === 'user.created') {
             console.log('userId:', id)
             const newUser = await db.insert(users).values(userData).onConflictDoUpdate({
                 target: users.auth_id,
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
             console.log('User upserted: ', newUser);
         }
 
-        return new Response('Webhook user.created successfully processed. New user inserted in db.', { status: 200 })
+        return new Response('Webhook successfully processed. New user inserted in db.', { status: 200 })
     } catch (e) {
         console.error(e);
         throw new Response('An error has occurred', { status: 500 });
