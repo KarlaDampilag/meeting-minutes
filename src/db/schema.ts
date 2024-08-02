@@ -9,8 +9,10 @@ export const users = pgTable('users', {
     image_url: text('image_url'),
     role_id: uuid('role_id').references(() => roles.id),
     created_at: timestamp('created_at').defaultNow(),
-    auth_id: varchar('auth_id').unique().notNull()
+    auth_id: varchar('auth_id', { length: 256 }).unique().notNull()
 });
+
+export type NewUser = typeof users.$inferInsert;
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),

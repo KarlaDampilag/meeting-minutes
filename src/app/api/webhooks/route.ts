@@ -2,7 +2,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { UserJSON, WebhookEvent } from '@clerk/nextjs/server'
 import { db } from '@/db/db'
-import { users } from '@/db/schema'
+import { NewUser, users } from '@/db/schema'
 
 export async function POST(req: Request) {
     try {
@@ -60,15 +60,17 @@ export async function POST(req: Request) {
         const primaryEmailAddressId = primary_email_address_id;
         const emailAddressItem = email_addresses.find(item => item.id === primaryEmailAddressId);
 
+        const userData: NewUser = {
+            auth_id: id,
+            first_name: first_name || '',
+            last_name: last_name || '',
+            email: emailAddressItem?.email_address || '',
+            image_url: image_url
+        }
+
         if (evt.type === 'user.updated') {
             console.log('userId:', id)
-            const newUser = await db.insert(users).values({
-                auth_id: id,
-                first_name: first_name,
-                last_name: last_name,
-                email: emailAddressItem?.email_address || '',
-                image_url: data.image_url
-            }).onConflictDoUpdate({
+            const newUser = await db.insert(users).values(userData).onConflictDoUpdate({
                 target: users.auth_id,
                 set: {
                     first_name: first_name || '',
