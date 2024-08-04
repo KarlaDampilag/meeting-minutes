@@ -11,6 +11,11 @@ import OnboardingSelectRole from '../components/molecules/OnboardingSelectRole';
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getUser();
 
+    const handleAssignPendingRole = async (role: "First Admin" | "Admin" | "Property Manager") => {
+        'use server'
+        return await assignPendingRole(user, role);
+    }
+
     const Content = () => {
         if (!!user && user.role_id) {
             if (user.role_id === process.env.ADMIN_ROLE_ID || user.role_id === process.env.PROPERTY_MANAGER_ROLE_ID) {
@@ -26,7 +31,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
             }
         }
         // last resort is user doesn't have a role
-        return <OnboardingSelectRole assignPendingRole={async (role) => await assignPendingRole(user, role)} />
+        return <OnboardingSelectRole assignPendingRole={handleAssignPendingRole} />
     }
 
     return (
