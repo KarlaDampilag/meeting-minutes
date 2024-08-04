@@ -6,8 +6,8 @@ const FirstAdminPendingApprovalCard = () => {
     return (
         <div className='flex justify-center h-fit w-full'>
             <Card>
-                <FaCheckCircle size={40} className='text-primary mb-4 mx-auto' />
-                <h3 className='text-center mb-4'>Company details submitted for verification</h3>
+                <FaCheckCircle size={40} className='text-primary mb-6 mx-auto' />
+                <h3 className='text-center mb-6'>Company details submitted for verification</h3>
                 <p className='text-center'>Thank you for submitting your company information. We will notify you via email once the verification is complete and your account has been approved.</p>
             </Card>
         </div>
