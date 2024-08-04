@@ -1,10 +1,10 @@
-'use server'
 import { db } from "@/db/db";
 import { User, users } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 export const getUser = async () => {
+    'use server'
     const { userId } = auth();
     if (userId) {
         const user = await db.query.users.findFirst({ where: eq(users.auth_id, userId) });
@@ -13,6 +13,7 @@ export const getUser = async () => {
 }
 
 export const assignPendingRole = async (user: User | undefined, role: "First Admin" | "Admin" | "Property Manager") => {
+    'use server'
     try {
         if (!user) {
             console.error('Will not update user role, user is null');
