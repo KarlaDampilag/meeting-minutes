@@ -11,12 +11,12 @@ export default function Providers(props: React.PropsWithChildren) {
     return (
         <>
             {/* <ReactQueryProvider>*/}
-            <NextUIProvider>
-                <ClerkProvider localization={deDE}>
+            <ClerkProvider localization={deDE}>
+                <NextUIProvider>
                     {props.children}
                     <ToastContainer />
-                </ClerkProvider>
-            </NextUIProvider>
+                </NextUIProvider>
+            </ClerkProvider>
             {/*</ReactQueryProvider> */}
         </>
     )

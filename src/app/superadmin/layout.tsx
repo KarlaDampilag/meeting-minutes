@@ -3,17 +3,24 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import { HiOutlineViewGrid } from 'react-icons/hi'
 
 import { NavLink } from '../components/atoms/NavLink'
+import { getUser } from '@/utils/serverActions'
 
-const SuperAdminLayout = ({ children }: { children: React.ReactNode }) => {
+const SuperAdminLayout = async ({ children }: { children: React.ReactNode }) => {
+    const user = await getUser();
+
+    if (!user || !process.env.SUPERADMIN_EMAILS?.toString().split(",")?.includes(user.email)) {
+        return <p className='m-4'>Page not found.</p>
+    }
+
     return (
         <div className='dashboard-container'>
             <div className='left-nav'>
                 <ul>
-                <li>
+                    <li>
                         <NavLink
                             href='/superadmin'
                             icon={<HiOutlineViewGrid size={20} className='min-w-fit' />}
-                        text='Dashboard'
+                            text='Dashboard'
                         />
                     </li>
                     <li>
