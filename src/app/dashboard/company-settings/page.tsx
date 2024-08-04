@@ -1,9 +1,9 @@
 import React from 'react'
 import { auth } from "@clerk/nextjs/server"
+import { eq } from 'drizzle-orm';
 
 import { db } from '@/db/db';
 import { companies, Company, User, users } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 
 import CompanyDetailsForm from './CompanyDetailsForm'
 import FirstAdminPendingApprovalCard from '@/app/components/atoms/FirstAdminPendingApprovalCard';

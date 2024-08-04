@@ -25,6 +25,7 @@ export type NewRole = typeof roles.$inferInsert;
 export type NewCompany = typeof companies.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type Company = typeof companies.$inferSelect;
+export type CompanyAndSubmittingUser = { companies: Company, users: User | null }
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
