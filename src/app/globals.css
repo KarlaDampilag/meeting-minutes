@@ -71,6 +71,10 @@ a {
         a {
             @apply w-full py-3 px-6 border-none text-black hover:bg-primary-50 flex items-center justify-start gap-2 transition-colors;
         }
+
+        a.active {
+            @apply bg-primary-100;
+        }
     }
 }
 
