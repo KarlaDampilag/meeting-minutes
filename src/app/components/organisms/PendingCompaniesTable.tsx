@@ -31,7 +31,7 @@ const PendingCompaniesTable = ({ companiesData, handleApprove }: { companiesData
         }
     }
 
-    const renderCell = React.useCallback((companyAndUser: CompanyAndSubmittingUser, columnKey: string) => { // FIXME change type any
+    const renderCell = React.useCallback((companyAndUser: CompanyAndSubmittingUser, columnKey: string) => {
         const company = companyAndUser.companies;
         const submittingUser = companyAndUser.users;
 

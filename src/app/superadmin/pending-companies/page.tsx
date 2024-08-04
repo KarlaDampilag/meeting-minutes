@@ -74,7 +74,6 @@ const PendingCompaniesPage = async () => {
         }
     }
 
-    // FIXME return page not found if logged in user is not superadmin
     return (
         <div>
             <h1>Pending Companies</h1>
