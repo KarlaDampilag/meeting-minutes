@@ -1,4 +1,5 @@
-import { FormEvent } from "react";
+import React, { FormEvent } from "react";
+import { Button, cn } from "@nextui-org/react";
 
 interface VerifyFormProps {
     handleVerify: (e: FormEvent) => void;
@@ -7,11 +8,16 @@ interface VerifyFormProps {
 }
 
 const VerifyForm = ({ handleVerify, code, setCode }: VerifyFormProps) => {
+    const [isLoading, setIsLoading] = React.useState(false);
+
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8 md:p-10">
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6">Verification Code</h1>
-                <form onSubmit={handleVerify}>
+                <form onSubmit={(e) => {
+                    setIsLoading(true);
+                    handleVerify(e);
+                }}>
                     <div className="mb-6">
                         <label htmlFor="code" className="block text-sm font-medium text-gray-700">
                             Enter your verification code
@@ -27,12 +33,19 @@ const VerifyForm = ({ handleVerify, code, setCode }: VerifyFormProps) => {
                             required
                         />
                     </div>
-                    <button
+                    <Button
+                        variant='solid'
+                        color={isLoading ? 'default' : 'primary'}
+                        radius='sm'
+                        fullWidth
+                        className={cn('mt-6 h-12 font-bold', { 'cursor-not-allowed': isLoading })}
+                        disabled={isLoading}
+                        isDisabled={isLoading}
+                        isLoading={isLoading}
                         type="submit"
-                        className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
                     >
                         Complete Sign Up
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

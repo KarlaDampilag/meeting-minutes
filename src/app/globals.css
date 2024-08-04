@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply text-stone-900;
+    @apply text-stone-800;
 }
 
 main {
@@ -11,17 +11,17 @@ main {
 }
 
 h1 {
-    @apply font-medium text-[32px] leading-[36px] lg:text-[36px] lg:leading-[40px];
+    @apply font-semibold text-[32px] leading-[36px] lg:text-[36px] lg:leading-[42px] mb-3;
 }
 
 h2 {
-    @apply font-medium text-[28px] leading-[32px] lg:text-[32px] lg:leading-[36px];
-}
-/*
-h3 {
-    @apply font-medium text-[26px] leading-[33px] lg:text-[30px] lg:leading-[38px];
+    @apply font-semibold text-[28px] leading-[32px] lg:text-[32px] lg:leading-[38px] mb-3;
 }
 
+h3 {
+    @apply font-semibold text-[24px] leading-[28px] lg:text-[28px] lg:leading-[36px] mb-3;
+}
+/*
 h4 {
     @apply font-medium text-[18px] leading-[23px] lg:text-[20px] lg:leading-[26px];
 } */
@@ -79,6 +79,6 @@ a {
 }
 
 .dashboard-main-container {
-    @apply p-5;
+    @apply py-8 px-10;
     grid-area: 2 / 2 / 6 / 6;
 }

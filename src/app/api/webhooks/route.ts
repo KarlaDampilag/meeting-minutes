@@ -51,7 +51,6 @@ export async function POST(req: Request) {
         }
 
         // Do something with the payload
-        // For this guide, you simply log the payload to the console
         const { id, first_name, last_name, email_addresses, primary_email_address_id, image_url } = evt.data as UserJSON;
         const eventType = evt.type;
         console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
                     email: emailAddressItem?.email_address || '',
                     image_url: image_url
                 },
-            });;
+            }).returning();
             console.log('User upserted: ', newUser);
         }
 

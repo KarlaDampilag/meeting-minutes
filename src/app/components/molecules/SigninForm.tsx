@@ -1,4 +1,6 @@
+import { Button, cn } from "@nextui-org/react";
 import Link from "next/link";
+import React from "react";
 
 interface SignInFormProps {
     signInWithEmail: ({
@@ -12,14 +14,17 @@ interface SignInFormProps {
 }
 
 const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
+    const [isLoading, setIsLoading] = React.useState(false);
+
     return (
         <div className="flex justify-center items-center min-h-full">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8 md:p-10">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                <h1 className="mb-6">
                     Sign In
                 </h1>
                 <form
                     onSubmit={(e) => {
+                        setIsLoading(true);
                         e.preventDefault();
                         const target = e.target as typeof e.target & {
                             email: { value: string };
@@ -61,12 +66,19 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
                             {clerkError}
                         </div>
                     )}
-                    <button
+                    <Button
+                        variant='solid'
+                        color={isLoading ? 'default' : 'primary'}
+                        radius='sm'
+                        fullWidth
+                        className={cn('mt-6 h-12 font-bold', { 'cursor-not-allowed': isLoading })}
+                        disabled={isLoading}
+                        isDisabled={isLoading}
+                        isLoading={isLoading}
                         type="submit"
-                        className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
                     >
                         Sign In
-                    </button>
+                    </Button>
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
                     Don&apos;t have an account?
