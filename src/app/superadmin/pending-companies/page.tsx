@@ -37,9 +37,14 @@ const PendingCompaniesPage = async () => {
     const sendConfirmationEmail = async (companyName: string, firstName: string, email: string): Promise<boolean> => {
         'use server'
         const resend = new Resend(process.env.RESEND_API_KEY);
+        const from = `${process.env.NEXT_PUBLIC_APP_NAME} <${process.env.NEXT_PUBLIC_SENDER_EMAIL}>`
+        const to = [email];
+        console.log('Sending email...');
+        console.log('from', from);
+        console.log('to', to);
         const { error } = await resend.emails.send({
-            from: `${process.env.NEXT_PUBLIC_APP_NAME} <${process.env.NEXT_PUBLIC_SENDER_EMAIL}>`,
-            to: [email],
+            from: from,
+            to: to,
             subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Account Approved`,
             react: CompanyApprovedEmailTemplate({ firstName, companyName }),
         });
