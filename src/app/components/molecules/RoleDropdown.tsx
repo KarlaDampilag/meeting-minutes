@@ -21,7 +21,7 @@ const RoleDropdown = ({ selectedRoleId, onChange }: { selectedRoleId: string | u
     return (
         <Select
             aria-label="Role"
-            className="max-w-xs"
+            className="max-w-44"
             variant='bordered'
             labelPlacement='outside'
             radius='sm'
