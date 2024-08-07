@@ -60,8 +60,8 @@ const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: 
                         onValueChange={setEmail}
                     />
                     <RoleDropdown selectedRoleId={roleId} onChange={setRoleId} />
-                </div>
-                <Button color={isLoading || !email || !roleId ? 'default' : 'primary'} type='submit' size='sm' className={cn('h-9 text-sm mt-2.5 px-4', { 'cursor-not-allowed': isLoading || !email || !roleId })} radius='sm' isLoading={isLoading} isDisabled={isLoading || !email || !roleId}>Send Invite</Button>
+                    <Button color={isLoading || !email || !roleId ? 'default' : 'primary'} type='submit' size='sm' className={cn('h-9 text-sm px-4', { 'cursor-not-allowed': isLoading || !email || !roleId })} radius='sm' isLoading={isLoading} isDisabled={isLoading || !email || !roleId}>Send Invite</Button>
+                </div> 
             </form>
         </div>
     )
