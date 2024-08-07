@@ -5,8 +5,8 @@ import { db } from "@/db/db";
 import { getUser } from "@/utils/serverActions";
 import { invites } from "@/db/schema";
 
-// GET /api/invites/byEmail
-export const GET = async (request: NextRequest) => {
+// GET /api/invites/byEmail/:email
+export const GET = async (request: NextRequest, context: { params: { email: string } }) => {
     try {
         const user = await getUser();
 
@@ -14,16 +14,9 @@ export const GET = async (request: NextRequest) => {
             return new Response('Unauthorized', { status: 401 });
         }
 
-        const formData = await request.formData();
-        const email = formData.get("email");
-
-        if (!email) {
-            return new Response("Email not found", { status: 400 });
-        }
-
         const result = await db.query.invites.findFirst({
             with: { role: true },
-            where: eq(invites.invited_email, email.toString())
+            where: eq(invites.invited_email, context.params.email)
         });
 
         return new Response(JSON.stringify(result), { status: 200 });

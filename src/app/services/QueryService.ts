@@ -41,9 +41,7 @@ export class QueryService {
 
     async fetchInviteByUserEmail(email: string): Promise<Invite> {
         try {
-            const res = await fetch(`/api/invites/byEmail`);
-            const formData = new FormData();
-            formData.append("email", email)
+            const res = await fetch(`/api/invites/byEmail/${email}`);
             if (res.status === 200) {
                 const data = await res.json()
                 return data;
