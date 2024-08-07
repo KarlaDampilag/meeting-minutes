@@ -8,11 +8,6 @@ import { invites } from "@/db/schema";
 // GET /api/invites/byEmail/:email
 export const GET = async (request: NextRequest, context: { params: { email: string } }) => {
     try {
-        const user = await getUser();
-
-        if (!user) {
-            return new Response('Unauthorized', { status: 401 });
-        }
 
         const result = await db.query.invites.findFirst({
             with: { role: true },
