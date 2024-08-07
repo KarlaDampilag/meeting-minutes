@@ -10,20 +10,20 @@ const AcceptInvitePage = () => {
 
     const inviteId = searchParams.get('id');
 
-    const { mutate, data } = useAcceptInvite({ inviteId });
+    const { mutate, isSuccess } = useAcceptInvite({ inviteId });
 
     React.useEffect(() => {
         if (!!inviteId) {
             mutate({ inviteId });
         }
     
-        if (!!data) {
+        if (isSuccess) {
             router.push('/dashboard');
         }
     }, [inviteId]);
 
     return (
-        <div className='px-5'>Please wait...</div>
+        <div className='px-5 py-2'>Please wait...</div>
     )
 }
 
