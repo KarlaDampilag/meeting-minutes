@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import SignupForm from "@/app/components/molecules/SignupForm";
 import VerifyForm from "@/app/components/molecules/VerifyForm";
-
+import { QueryService } from "@/app/services/QueryService";
 
 const Signup = () => {
     const { isLoaded, signUp, setActive } = useSignUp();
@@ -12,6 +12,8 @@ const Signup = () => {
     const router = useRouter();
     const [verifying, setVerifying] = useState(false);
     const [code, setCode] = useState("");
+
+    const queryService = QueryService.getInstance();
 
     const signUpWithEmail = async ({
         firstName,
@@ -59,6 +61,14 @@ const Signup = () => {
 
             if (completeSignUp.status === "complete") {
                 await setActive({ session: completeSignUp.createdSessionId });
+
+                // if invite has accepted === null or undefined, redirect to accept-invite, else redirect to dashboard
+                const pendingInvite = await queryService.fetchInviteByUserEmail(completeSignUp.emailAddress as string);
+                if (pendingInvite.accepted === null || pendingInvite.accepted === undefined) {
+                    router.push("/accept-invite");
+                } else {
+                    router.push("/dashboard");
+                }
             }
         } catch (err) {
             console.log("Error:", JSON.stringify(err, null, 2));

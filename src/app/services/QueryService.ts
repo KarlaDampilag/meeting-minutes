@@ -39,6 +39,21 @@ export class QueryService {
         }
     }
 
+    async fetchInviteByUserEmail(email: string): Promise<Invite> {
+        try {
+            const res = await fetch(`/api/invites/byEmail`);
+            const formData = new FormData();
+            formData.append("email", email)
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch invite');
+        } catch (error) {
+            throw new Error('Failed to fetch invite');
+        }
+    }
+
     async acceptInvite(inviteId: string): Promise<Invite[]> {
         try {
             const formData = new FormData();
