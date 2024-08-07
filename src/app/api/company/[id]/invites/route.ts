@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 
 import { db } from "@/db/db";
 import { getUser } from "@/utils/serverActions";
@@ -16,7 +16,10 @@ export const GET = async (request: NextRequest, context: { params: { id: string 
 
         const result = await db.query.invites.findMany({
             with: { role: true },
-            where: eq(invites.company_id, context.params.id)
+            where: and(
+                eq(invites.company_id, context.params.id),
+                ne(invites.accepted, true)
+            )
         });
 
         return new Response(JSON.stringify(result), { status: 200 });
