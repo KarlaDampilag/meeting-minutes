@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import SignupForm from "@/app/components/molecules/SignupForm";
 import VerifyForm from "@/app/components/molecules/VerifyForm";
@@ -14,6 +14,8 @@ const Signup = () => {
     const [code, setCode] = useState("");
 
     const queryService = QueryService.getInstance();
+    const searchParams = useSearchParams();
+    const inviteId = searchParams.get('id');
 
     const signUpWithEmail = async ({
         firstName,
@@ -65,7 +67,7 @@ const Signup = () => {
                 // if invite has accepted === null or undefined, redirect to accept-invite, else redirect to dashboard
                 const pendingInvite = await queryService.fetchInviteByUserEmail(completeSignUp.emailAddress as string);
                 if (pendingInvite.accepted === null || pendingInvite.accepted === undefined) {
-                    router.push("/accept-invite");
+                    router.push(`/accept-invite?id=${inviteId}`);
                 } else {
                     router.push("/dashboard");
                 }

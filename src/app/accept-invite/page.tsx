@@ -12,13 +12,15 @@ const AcceptInvitePage = () => {
 
     const { mutate, data } = useAcceptInvite({ inviteId });
 
-    if (!!inviteId) {
-        mutate({ inviteId });
-    }
-
-    if (!!data) {
-        router.push('/dashboard');
-    }
+    React.useEffect(() => {
+        if (!!inviteId) {
+            mutate({ inviteId });
+        }
+    
+        if (!!data) {
+            router.push('/dashboard');
+        }
+    }, [inviteId]);
 
     return (
         <div className='px-5'>Please wait...</div>
