@@ -17,6 +17,10 @@ export const usersRelations = relations(users, ({ one }) => ({
     company: one(companies, {
         fields: [users.company_id],
         references: [companies.id]
+    }),
+    role: one(roles, {
+        fields: [users.role_id],
+        references: [roles.id]
     })
 }));
 
@@ -33,7 +37,9 @@ type CompanyAddress = {
     country: string,
     telephone: string
 }
+export type UserWithCompany = User & { company: Company | null }
 export type CompanyAndSubmittingUser = { companies: Company, users: User | null }
+export type Invite = typeof invites.$inferSelect;
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -51,3 +57,20 @@ export const companies = pgTable('companies', {
     approved: boolean('approved'),
     trial_end_date: date('trial_end_date')
 });
+
+export const invites = pgTable('invites', {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    company_id: uuid('company_id').references(() => companies.id).notNull(),
+    invitor_id: uuid('invitor_id').references(() => users.id).notNull(),
+    invited_email: varchar('invited_email', { length: 256 }).unique().notNull(),
+    accepted: boolean('accepted'),
+    role_id: uuid('role_id').references(() => roles.id).notNull(),
+    rejected: boolean('rejected')
+});
+
+export const invitesRelations = relations(invites, ({ one }) => ({
+    role: one(roles, {
+        fields: [invites.role_id],
+        references: [roles.id]
+    })
+}));

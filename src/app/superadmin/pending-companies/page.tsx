@@ -23,7 +23,7 @@ const PendingCompaniesPage = async () => {
 
             // Update the user's role
             await db.update(users)
-                .set({ role_id: process.env.ADMIN_ROLE_ID })
+                .set({ role_id: process.env.NEXT_PUBLIC_ADMIN_ROLE_ID })
                 .where(eq(users.id, userId));
 
             return true;

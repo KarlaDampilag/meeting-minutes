@@ -18,15 +18,15 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     const Content = () => {
         if (!!user && user.role_id) {
-            if (user.role_id === process.env.ADMIN_ROLE_ID || user.role_id === process.env.PROPERTY_MANAGER_ROLE_ID) {
+            if (user.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) {
                 return children;
-            } else if (user.role_id === process.env.PENDING_FIRST_ADMIN_ROLE_ID) {
+            } else if (user.role_id === process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID) {
                 if (user.company_id) {
                     return <FirstAdminPendingApprovalCard />;
                 } else {
                     redirect('/dashboard/company-settings');
                 }
-            } else if (user.role_id === process.env.PENDING_ADMIN_ROLE_ID || user.role_id === process.env.PENDING_PROPERTY_MANAGER_ROLE_ID) {
+            } else if (user.role_id === process.env.PENDING_NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.PENDING_NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) {
                 return <PendingApprovalCard />;
             }
         }

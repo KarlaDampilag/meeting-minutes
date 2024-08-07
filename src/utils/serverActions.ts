@@ -1,13 +1,26 @@
 'use server'
 import { db } from "@/db/db";
-import { User, users } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
+import { companies, User, users } from "@/db/schema";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 export const getUser = async () => {
     const { userId } = auth();
     if (userId) {
         const user = await db.query.users.findFirst({ where: eq(users.auth_id, userId) });
+        return user;
+    }
+}
+
+export const getUserAndCompany = async () => {
+    const { userId } = auth();
+    if (userId) {
+        const user = await db.query.users.findFirst({
+            where: eq(users.auth_id, userId),
+            with: {
+                company: true
+            }
+        })
         return user;
     }
 }
@@ -20,11 +33,11 @@ export const assignPendingRole = async (user: User | undefined, role: "First Adm
         }
         let roleId;
         if (role === "First Admin") {
-            roleId = process.env.PENDING_FIRST_ADMIN_ROLE_ID;
+            roleId = process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID;
         } else if (role === "Admin") {
-            roleId = process.env.PENDING_ADMIN_ROLE_ID
+            roleId = process.env.PENDING_NEXT_PUBLIC_ADMIN_ROLE_ID
         } else if (role === "Property Manager") {
-            roleId = process.env.PENDING_PROPERTY_MANAGER_ROLE_ID;
+            roleId = process.env.PENDING_NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID;
         }
         const updatedUser = await db.update(users).set({ role_id: roleId }).where(eq(users.id, user.id)).returning();
         if (!!updatedUser) {

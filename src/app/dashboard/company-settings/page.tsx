@@ -149,7 +149,7 @@ const CompanySettingsPage = async () => {
             createOrUpdateCompany(formData, billingSameAsAddress)
                 .then((company) => {
                     if (!company || !company.approved) {
-                        db.update(users).set({ role_id: process.env.PENDING_FIRST_ADMIN_ROLE_ID, company_id: company.id }).where(eq(users.id, (user as User).id)).returning()
+                        db.update(users).set({ role_id: process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID, company_id: company.id }).where(eq(users.id, (user as User).id)).returning()
                             .then((userResult) => {
                                 return userResult;
                             });

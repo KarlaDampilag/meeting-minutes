@@ -59,7 +59,6 @@ const Signup = () => {
 
             if (completeSignUp.status === "complete") {
                 await setActive({ session: completeSignUp.createdSessionId });
-                router.push("/dashboard");
             }
         } catch (err) {
             console.log("Error:", JSON.stringify(err, null, 2));
