@@ -29,13 +29,13 @@ const CompanySettingsPage = async () => {
             if (!user) {
                 throw new Error('Cannot create or update company details, logged in user not found.');
             }
-            const name = formData.get('companyName');
-            const street = formData.get('street');
-            const city = formData.get('city');
-            const state = formData.get('state');
-            const zipCode = formData.get('zipCode');
-            const country = formData.get('country');
-            const telephone = formData.get('telephone');
+            const name = formData.get('companyName')?.toString() || "";
+            const street = formData.get('street')?.toString() || "";
+            const city = formData.get('city')?.toString() || "";
+            const state = formData.get('state')?.toString() || "";
+            const zipCode = formData.get('zipCode')?.toString() || "";
+            const country = formData.get('country')?.toString() || "";
+            const telephone = formData.get('telephone')?.toString() || "";
 
             let billingStreet, billingCity, billingState, billingZipCode, billingCountry, billingTelephone;
 
@@ -47,41 +47,47 @@ const CompanySettingsPage = async () => {
                 billingCountry = country;
                 billingTelephone = telephone;
             } else {
-                billingStreet = formData.get('billing-street');
-                billingCity = formData.get('billing-city');
-                billingState = formData.get('billing-state');
-                billingZipCode = formData.get('billing-zipCode');
-                billingCountry = formData.get('billing-country');
-                billingTelephone = formData.get('billing-telephone');
+                billingStreet = formData.get('billing-street')?.toString() || "";
+                billingCity = formData.get('billing-city')?.toString() || "";
+                billingState = formData.get('billing-state')?.toString() || "";
+                billingZipCode = formData.get('billing-zipCode')?.toString() || "";
+                billingCountry = formData.get('billing-country')?.toString() || "";
+                billingTelephone = formData.get('billing-telephone')?.toString() || "";
             }
 
             if (!name || !street || !city || !state || !zipCode || !country || !telephone || !billingStreet || !billingCity || !billingState || !billingZipCode || !billingCountry || !billingTelephone) {
                 throw new Error('Cannot create or update company details, required fields are not defined.');
             } else {
-                const newCompanyResult = await db.insert(companies).values({
-                    name: name as string,
-                    address: {
-                        street: street,
-                        city: city,
-                        state: state,
-                        zipCode: zipCode,
-                        country: country,
-                        telephone: telephone
-                    },
-                    billing_address: {
-                        street: billingStreet,
-                        city: billingCity,
-                        state: billingState,
-                        zipCode: billingZipCode,
-                        country: billingCountry,
-                        telephone: billingTelephone
-                    },
-                    created_by: user.id,
-                    approved: false
-                }).onConflictDoUpdate({
-                    target: companies.created_by,
-                    set: {
-                        name: name as string,
+                if (!!company && !!company.approved) {
+                    const updatedCompanyResult = await db.update(companies)
+                        .set({
+                            name: name,
+                            address: {
+                                street: street,
+                                city: city,
+                                state: state,
+                                zipCode: zipCode,
+                                country: country,
+                                telephone: telephone
+                            },
+                            billing_address: {
+                                street: billingStreet,
+                                city: billingCity,
+                                state: billingState,
+                                zipCode: billingZipCode,
+                                country: billingCountry,
+                                telephone: billingTelephone
+                            }
+                        })
+                        .where(eq(companies.id, company.id))
+                        .returning();
+                        if (!updatedCompanyResult || updatedCompanyResult.length === 0) {
+                            throw new Error('Cannot update company details, failed at db update operation');
+                        }
+                        return updatedCompanyResult[0];
+                } else {
+                    const newCompanyResult = await db.insert(companies).values({
+                        name: name,
                         address: {
                             street: street,
                             city: city,
@@ -100,12 +106,36 @@ const CompanySettingsPage = async () => {
                         },
                         created_by: user.id,
                         approved: false
-                    },
-                }).returning();
-                if (!newCompanyResult || newCompanyResult.length === 0) {
-                    throw new Error('Cannot create or update company details, failed at db insert operation');
+                    }).onConflictDoUpdate({
+                        target: companies.created_by,
+                        set: {
+                            name: name as string,
+                            address: {
+                                street: street,
+                                city: city,
+                                state: state,
+                                zipCode: zipCode,
+                                country: country,
+                                telephone: telephone
+                            },
+                            billing_address: {
+                                street: billingStreet,
+                                city: billingCity,
+                                state: billingState,
+                                zipCode: billingZipCode,
+                                country: billingCountry,
+                                telephone: billingTelephone
+                            },
+                            created_by: user.id,
+                            approved: false
+                        },
+                    }).returning();
+                    if (!newCompanyResult || newCompanyResult.length === 0) {
+                        throw new Error('Cannot create or update company details, failed at db insert operation');
+                    }
+                    return newCompanyResult[0];
                 }
-                return newCompanyResult[0];
+
             }
         } catch (error) {
             console.error(error);
@@ -118,10 +148,14 @@ const CompanySettingsPage = async () => {
         try {
             createOrUpdateCompany(formData, billingSameAsAddress)
                 .then((company) => {
-                    db.update(users).set({ role_id: process.env.PENDING_FIRST_ADMIN_ROLE_ID, company_id: company.id }).where(eq(users.id, (user as User).id)).returning()
-                        .then((userResult) => {
-                            return userResult;
-                        });
+                    if (!company || !company.approved) {
+                        db.update(users).set({ role_id: process.env.PENDING_FIRST_ADMIN_ROLE_ID, company_id: company.id }).where(eq(users.id, (user as User).id)).returning()
+                            .then((userResult) => {
+                                return userResult;
+                            });
+                    } else {
+                        return !!company;
+                    }
                 });
         } catch (error) {
             console.error('Failed to handle company form submit.');
@@ -137,7 +171,7 @@ const CompanySettingsPage = async () => {
         <div>
             <h1 className='mb-6'>Company Details</h1>
             {!user?.company_id && <p className='mb-7 font-medium'>Please submit your company details for verification:</p>}
-            <CompanyDetailsForm onSubmit={handleCompanyFormSubmit} />
+            <CompanyDetailsForm onSubmit={handleCompanyFormSubmit} currentCompanyData={company} />
         </div>
     )
 }

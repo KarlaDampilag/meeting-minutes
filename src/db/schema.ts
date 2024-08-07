@@ -25,6 +25,14 @@ export type NewRole = typeof roles.$inferInsert;
 export type NewCompany = typeof companies.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type Company = typeof companies.$inferSelect;
+type CompanyAddress = {
+    street: string,
+    city: string,
+    state: string,
+    zipCode: string,
+    country: string,
+    telephone: string
+}
 export type CompanyAndSubmittingUser = { companies: Company, users: User | null }
 
 export const roles = pgTable('roles', {
@@ -37,8 +45,8 @@ export const companies = pgTable('companies', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
     name: varchar('name', { length: 256 }).unique().notNull(),
     created_at: timestamp('created_at').defaultNow(),
-    address: json('address'),
-    billing_address: json('billing_address'),
+    address: json('address').$type<CompanyAddress>(),
+    billing_address: json('billing_address').$type<CompanyAddress>(),
     created_by: uuid('created_by').unique(),
     approved: boolean('approved'),
     trial_end_date: date('trial_end_date')
