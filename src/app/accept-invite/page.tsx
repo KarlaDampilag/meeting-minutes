@@ -20,7 +20,7 @@ const AcceptInvitePage = () => {
         if (isSuccess) {
             router.push('/dashboard');
         }
-    }, [inviteId]);
+    }, [inviteId, isSuccess]);
 
     return (
         <div className='px-5 py-2'>Please wait...</div>

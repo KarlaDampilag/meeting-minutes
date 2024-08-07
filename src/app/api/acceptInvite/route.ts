@@ -4,10 +4,17 @@ import { NextRequest } from "next/server";
 import { db } from "@/db/db";
 import { invites, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { getUser } from "@/utils/serverActions";
 
 // POST /api/acceptInvite
 export const POST = async (request: NextRequest) => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            return new Response('Unauthorized', { status: 401 });
+        }
+
         const formData = await request.formData();
         const inviteId = formData.get("inviteId");
 
@@ -22,7 +29,7 @@ export const POST = async (request: NextRequest) => {
         }
 
         const invite = inviteResult[0];
-        const updateUserResult = await db.update(users).set({ company_id: invite.company_id, role_id: invite.role_id }).returning();
+        const updateUserResult = await db.update(users).set({ company_id: invite.company_id, role_id: invite.role_id }).where(eq(users.id, user.id)).returning();
 
         if (!updateUserResult || updateUserResult.length === 0) {
             return new Response('Update user failed', { status: 500 });
