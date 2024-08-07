@@ -26,7 +26,7 @@ export const assignPendingRole = async (user: User | undefined, role: "First Adm
         } else if (role === "Property Manager") {
             roleId = process.env.PENDING_PROPERTY_MANAGER_ROLE_ID;
         }
-        const updatedUser = await db.update(users).set({ role_id: roleId }).where(eq(users.auth_id, user.id));
+        const updatedUser = await db.update(users).set({ role_id: roleId }).where(eq(users.id, user.id)).returning();
         if (!!updatedUser) {
             return true;
         } else {

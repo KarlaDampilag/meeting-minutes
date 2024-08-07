@@ -42,14 +42,14 @@ const OnboardingSelectRole = ({ assignPendingRole }: { assignPendingRole: (role:
             <div className='flex items-center gap-5'>
                 <SelectItemCard
                     title="Admin"
-                    description="Set up the company account, and manage team members and properties."
+                    description="Set up the company account, manage team members, and access all the features available to Property Managers."
                     icon={<RiShieldUserLine size={40} className='text-primary mt-4' />}
                     isSelected={selectedRole === "Admin"}
                     onClick={() => setSelectedRole("Admin")}
                 />
                 <SelectItemCard
                     title="Property Manager"
-                    description="Maintain property details, schedule meetings, and record meeting minutes."
+                    description="Manage property details, schedule meetings, record and document meeting minutes, and manage meeting attachments."
                     icon={<AiOutlineHome size={40} className='text-primary mt-4' />}
                     isSelected={selectedRole === "Property Manager"}
                     onClick={() => setSelectedRole("Property Manager")}
@@ -82,8 +82,12 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
         if (hasCompanyAccount === true) {
             setIsLoading(true);
             try {
-                await assignPendingRole("Admin");
-                router.push('/dashboard');
+                const success = await assignPendingRole("Admin");
+                if (success) {
+                    router.refresh();
+                } else {
+                    throw new Error('Failed to assign pending admin role')
+                }
             } catch (error) {
                 console.error('Failed to assign pending admin role');
                 console.error(error);
@@ -93,8 +97,12 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
         } else {
             setIsLoading(true);
             try {
-                await assignPendingRole("First Admin");
-                router.push('/dashboard/company-settings');
+                const success = await assignPendingRole("First Admin");
+                if (success) {
+                    router.push('/dashboard/company-settings');
+                } else {
+                    throw new Error('Failed to assign pending first admin role')
+                }
             } catch (error) {
                 console.error('Failed to assign pending first admin role');
                 console.error(error);
@@ -118,7 +126,7 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
                 />
                 <SelectItemCard
                     title="Company Account Exists"
-                    description="Join by getting access from your admin."
+                    description="Join by getting access from an admin."
                     icon={<FaCheck size={40} className='text-primary mt-4' />}
                     isSelected={hasCompanyAccount === true}
                     onClick={() => setHasCompanyAccount(true)}
