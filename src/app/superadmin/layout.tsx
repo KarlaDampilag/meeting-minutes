@@ -8,6 +8,9 @@ import { getUser } from '@/utils/serverActions'
 const SuperAdminLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getUser();
 
+    console.log(user)
+    console.log(process.env.SUPERADMIN_EMAILS?.toString().split(","))
+
     if (!user || !process.env.SUPERADMIN_EMAILS?.toString().split(",")?.includes(user.email)) {
         return <p className='m-4'>Page not found.</p>
     }
