@@ -8,7 +8,7 @@ const AcceptInvitePage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const inviteId = searchParams.get('inviteId');
+    const inviteId = searchParams.get('id');
 
     const { mutate, data } = useAcceptInvite({ inviteId });
 
@@ -21,7 +21,7 @@ const AcceptInvitePage = () => {
     }
 
     return (
-        <div>Please wait...</div>
+        <div className='px-5'>Please wait...</div>
     )
 }
 
