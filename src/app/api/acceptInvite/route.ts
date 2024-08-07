@@ -1,7 +1,6 @@
 
 import { NextRequest } from "next/server";
 
-import { getUser } from "@/utils/serverActions";
 import { db } from "@/db/db";
 import { invites, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -9,12 +8,6 @@ import { eq } from "drizzle-orm";
 // POST /api/acceptInvite
 export const POST = async (request: NextRequest) => {
     try {
-        const user = await getUser();
-
-        if (!user) {
-            return new Response('Unauthorized', { status: 401 });
-        }
-
         const formData = await request.formData();
         const inviteId = formData.get("inviteId");
 
