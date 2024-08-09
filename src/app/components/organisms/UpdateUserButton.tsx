@@ -30,7 +30,7 @@ const UpdateUserButton = ({ user }: { user: User }) => {
 
     return (
         <>
-            <Button onPress={onOpen} color="default" variant='light' isIconOnly startContent={<GoPencil />}></Button>
+            <Button onPress={onOpen} color="default" variant='light' isIconOnly startContent={<GoPencil size={16} />}></Button>
             <UpdateUserModal user={user} isUpdateUserRolePending={isUpdateUserRolePending} isOpen={isOpen} onUpdateUser={handleUpdateUser} onClose={onClose} onOpenChange={onOpenChange} />
         </>
     )

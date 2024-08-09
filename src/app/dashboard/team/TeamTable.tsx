@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Spinner, Button } from "@nextui-org/react";
-import { GoTrash } from 'react-icons/go';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Spinner } from "@nextui-org/react";
 
 import { teamColumns } from './data';
 import { UserWithCompany } from '@/db/schema';
 import { useGetUsers } from '@/rq-hooks/useGetUsers';
 
+import DeleteUserFromCompanyButton from '@/app/components/organisms/DeleteUserFromCompanyButton';
 import UpdateUserButton from '@/app/components/organisms/UpdateUserButton';
 
 const TeamTable = ({ user }: { user: UserWithCompany | undefined }) => {
@@ -34,11 +34,11 @@ const TeamTable = ({ user }: { user: UserWithCompany | undefined }) => {
             case "actions":
                 return (
                     <div className="relative flex items-center justify-center gap-4">
-                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                        <span className="text-lg cursor-pointer">
                             <UpdateUserButton user={user} />
                         </span>
-                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                            <GoTrash />
+                        <span className="text-lg cursor-pointer">
+                            <DeleteUserFromCompanyButton user={user} />
                         </span>
                     </div>
                 );

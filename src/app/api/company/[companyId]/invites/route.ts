@@ -6,7 +6,7 @@ import { getUser } from "@/utils/serverActions";
 import { invites } from "@/db/schema";
 
 // GET /api/company/:id/invites
-export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
+export const GET = async (request: NextRequest, context: { params: { companyId: string } }) => {
     try {
         const user = await getUser();
 
@@ -17,7 +17,7 @@ export const GET = async (request: NextRequest, context: { params: { id: string 
         const result = await db.query.invites.findMany({
             with: { role: true },
             where: and(
-                eq(invites.company_id, context.params.id),
+                eq(invites.company_id, context.params.companyId),
                 ne(invites.accepted, true)
             )
         });

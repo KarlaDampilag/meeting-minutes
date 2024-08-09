@@ -5,8 +5,8 @@ import { db } from "@/db/db";
 import { getUser } from "@/utils/serverActions";
 import { users } from "@/db/schema";
 
-// GET /api/company/:id/users
-export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
+// GET /api/company/:companyId/users
+export const GET = async (request: NextRequest, context: { params: { companyId: string } }) => {
     try {
         const user = await getUser();
 
@@ -16,7 +16,7 @@ export const GET = async (request: NextRequest, context: { params: { id: string 
 
         const result = await db.query.users.findMany({
             with: { company: true, role: true },
-            where: eq(users.company_id, context.params.id)
+            where: eq(users.company_id, context.params.companyId)
         });
 
         return new Response(JSON.stringify(result), { status: 200 });

@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, User as UserComponent } from "@nextui-org/react";
+import { toast } from 'react-toastify';
 
 import { User } from '@/db/schema';
 import RoleDropdown from './RoleDropdown';
@@ -27,6 +28,7 @@ const UpdateUserModal = ({ user, isUpdateUserRolePending, isOpen, onUpdateUser, 
             roleId: { value: string };
         };
         const roleId = target.roleId.value;
+        toast.info("Please wait...");
         onUpdateUser(user.id, roleId);
         onClose();
     }

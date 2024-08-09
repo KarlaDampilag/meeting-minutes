@@ -85,4 +85,18 @@ export class QueryService {
             throw new Error('Failed to update user');
         }
     }
+
+    async deleteUserFromCompany(companyId: string, userId: string): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/company/${companyId}/users/delete/${userId}`, { method: 'POST' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete user');
+        } catch (error) {
+            throw new Error('Failed to delete user');
+        }
+    }
 }
