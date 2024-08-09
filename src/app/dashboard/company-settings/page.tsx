@@ -1,6 +1,7 @@
 import React from 'react'
 import { auth } from "@clerk/nextjs/server"
 import { eq } from 'drizzle-orm';
+import { redirect } from 'next/navigation';
 
 import { db } from '@/db/db';
 import { companies, Company, User, users } from '@/db/schema';
@@ -165,6 +166,10 @@ const CompanySettingsPage = async () => {
 
     if (company?.approved === false) {
         return <FirstAdminPendingApprovalCard />;
+    }
+
+    if (user?.role_id !== process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) {
+        redirect('/dashboard');
     }
 
     return (

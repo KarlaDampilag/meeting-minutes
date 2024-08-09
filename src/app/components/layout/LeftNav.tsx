@@ -14,6 +14,7 @@ import { NavLink } from '../atoms/NavLink';
 
 const LeftNav = async () => {
     let companyApproved = false;
+    let isAdmin;
     const { userId } = auth();
 
     if (userId) {
@@ -22,6 +23,7 @@ const LeftNav = async () => {
             .limit(1);
         if (userResult?.length > 0 && userResult[0].companies?.approved) {
             companyApproved = true;
+            isAdmin = userResult[0].users.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID;
         }
     }
 
@@ -35,7 +37,7 @@ const LeftNav = async () => {
                         icon={<HiOutlineViewGrid size={20} className='min-w-fit' />}
                         text='Dashboard'
                     />
-                </li> {/** Admins only */}
+                </li>
                 <li>
                     <NavLink
                         href='/dashboard/properties'
@@ -44,14 +46,16 @@ const LeftNav = async () => {
                         text='Properties'
                     />
                 </li>
-                <li>
-                    <NavLink
-                        href='/dashboard/team'
-                        className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
-                        icon={<IoPersonOutline size={20} className='min-w-fit' />}
-                        text='Team'
-                    />
-                </li> {/** Admins only */}
+                {isAdmin && (
+                    <li>
+                        <NavLink
+                            href='/dashboard/team'
+                            className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
+                            icon={<IoPersonOutline size={20} className='min-w-fit' />}
+                            text='Team'
+                        />
+                    </li>
+                )}
                 <li>
                     <NavLink
                         href='/dashboard/meetings'
@@ -76,14 +80,16 @@ const LeftNav = async () => {
                         text='Suppliers'
                     />
                 </li>
-                <li>
-                    <NavLink
-                        href='/dashboard/company-settings'
-                        className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
-                        icon={<IoSettingsOutline size={20} className='min-w-fit' />}
-                        text='Company Settings'
-                    />
-                </li> {/** Admins only */}
+                {isAdmin && (
+                    <li>
+                        <NavLink
+                            href='/dashboard/company-settings'
+                            className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
+                            icon={<IoSettingsOutline size={20} className='min-w-fit' />}
+                            text='Company Settings'
+                        />
+                    </li>
+                )}
             </ul>
         </div>
     )

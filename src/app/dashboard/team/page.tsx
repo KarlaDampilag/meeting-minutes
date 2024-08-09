@@ -1,5 +1,6 @@
 import React from 'react'
 import { Resend } from 'resend'
+import { redirect } from 'next/navigation'
 
 import { db } from '@/db/db'
 import { Invite, invites } from '@/db/schema'
@@ -74,6 +75,10 @@ const TeamPage = async () => {
             console.error(error);
             return false;
         }
+    }
+
+    if (userWithCompany?.role_id !== process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) {
+        redirect('/dashboard');
     }
 
     return (
