@@ -2,7 +2,16 @@
 import React from 'react'
 import { Select, SelectItem } from '@nextui-org/react'
 
-const RoleDropdown = ({ selectedRoleId, onChange }: { selectedRoleId: string | undefined, onChange: (selectedRoleId: string) => void }) => {
+interface Props {
+    selectedRoleId: string | undefined;
+    onChange: (selectedRoleId: string) => void;
+    labelPlacement: "outside" | "outside-left" | "inside" | undefined;
+    className: string;
+    useAriaLabel?: boolean;
+    autoFocus?: boolean;
+}
+
+const RoleDropdown = ({ selectedRoleId, onChange, labelPlacement, className, useAriaLabel, autoFocus }: Props) => {
     const roles = [
         {
             id: process.env.NEXT_PUBLIC_ADMIN_ROLE_ID,
@@ -21,19 +30,23 @@ const RoleDropdown = ({ selectedRoleId, onChange }: { selectedRoleId: string | u
     return (
         <Select
             aria-label="Role"
-            className="max-w-44"
+            label={useAriaLabel ? "" : "Role"}
+            name="roleId"
+            className={className}
             variant='bordered'
-            labelPlacement='outside'
+            labelPlacement={labelPlacement}
             radius='sm'
             classNames={{ base: 'max-w-44 !mt-0', trigger: '!border border-gray-300' }}
             isRequired
             selectionMode='single'
-            selectedKeys={selectedRoleId ? [selectedRoleId] : []}
+            value={selectedRoleId}
+            defaultSelectedKeys={selectedRoleId ? [selectedRoleId] : []}
             onChange={handleOnChange}
             placeholder='Select role'
+            autoFocus={autoFocus}
         >
             {roles.map((role) => (
-                <SelectItem key={role.id as string} value={role.id}>
+                <SelectItem key={role.id as string} value={role.id} >
                     {role.label}
                 </SelectItem>
             ))}

@@ -59,7 +59,7 @@ const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: 
                         value={email}
                         onValueChange={setEmail}
                     />
-                    <RoleDropdown selectedRoleId={roleId} onChange={setRoleId} />
+                    <RoleDropdown selectedRoleId={roleId} onChange={setRoleId} labelPlacement='inside' className='max-w-44' useAriaLabel />
                     <Button color={isLoading || !email || !roleId ? 'default' : 'primary'} type='submit' size='sm' className={cn('h-10 text-sm px-4', { 'cursor-not-allowed': isLoading || !email || !roleId })} radius='sm' isLoading={isLoading} isDisabled={isLoading || !email || !roleId}>Send Invite</Button>
                 </div> 
             </form>

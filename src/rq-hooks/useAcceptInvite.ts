@@ -14,7 +14,7 @@ const acceptInvite = async (params: AcceptInviteMutationParams) => {
 
 const QUERY_KEY = ['Invites', 'Users'];
 
-export const useAcceptInvite = (params: AcceptInviteMutationParams) => {
+export const useAcceptInvite = () => {
     const queryClient = useQueryClient();
 
     return useMutation({

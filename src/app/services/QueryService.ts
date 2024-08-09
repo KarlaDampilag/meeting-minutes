@@ -56,7 +56,9 @@ export class QueryService {
         try {
             const formData = new FormData();
             formData.append("inviteId", inviteId)
+
             const res = await fetch(`/api/acceptInvite`, { method: 'POST', body: formData });
+
             if (res.status === 200) {
                 const data = await res.json()
                 return data;
@@ -64,6 +66,23 @@ export class QueryService {
             throw new Error('Failed to accept invite');
         } catch (error) {
             throw new Error('Failed to accept invite');
+        }
+    }
+
+    async updateRole(userId: string, roleId: string): Promise<User> {
+        try {
+            const formData = new FormData();
+            formData.append("roleId", roleId);
+
+            const res = await fetch(`/api/users/${userId}`, { method: 'POST', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to update user');
+        } catch (error) {
+            throw new Error('Failed to update user');
         }
     }
 }

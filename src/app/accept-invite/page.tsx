@@ -10,7 +10,7 @@ const AcceptInvitePage = () => {
 
     const inviteId = searchParams.get('id');
 
-    const { mutate, isSuccess } = useAcceptInvite({ inviteId });
+    const { mutate, isSuccess } = useAcceptInvite();
 
     React.useEffect(() => {
         if (!!inviteId) {
