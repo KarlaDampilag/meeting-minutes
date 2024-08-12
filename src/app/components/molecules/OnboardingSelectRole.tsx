@@ -4,8 +4,10 @@ import { Button, cn } from '@nextui-org/react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { FaArrowRightLong, FaCheck, FaXmark } from 'react-icons/fa6';
 import { RiShieldUserLine } from 'react-icons/ri';
-import SelectItemCard from '../atoms/SelectItemCard';
 import { useRouter } from 'next/navigation';
+
+import SelectItemCard from '../atoms/SelectItemCard';
+import Text from '../atoms/Text';
 
 const OnboardingSelectRole = ({ assignPendingRole }: { assignPendingRole: (role: "First Admin" | "Admin" | "Property Manager") => Promise<boolean> }) => {
     const router = useRouter();
@@ -37,19 +39,23 @@ const OnboardingSelectRole = ({ assignPendingRole }: { assignPendingRole: (role:
 
     return (
         <div className='text-center w-fit mx-auto'>
-            <h1 className='mb-6'>Select Your Role</h1>
-            <p className='mb-8'>What&apos;s your role within the company?</p>
+            <h1 className='mb-6'>
+                <Text localeParent="Onboarding" localeKey="Select Your Role" />
+            </h1>
+            <p className='mb-8'>
+                <Text localeParent="Onboarding" localeKey="selectYourRoleDescription" />
+            </p>
             <div className='flex items-center gap-5'>
                 <SelectItemCard
-                    title="Admin"
-                    description="Set up the company account, manage team members, and access all the features available to Property Managers."
+                    title={<Text localeParent="Roles" localeKey="Admin" />}
+                    description={<Text localeParent="Roles" localeKey="adminDescription" />}
                     icon={<RiShieldUserLine size={40} className='text-primary mt-4' />}
                     isSelected={selectedRole === "Admin"}
                     onClick={() => setSelectedRole("Admin")}
                 />
                 <SelectItemCard
-                    title="Property Manager"
-                    description="Manage property details, schedule meetings, record and document meeting minutes, and manage meeting attachments."
+                    title={<Text localeParent="Roles" localeKey="Property Manager" />}
+                    description={<Text localeParent="Roles" localeKey="propertyManagerDescription" />}
                     icon={<AiOutlineHome size={40} className='text-primary mt-4' />}
                     isSelected={selectedRole === "Property Manager"}
                     onClick={() => setSelectedRole("Property Manager")}
@@ -67,7 +73,7 @@ const OnboardingSelectRole = ({ assignPendingRole }: { assignPendingRole: (role:
                 isDisabled={isLoading}
                 isLoading={isLoading}
             >
-                Continue
+                <Text localeParent="Common" localeKey="Continue" />
             </Button>
         </div>
     )
@@ -114,19 +120,21 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
 
     return (
         <div className='text-center w-fit mx-auto max-w-[529px]'>
-            <h1 className='mb-6'>Company Account Status</h1>
-            <p className='mb-8'>Does your company already have an account with {process.env.NEXT_PUBLIC_APP_NAME}?</p>
-            <div className='flex items-center gap-5 mx-auto w-fit'>
+            <h1 className='mb-6'>
+                <Text localeParent="Onboarding" localeKey="Company Account Status" />
+            </h1>
+            <p className='mb-8'><Text localeParent="Onboarding" localeKey="companyAccountStatusDescription" /> {process.env.NEXT_PUBLIC_APP_NAME}?</p>
+            <div className='flex gap-5 mx-auto w-fit items-stretch'>
                 <SelectItemCard
-                    title="No Existing Company Account"
-                    description="Create a new company account for verification."
+                    title={<Text localeParent="Onboarding" localeKey="No Existing Company Account" />}
+                    description={<Text localeParent="Onboarding" localeKey="noExistingCompanyAccountDescription" />}
                     icon={<FaXmark size={40} className='text-primary mt-4' />}
                     isSelected={hasCompanyAccount === false}
                     onClick={() => setHasCompanyAccount(false)}
                 />
                 <SelectItemCard
-                    title="Company Account Exists"
-                    description="Join by getting access from an admin."
+                    title={<Text localeParent="Onboarding" localeKey="Company Account Exists" />}
+                    description={<Text localeParent="Onboarding" localeKey="companyAccountExistsDescription" />}
                     icon={<FaCheck size={40} className='text-primary mt-4' />}
                     isSelected={hasCompanyAccount === true}
                     onClick={() => setHasCompanyAccount(true)}
@@ -144,7 +152,7 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
                 isDisabled={isLoading}
                 isLoading={isLoading}
             >
-                Continue
+                <Text localeParent="Common" localeKey="Continue" />
             </Button>
         </div>
     );

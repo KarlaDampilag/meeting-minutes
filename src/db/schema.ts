@@ -32,7 +32,7 @@ export type Company = typeof companies.$inferSelect;
 type CompanyAddress = {
     street: string,
     city: string,
-    state: string,
+    state?: string,
     zipCode: string,
     country: string,
     telephone: string

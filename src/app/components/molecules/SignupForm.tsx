@@ -2,6 +2,8 @@ import { Button, cn } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
+import Text from "../atoms/Text";
+
 interface SignUpFormProps {
     signUpWithEmail: ({ firstName, lastName, emailAddress, password }: { firstName: string; lastName: string; emailAddress: string; password: string }) => void;
     clerkError: string;
@@ -13,7 +15,9 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
     return (
         <div className="flex justify-center items-center min-h-full">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8 md:p-10">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6">Sign Up</h1>
+                <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                    <Text localeParent="Auth" localeKey="Sign up" />
+                </h1>
                 <form
                     onSubmit={(e) => {
                         setIsLoading(true);
@@ -34,7 +38,7 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
                     <div className="mb-4 flex items-center gap-4">
                         <div>
                             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                                First name
+                                <Text localeParent="User" localeKey="First name" />
                             </label>
                             <input
                                 id="firstName"
@@ -47,7 +51,7 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
                         </div>
                         <div>
                             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                                Last name
+                                <Text localeParent="User" localeKey="Last name" />
                             </label>
                             <input
                                 id="lastName"
@@ -61,7 +65,7 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            Email address
+                            <Text localeParent="User" localeKey="Email address" />
                         </label>
                         <input
                             id="email"
@@ -74,7 +78,7 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
                     </div>
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Password
+                            <Text localeParent="Auth" localeKey="Password" />
                         </label>
                         <input
                             id="password"
@@ -101,13 +105,13 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
                         isLoading={isLoading}
                         type="submit"
                     >
-                        Create an account
+                        <Text localeParent="Auth" localeKey="Create an account" />
                     </Button>
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Already have an account?
+                    <Text localeParent="Auth" localeKey="Already have an account?" />
                     <Link href="/sign-in" className="ml-1 text-blue-600 hover:underline">
-                        Login
+                        <Text localeParent="Auth" localeKey="Sign in" />
                     </Link>
                 </p>
             </div>

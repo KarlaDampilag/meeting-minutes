@@ -39,12 +39,14 @@ export class QueryService {
         }
     }
 
-    async fetchInviteByUserEmail(email: string): Promise<Invite> {
+    async fetchInviteByUserEmail(email: string): Promise<Invite | null> {
         try {
             const res = await fetch(`/api/invites/byEmail/${email}`);
             if (res.status === 200) {
                 const data = await res.json()
                 return data;
+            } else if (res.status === 404) {
+                return null;
             }
             throw new Error('Failed to fetch invite');
         } catch (error) {

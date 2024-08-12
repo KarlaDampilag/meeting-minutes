@@ -1,0 +1,69 @@
+{
+  "Auth": {
+    "Already have an account?": "Du hast bereits ein Konto?",
+    "Complete Sign Up": "Anmeldung abschliessen",
+    "Create an account": "Konto erstellen",
+    "Don't have an account?": "Noch kein Konto?",
+    "Enter your verification code": "Bestätigungscode eingeben",
+    "Password": "Passwort",
+    "Sign in": "Anmelden",
+    "Sign up": "Konto erstellen",
+    "Verification Code": "Bestätigungscode"
+  },
+  "Common": {
+    "Continue": "Weiter",
+    "Submit": "Senden"
+  },
+  "Company Settings": {
+    "Billing Details": "Rechnungsadresse",
+    "City": "Ort",
+    "companyDetailsFormDescription": "Bitte fülle die folgenden Angaben zu deiner Firma aus:",
+    "Company Details": "Angaben zur Firma",
+    "Company name": "Firmenname",
+    "Company Settings": "Einstellungen",
+    "Country": "Land",
+    "Same as company address": "Gleich wie Firmenadresse",
+    "Street": "Strasse und Nr.",
+    "Telephone number": "Telefon",
+    "Zip code": "PLZ"
+  },
+  "Dashboard": {
+    "Dashboard": "Dashboard"
+  },
+  "Meetings": {
+    "Meetings": "Versammlungen"
+  },
+  "Onboarding": {
+    "companyAccountExistsDescription": "Beitreten, indem du Zugriff von deinem Admin erhältst.",
+    "companyAccountStatusDescription": "Hat deine Firma bereits ein Konto mit",
+    "Company Account Exists": "Firmenkonto besteht",
+    "Company Account Status": "Status des Firmenkontos",
+    "noExistingCompanyAccountDescription": "Neues Firmenkonto erstellen",
+    "No Existing Company Account": "Kein bestehendes Firmenkonto",
+    "selectYourRoleDescription": "Was ist deine Rolle in der Firma?",
+    "Select Your Role": "Wähle deine Rolle "
+  },
+  "Properties": {
+    "Properties": "Liegenschaften"
+  },
+  "Roles": {
+    "Admin": "Admin",
+    "adminDescription": "Firmenkonto einrichten, Team Mitglieder und Liegenschaften verwalten",
+    "Property Manager": "Bewirtschafter:In",
+    "propertyManagerDescription": "Liegenschaften verwalten, zu Versammlungen einladen und abhalten"
+  },
+  "Suppliers": {
+    "Suppliers": "Lieferanten"
+  },
+  "Tasks": {
+    "Tasks": "Aufgaben"
+  },
+  "Team": {
+    "Team": "Team"
+  },
+  "User": {
+    "First name": "Vorname",
+    "Last name": "Nachname",
+    "Email address": "Email Adresse"
+  }
+}

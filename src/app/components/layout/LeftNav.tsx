@@ -11,8 +11,10 @@ import { companies, users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
 import { NavLink } from '../atoms/NavLink';
+import Text from '../atoms/Text';
 
 const LeftNav = async () => {
+
     let companyApproved = false;
     let isAdmin;
     const { userId } = auth();
@@ -35,7 +37,7 @@ const LeftNav = async () => {
                         href='/dashboard'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<HiOutlineViewGrid size={20} className='min-w-fit' />}
-                        text='Dashboard'
+                        text={<Text localeParent='Dashboard' localeKey='Dashboard' />}
                     />
                 </li>
                 <li>
@@ -43,7 +45,7 @@ const LeftNav = async () => {
                         href='/dashboard/properties'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<HiOutlineBuildingOffice size={20} className='min-w-fit' />}
-                        text='Properties'
+                        text={<Text localeParent='Properties' localeKey='Properties' />}
                     />
                 </li>
                 {isAdmin && (
@@ -52,7 +54,7 @@ const LeftNav = async () => {
                             href='/dashboard/team'
                             className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                             icon={<IoPersonOutline size={20} className='min-w-fit' />}
-                            text='Team'
+                            text={<Text localeParent='Team' localeKey='Team' />}
                         />
                     </li>
                 )}
@@ -61,7 +63,7 @@ const LeftNav = async () => {
                         href='/dashboard/meetings'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<IoCalendarClearOutline size={20} className='min-w-fit' />}
-                        text='Meetings'
+                        text={<Text localeParent='Meetings' localeKey='Meetings' />}
                     />
                 </li>
                 <li>
@@ -69,7 +71,7 @@ const LeftNav = async () => {
                         href='/dashboard/tasks'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<IoMdCheckmarkCircleOutline size={20} className='min-w-fit' />}
-                        text='Tasks'
+                        text={<Text localeParent='Tasks' localeKey='Tasks' />}
                     />
                 </li>
                 <li>
@@ -77,7 +79,7 @@ const LeftNav = async () => {
                         href='/dashboard/suppliers'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<IoCartOutline size={20} className='min-w-fit' />}
-                        text='Suppliers'
+                        text={<Text localeParent='Suppliers' localeKey='Suppliers' />}
                     />
                 </li>
                 {isAdmin && (
@@ -86,7 +88,7 @@ const LeftNav = async () => {
                             href='/dashboard/company-settings'
                             className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                             icon={<IoSettingsOutline size={20} className='min-w-fit' />}
-                            text='Company Settings'
+                            text={<Text localeParent='Company Settings' localeKey='Company Settings' />}
                         />
                     </li>
                 )}

@@ -3,8 +3,8 @@ import React from 'react'
 import { FaCircleCheck } from 'react-icons/fa6';
 
 type Properties = {
-    title: string;
-    description: string;
+    title: string | JSX.Element;
+    description: string | JSX.Element;
     icon: JSX.Element;
     isSelected: boolean;
     onClick: () => void;

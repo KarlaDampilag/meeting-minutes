@@ -2,9 +2,10 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'react-toastify';
+import { Button, Checkbox, Input } from '@nextui-org/react'
 
 import { Company } from '@/db/schema'
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import Text from '@/app/components/atoms/Text';
 
 const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formData: FormData, billingSameAsAddress: boolean) => Promise<void>, currentCompanyData: Company | undefined | null }) => {
     const router = useRouter();
@@ -33,7 +34,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
         <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
             <Input
                 variant='bordered'
-                label="Company name"
+                label={<Text localeParent='Company Settings' localeKey='Company name' />}
                 placeholder="Acme Inc."
                 type='text'
                 name='companyName'
@@ -47,7 +48,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
 
             <Input
                 variant='bordered'
-                label="Street"
+                label={<Text localeParent='Company Settings' localeKey='Street' />}
                 placeholder="Grossmatt 92"
                 type='text'
                 name='street'
@@ -60,8 +61,8 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
             />
             <Input
                 variant='bordered'
-                label="City"
-                placeholder="City:  Besazio"
+                label={<Text localeParent='Company Settings' localeKey='City' />}
+                placeholder="Besazio"
                 type='text'
                 name='city'
                 isRequired
@@ -71,7 +72,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 validationBehavior='native'
                 defaultValue={currentCompanyData?.address?.city}
             />
-            <Input
+            {/* <Input
                 variant='bordered'
                 label="State"
                 placeholder="Bern"
@@ -83,10 +84,10 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
                 defaultValue={currentCompanyData?.address?.state}
-            />
+            /> */}
             <Input
                 variant='bordered'
-                label="Zip code"
+                label={<Text localeParent='Company Settings' localeKey='Zip code' />}
                 placeholder="6863"
                 type='text'
                 name='zipCode'
@@ -99,7 +100,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
             />
             <Input
                 variant='bordered'
-                label="Country"
+                label={<Text localeParent='Company Settings' localeKey='Country' />}
                 placeholder="Switzerland"
                 type='text'
                 name='country'
@@ -112,7 +113,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
             />
             <Input
                 variant='bordered'
-                label="Telephone number"
+                label={<Text localeParent='Company Settings' localeKey='Telephone number' />}
                 placeholder="091 233 20 88"
                 type='text'
                 name='telephone'
@@ -126,14 +127,14 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
 
             <hr className='my-3' />
 
-            <h2 className='mb-0'>Billing Details</h2>
+            <h2 className='mb-0'><Text localeParent='Company Settings' localeKey='Billing Details' /></h2>
 
-            <Checkbox isSelected={billingSameAsAddress} onValueChange={setBillingSameAsAddress}>Same as company address</Checkbox>
+            <Checkbox isSelected={billingSameAsAddress} onValueChange={setBillingSameAsAddress}><Text localeParent='Company Settings' localeKey='Same as company address' /></Checkbox>
 
             {!billingSameAsAddress && (
                 <>
                     <Input variant='bordered'
-                        label="Street"
+                        label={<Text localeParent='Company Settings' localeKey='Street' />}
                         placeholder="Grossmatt 92"
                         type='text'
                         name='billing-street'
@@ -145,8 +146,8 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                     />
                     <Input
                         variant='bordered'
-                        label="City"
-                        placeholder="City:  Besazio"
+                        label={<Text localeParent='Company Settings' localeKey='City' />}
+                        placeholder="Besazio"
                         type='text'
                         name='billing-city'
                         isRequired
@@ -155,7 +156,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         classNames={{ inputWrapper: 'border border-gray-300' }}
                         defaultValue={currentCompanyData?.billing_address?.city}
                     />
-                    <Input
+                    {/* <Input
                         variant='bordered'
                         label="State"
                         placeholder="Bern"
@@ -166,10 +167,10 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
                         defaultValue={currentCompanyData?.billing_address?.state}
-                    />
+                    /> */}
                     <Input
                         variant='bordered'
-                        label="Zip code"
+                        label={<Text localeParent='Company Settings' localeKey='Zip code' />}
                         placeholder="6863"
                         type='text'
                         name='billing-zipCode'
@@ -181,7 +182,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                     />
                     <Input
                         variant='bordered'
-                        label="Country"
+                        label={<Text localeParent='Company Settings' localeKey='Country' />}
                         placeholder="Switzerland"
                         type='text'
                         name='billing-country'
@@ -193,7 +194,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                     />
                     <Input
                         variant='bordered'
-                        label="Telephone number"
+                        label={<Text localeParent='Company Settings' localeKey='Telephone number' />}
                         placeholder="091 233 20 88"
                         type='text'
                         name='billing-telephone'
@@ -206,7 +207,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 </>
             )}
 
-            <Button color='primary' type='submit' className='h-12 text-base mt-2 mb-4' radius='sm' isLoading={isLoading} isDisabled={isLoading}>Submit</Button>
+            <Button color='primary' type='submit' className='h-12 text-base mt-2 mb-4' radius='sm' isLoading={isLoading} isDisabled={isLoading}><Text localeParent='Common' localeKey='Submit' /></Button>
         </form>
     )
 }

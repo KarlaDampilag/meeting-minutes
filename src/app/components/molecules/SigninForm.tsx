@@ -2,6 +2,8 @@ import { Button, cn } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
+import Text from "../atoms/Text";
+
 interface SignInFormProps {
     signInWithEmail: ({
         emailAddress,
@@ -20,7 +22,7 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
         <div className="flex justify-center items-center min-h-full">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8 md:p-10">
                 <h1 className="mb-6">
-                    Sign In
+                    <Text localeParent="Auth" localeKey="Sign in" />
                 </h1>
                 <form
                     onSubmit={(e) => {
@@ -37,7 +39,7 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
                 >
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            Email address
+                            <Text localeParent="User" localeKey="Email address" />
                         </label>
                         <input
                             id="email"
@@ -50,7 +52,7 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
                     </div>
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Password
+                            <Text localeParent="Auth" localeKey="Password" />
                         </label>
                         <input
                             id="password"
@@ -77,13 +79,13 @@ const SigninForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
                         isLoading={isLoading}
                         type="submit"
                     >
-                        Sign In
+                        <Text localeParent="Auth" localeKey="Sign in" />
                     </Button>
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Don&apos;t have an account?
+                    <Text localeParent="Auth" localeKey="Don't have an account?" />
                     <Link href="/sign-up" className="ml-1 text-blue-600 hover:underline">
-                        Sign up
+                        <Text localeParent="Auth" localeKey="Sign up" />
                     </Link>
                 </p>
             </div>

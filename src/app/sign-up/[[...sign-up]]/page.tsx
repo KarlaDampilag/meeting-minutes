@@ -57,6 +57,7 @@ const Signup = () => {
             const completeSignUp = await signUp.attemptEmailAddressVerification({
                 code,
             });
+            // console.log('attemptEmailAddressVerification result', completeSignUp)
             if (completeSignUp.status !== "complete") {
                 console.log(JSON.stringify(completeSignUp, null, 2));
             }
@@ -66,7 +67,7 @@ const Signup = () => {
 
                 // if invite has accepted === null or undefined, redirect to accept-invite, else redirect to dashboard
                 const pendingInvite = await queryService.fetchInviteByUserEmail(completeSignUp.emailAddress as string);
-                if (pendingInvite.accepted === null || pendingInvite.accepted === undefined) {
+                if (!!pendingInvite && (pendingInvite.accepted === null || pendingInvite.accepted === undefined)) {
                     router.push(`/accept-invite?id=${inviteId}`);
                 } else {
                     router.push("/dashboard");

@@ -1,8 +1,10 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
-import { UserJSON, WebhookEvent } from '@clerk/nextjs/server'
+import { EmailJSON, UserJSON, WebhookEvent } from '@clerk/nextjs/server'
 import { db } from '@/db/db'
 import { NewUser, users } from '@/db/schema'
+import { Resend } from 'resend'
+import { SignUpCodeVerification } from '@/app/components/emailTemplates/SignUpCodeVerification'
 
 export async function POST(req: Request) {
     try {
@@ -51,23 +53,23 @@ export async function POST(req: Request) {
         }
 
         // Do something with the payload
-        const { id, first_name, last_name, email_addresses, primary_email_address_id, image_url } = evt.data as UserJSON;
-        const eventType = evt.type;
-        console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-        console.log('Webhook body:', body)
-
-        const primaryEmailAddressId = primary_email_address_id;
-        const emailAddressItem = email_addresses.find(item => item.id === primaryEmailAddressId);
-
-        const userData: NewUser = {
-            auth_id: id,
-            first_name: first_name || '',
-            last_name: last_name || '',
-            email: emailAddressItem?.email_address || '',
-            image_url: image_url
-        }
-
         if (evt.type === 'user.updated' || evt.type === 'user.created') {
+            const { id, first_name, last_name, email_addresses, primary_email_address_id, image_url } = evt.data as UserJSON;
+
+            const eventType = evt.type;
+            console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
+            console.log('Webhook body:', body)
+
+            const primaryEmailAddressId = primary_email_address_id;
+            const emailAddressItem = email_addresses.find(item => item.id === primaryEmailAddressId);
+
+            const userData: NewUser = {
+                auth_id: id,
+                first_name: first_name || '',
+                last_name: last_name || '',
+                email: emailAddressItem?.email_address || '',
+                image_url: image_url
+            }
             console.log('userId:', id)
             const newUser = await db.insert(users).values(userData).onConflictDoUpdate({
                 target: users.auth_id,
@@ -79,9 +81,38 @@ export async function POST(req: Request) {
                 },
             }).returning();
             console.log('User upserted: ', newUser);
+        } else if (evt.type === 'email.created') {
+            const { id, data, to_email_address } = evt.data as EmailJSON;
+
+            if (!data || !data.otp_code || !to_email_address) {
+                return new Response('Clerk webhook did not provide expected data from event', { status: 500 });
+            }
+
+            const eventType = evt.type;
+            console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
+            console.log('Webhook body:', body)
+
+            const resend = new Resend(process.env.RESEND_API_KEY);
+            const from = `${process.env.NEXT_PUBLIC_APP_NAME} <${process.env.NEXT_PUBLIC_SENDER_EMAIL}>`
+            console.log('Sending email...');
+            console.log('from', from);
+            console.log('to', to_email_address);
+            const { error } = await resend.emails.send({
+                from: from,
+                to: to_email_address,
+                subject: `${process.env.NEXT_PUBLIC_APP_NAME}: ${data.otp_code} ist dein Bestätigungscode`,
+                react: SignUpCodeVerification({ otpCode: data.otp_code }),
+            });
+    
+            if (error) {
+                console.error(error);
+                return new Response('Failed to process webhook .', { status: 500 });
+            }
+        } else {
+            return new Response('Webhook type not supported', { status: 400 });
         }
 
-        return new Response('Webhook successfully processed. New user inserted in db.', { status: 200 })
+        return new Response('Webhook successfully processed.', { status: 200 })
     } catch (e) {
         console.error(e);
         throw new Response('An error has occurred', { status: 500 });

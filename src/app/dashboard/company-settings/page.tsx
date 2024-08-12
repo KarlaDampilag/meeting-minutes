@@ -8,6 +8,7 @@ import { companies, Company, User, users } from '@/db/schema';
 
 import CompanyDetailsForm from './CompanyDetailsForm'
 import FirstAdminPendingApprovalCard from '@/app/components/atoms/FirstAdminPendingApprovalCard';
+import Text from '@/app/components/atoms/Text';
 
 const CompanySettingsPage = async () => {
     let user: User | undefined;
@@ -33,30 +34,30 @@ const CompanySettingsPage = async () => {
             const name = formData.get('companyName')?.toString() || "";
             const street = formData.get('street')?.toString() || "";
             const city = formData.get('city')?.toString() || "";
-            const state = formData.get('state')?.toString() || "";
+            // const state = formData.get('state')?.toString() || "";
             const zipCode = formData.get('zipCode')?.toString() || "";
             const country = formData.get('country')?.toString() || "";
             const telephone = formData.get('telephone')?.toString() || "";
 
-            let billingStreet, billingCity, billingState, billingZipCode, billingCountry, billingTelephone;
+            let billingStreet, billingCity, billingZipCode, billingCountry, billingTelephone;
 
             if (billingSameAsAddress) {
                 billingStreet = street;
                 billingCity = city;
-                billingState = state;
+                // billingState = state;
                 billingZipCode = zipCode;
                 billingCountry = country;
                 billingTelephone = telephone;
             } else {
                 billingStreet = formData.get('billing-street')?.toString() || "";
                 billingCity = formData.get('billing-city')?.toString() || "";
-                billingState = formData.get('billing-state')?.toString() || "";
+                // billingState = formData.get('billing-state')?.toString() || "";
                 billingZipCode = formData.get('billing-zipCode')?.toString() || "";
                 billingCountry = formData.get('billing-country')?.toString() || "";
                 billingTelephone = formData.get('billing-telephone')?.toString() || "";
             }
 
-            if (!name || !street || !city || !state || !zipCode || !country || !telephone || !billingStreet || !billingCity || !billingState || !billingZipCode || !billingCountry || !billingTelephone) {
+            if (!name || !street || !city || !zipCode || !country || !telephone || !billingStreet || !billingCity || !billingZipCode || !billingCountry || !billingTelephone) {
                 throw new Error('Cannot create or update company details, required fields are not defined.');
             } else {
                 if (!!company && !!company.approved) {
@@ -66,7 +67,7 @@ const CompanySettingsPage = async () => {
                             address: {
                                 street: street,
                                 city: city,
-                                state: state,
+                                // state: state,
                                 zipCode: zipCode,
                                 country: country,
                                 telephone: telephone
@@ -74,7 +75,7 @@ const CompanySettingsPage = async () => {
                             billing_address: {
                                 street: billingStreet,
                                 city: billingCity,
-                                state: billingState,
+                                // state: billingState,
                                 zipCode: billingZipCode,
                                 country: billingCountry,
                                 telephone: billingTelephone
@@ -92,7 +93,7 @@ const CompanySettingsPage = async () => {
                         address: {
                             street: street,
                             city: city,
-                            state: state,
+                            // state: state,
                             zipCode: zipCode,
                             country: country,
                             telephone: telephone
@@ -100,7 +101,7 @@ const CompanySettingsPage = async () => {
                         billing_address: {
                             street: billingStreet,
                             city: billingCity,
-                            state: billingState,
+                            // state: billingState,
                             zipCode: billingZipCode,
                             country: billingCountry,
                             telephone: billingTelephone
@@ -114,7 +115,7 @@ const CompanySettingsPage = async () => {
                             address: {
                                 street: street,
                                 city: city,
-                                state: state,
+                                // state: state,
                                 zipCode: zipCode,
                                 country: country,
                                 telephone: telephone
@@ -122,7 +123,7 @@ const CompanySettingsPage = async () => {
                             billing_address: {
                                 street: billingStreet,
                                 city: billingCity,
-                                state: billingState,
+                                // state: billingState,
                                 zipCode: billingZipCode,
                                 country: billingCountry,
                                 telephone: billingTelephone
@@ -174,8 +175,8 @@ const CompanySettingsPage = async () => {
 
     return (
         <div>
-            <h1 className='mb-6'>Company Details</h1>
-            {!user?.company_id && <p className='mb-7 font-medium'>Please submit your company details for verification:</p>}
+            <h1 className='mb-6'><Text localeParent='Company Settings' localeKey='Company Details' /></h1>
+            {!user?.company_id && <p className='mb-7 font-medium'><Text localeParent='Company Settings' localeKey='companyDetailsFormDescription' /></p>}
             <CompanyDetailsForm onSubmit={handleCompanyFormSubmit} currentCompanyData={company} />
         </div>
     )

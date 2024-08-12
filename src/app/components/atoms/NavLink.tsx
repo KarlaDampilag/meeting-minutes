@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-export const NavLink = ({ href, text, icon, className }: { href: string, text: string, icon: JSX.Element, className?: string }) => {
+export const NavLink = ({ href, text, icon, className }: { href: string, text: string | JSX.Element, icon: JSX.Element, className?: string }) => {
     const pathname = usePathname()
 
     const classNameFinal = [

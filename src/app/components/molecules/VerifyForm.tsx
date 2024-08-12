@@ -1,6 +1,8 @@
 import React, { FormEvent } from "react";
 import { Button, cn } from "@nextui-org/react";
 
+import Text from "../atoms/Text";
+
 interface VerifyFormProps {
     handleVerify: (e: FormEvent) => void;
     code: string;
@@ -13,14 +15,16 @@ const VerifyForm = ({ handleVerify, code, setCode }: VerifyFormProps) => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8 md:p-10">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6">Verification Code</h1>
+                <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                    <Text localeParent="Auth" localeKey="Verification Code" />
+                </h1>
                 <form onSubmit={(e) => {
                     setIsLoading(true);
                     handleVerify(e);
                 }}>
                     <div className="mb-6">
                         <label htmlFor="code" className="block text-sm font-medium text-gray-700">
-                            Enter your verification code
+                            <Text localeParent="Auth" localeKey="Enter your verification code" />
                         </label>
                         <input
                             value={code}
@@ -44,7 +48,7 @@ const VerifyForm = ({ handleVerify, code, setCode }: VerifyFormProps) => {
                         isLoading={isLoading}
                         type="submit"
                     >
-                        Complete Sign Up
+                        <Text localeParent="Auth" localeKey="Complete Sign Up" />
                     </Button>
                 </form>
             </div>
