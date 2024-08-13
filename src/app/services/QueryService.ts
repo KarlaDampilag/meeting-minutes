@@ -1,4 +1,4 @@
-import { Invite, User } from "@/db/schema";
+import { Invite, PropertyWithManager, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -54,6 +54,32 @@ export class QueryService {
         }
     }
 
+    async fetchPropertyManagers(companyId: string): Promise<User[]> {
+        try {
+            const res = await fetch(`/api/propertyManagers/${companyId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch property managers');
+        } catch (error) {
+            throw new Error('Failed to fetch property managers');
+        }
+    }
+
+    async fetchProperties(companyId: string): Promise<PropertyWithManager[]> {
+        try {
+            const res = await fetch(`/api/properties/${companyId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch properties');
+        } catch (error) {
+            throw new Error('Failed to fetch properties');
+        }
+    }
+
     async acceptInvite(inviteId: string): Promise<Invite[]> {
         try {
             const formData = new FormData();
@@ -99,6 +125,37 @@ export class QueryService {
             throw new Error('Failed to delete user');
         } catch (error) {
             throw new Error('Failed to delete user');
+        }
+    }
+
+    async addProperty(props: { companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string }): Promise<PropertyWithManager> {
+        try {
+            const formData = new FormData();
+            formData.append("propertyName", props.propertyName);
+
+            if (props.street) {
+                formData.append("street", props.street);
+            }
+            if (props.city) {
+                formData.append("city", props.city);
+            }
+            if (props.zipCode) {
+                formData.append("zipCode", props.zipCode);
+            }
+            if (props.country) {
+                formData.append("country", props.country);
+            }
+            formData.append("propertyManagerId", props.propertyManagerId);
+
+            const res = await fetch(`/api/properties/${props.companyId}`, { method: 'POST', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to add property');
+        } catch (error) {
+            throw new Error('Failed to add property');
         }
     }
 }

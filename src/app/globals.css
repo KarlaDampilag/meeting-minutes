@@ -41,13 +41,13 @@ a {
 }
 
 .root-container {
-    @apply mx-auto w-full max-w-screen-xl flex flex-col;
+    @apply mx-auto w-full flex flex-col ;
     height: 100%;
     min-height: 100vh;
 }
 
 .dashboard-container {
-    @apply mx-auto w-full max-w-screen-xl;
+    @apply w-full;
     height: 100%;
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -83,6 +83,10 @@ a {
 }
 
 .dashboard-main-container {
-    @apply py-8 px-10;
+    @apply py-8 px-10 w-full overflow-y-auto;
     grid-area: 2 / 2 / 6 / 6;
+}
+
+.dashboard-main-inner {
+
 }

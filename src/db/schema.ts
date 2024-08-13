@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, date, json, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, decimal, json, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -29,7 +29,7 @@ export type NewRole = typeof roles.$inferInsert;
 export type NewCompany = typeof companies.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type Company = typeof companies.$inferSelect;
-type CompanyAddress = {
+type Address = {
     street: string,
     city: string,
     state?: string,
@@ -40,6 +40,8 @@ type CompanyAddress = {
 export type UserWithCompany = User & { company: Company | null }
 export type CompanyAndSubmittingUser = { companies: Company, users: User | null }
 export type Invite = typeof invites.$inferSelect;
+export type Property = typeof properties.$inferSelect;
+export type PropertyWithManager = Property & { propertyManager: User }
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -49,10 +51,10 @@ export const roles = pgTable('roles', {
 
 export const companies = pgTable('companies', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
-    name: varchar('name', { length: 256 }).unique().notNull(),
+    name: varchar('name', { length: 256 }).notNull(),
     created_at: timestamp('created_at').defaultNow(),
-    address: json('address').$type<CompanyAddress>(),
-    billing_address: json('billing_address').$type<CompanyAddress>(),
+    address: json('address').$type<Address>(),
+    billing_address: json('billing_address').$type<Address>(),
     created_by: uuid('created_by').unique(),
     approved: boolean('approved'),
     trial_end_date: date('trial_end_date')
@@ -74,3 +76,27 @@ export const invitesRelations = relations(invites, ({ one }) => ({
         references: [roles.id]
     })
 }));
+
+export const properties = pgTable('properties', {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    company_id: uuid('company_id').references(() => companies.id).notNull(),
+    name: varchar('name', { length: 256 }).notNull(),
+    address: json('address').$type<Address>(),
+    property_manager_id: uuid('property_manager_id').references(() => users.id).notNull(),
+});
+
+export const propertiesRelations = relations(properties, ({ one }) => ({
+    propertyManager: one(users, {
+        fields: [properties.property_manager_id],
+        references: [users.id]
+    })
+}))
+
+export const owners = pgTable('owners', {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    name: varchar('name', { length: 256 }).notNull(),
+    telephone: varchar('telephone', { length: 256 }),
+    email: varchar('email', { length: 256 }),
+    ownership_share: decimal('ownership_share'),
+    property_id: uuid('property_id').references(() => properties.id).notNull(),
+});

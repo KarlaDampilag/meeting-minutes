@@ -9,6 +9,8 @@ export const getUser = async () => {
     if (userId) {
         const user = await db.query.users.findFirst({ where: eq(users.auth_id, userId) });
         return user;
+    } else {
+        return null;
     }
 }
 
@@ -22,6 +24,8 @@ export const getUserAndCompany = async () => {
             }
         })
         return user;
+    } else {
+        return null;
     }
 }
 

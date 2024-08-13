@@ -25,6 +25,7 @@ const CompanySettingsPage = async () => {
         }
     }
 
+    // FIXME should check for admin role
     const createOrUpdateCompany = async (formData: FormData, billingSameAsAddress: boolean): Promise<Company> => {
         'use server'
         try {
@@ -174,7 +175,7 @@ const CompanySettingsPage = async () => {
     }
 
     return (
-        <div>
+        <div className='max-w-3xl mx-auto'>
             <h1 className='mb-6'><Text localeParent='Company Settings' localeKey='Company Details' /></h1>
             {!user?.company_id && <p className='mb-7 font-medium'><Text localeParent='Company Settings' localeKey='companyDetailsFormDescription' /></p>}
             <CompanyDetailsForm onSubmit={handleCompanyFormSubmit} currentCompanyData={company} />

@@ -82,7 +82,7 @@ const TeamPage = async () => {
     }
 
     return (
-        <div>
+        <div className='max-w-screen-lg mx-auto'>
             <InviteTeamMemberForm onSubmit={handleSendInvite} />
             <TeamTable user={userWithCompany} />
             <InvitedTable user={userWithCompany} />

@@ -38,7 +38,9 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         <div className='dashboard-container'>
             <LeftNav />
             <div className='dashboard-main-container'>
-                <Content />
+                <div className='dashboard-main-inner'>
+                    <Content />
+                </div>
             </div>
         </div>
     )
