@@ -41,7 +41,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
     }
 
     if (isError) {
-        toast.error("Something went wrong, please contact support", { toastId: "add-property-error" });
+        toast.error("Something went wrong, please contact support", { toastId: "update-property-error" });
     }
 
     return (

@@ -3,6 +3,7 @@ import React from 'react'
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Spinner } from "@nextui-org/react";
 
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
+import UpdatePropertyOwnerButton from '../organisms/UpdatePropertyOwnerButton';
 
 const columns = [
     { name: "NAME", uid: "name" },
@@ -46,10 +47,10 @@ const PropertyOwnersTable = ({ companyId, propertyId }: { companyId: string, pro
             case "actions":
                 return (
                     <div className="relative flex items-center justify-center gap-4">
-                        {/* <span className="text-lg cursor-pointer">
-                            <UpdateUserButton user={user} />
-                        </span>
                         <span className="text-lg cursor-pointer">
+                            <UpdatePropertyOwnerButton companyId={companyId} propertyOwner={owner} />
+                        </span>
+                        {/* <span className="text-lg cursor-pointer">
                             <DeleteUserFromCompanyButton user={user} />
                         </span> */}
                     </div>

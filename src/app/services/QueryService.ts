@@ -242,4 +242,32 @@ export class QueryService {
             throw new Error('Failed to add property');
         }
     }
+
+    async updatePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null }): Promise<Owner> {
+        try {
+            const formData = new FormData();
+            formData.append("firstName", props.firstName);
+            formData.append("lastName", props.lastName);
+
+            if (props.telephone) {
+                formData.append("telephone", props.telephone);
+            }
+            if (props.email) {
+                formData.append("email", props.email);
+            }
+            if (props.ownershipPercentage) {
+                formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            }
+
+            const res = await fetch(`/api/propertyOwners/${props.companyId}/${props.propertyId}/${props.propertyOwnerId}`, { method: 'PUT', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to update property owner');
+        } catch (error) {
+            throw new Error('Failed to update property owner');
+        }
+    }
 }
