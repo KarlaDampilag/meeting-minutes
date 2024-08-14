@@ -25,12 +25,14 @@ const CompanySettingsPage = async () => {
         }
     }
 
-    // FIXME should check for admin role
     const createOrUpdateCompany = async (formData: FormData, billingSameAsAddress: boolean): Promise<Company> => {
         'use server'
         try {
             if (!user) {
                 throw new Error('Cannot create or update company details, logged in user not found.');
+            }
+            if (user.role_id !== process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) {
+                throw new Error('Unauthorized');
             }
             const name = formData.get('companyName')?.toString() || "";
             const street = formData.get('street')?.toString() || "";

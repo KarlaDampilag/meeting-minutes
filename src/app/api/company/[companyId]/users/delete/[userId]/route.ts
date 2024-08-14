@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest, context: { params: { userId: st
     try {
         const user = await getUser();
 
-        if (!user) {
+        if (!user || user.role_id !== process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) {
             return new Response('Unauthorized', { status: 401 });
         }
 
