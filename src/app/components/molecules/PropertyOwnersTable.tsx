@@ -4,6 +4,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Spinne
 
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
 import UpdatePropertyOwnerButton from '../organisms/UpdatePropertyOwnerButton';
+import DeletePropertyOwnerButton from '../organisms/DeletePropertyOwnerButton';
 
 const columns = [
     { name: "NAME", uid: "name" },
@@ -50,9 +51,9 @@ const PropertyOwnersTable = ({ companyId, propertyId }: { companyId: string, pro
                         <span className="text-lg cursor-pointer">
                             <UpdatePropertyOwnerButton companyId={companyId} propertyOwner={owner} />
                         </span>
-                        {/* <span className="text-lg cursor-pointer">
-                            <DeleteUserFromCompanyButton user={user} />
-                        </span> */}
+                        <span className="text-lg cursor-pointer">
+                            <DeletePropertyOwnerButton companyId={companyId} propertyId={owner.property_id} propertyOwnerId={owner.id} />
+                        </span>
                     </div>
                 );
             default:

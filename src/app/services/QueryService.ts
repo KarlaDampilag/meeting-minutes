@@ -270,4 +270,18 @@ export class QueryService {
             throw new Error('Failed to update property owner');
         }
     }
+
+    async deletePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string }): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/propertyOwners/${props.companyId}/${props.propertyId}/${props.propertyOwnerId}`, { method: 'DELETE' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete property owner');
+        } catch (error) {
+            throw new Error('Failed to delete property owner');
+        }
+    }
 }
