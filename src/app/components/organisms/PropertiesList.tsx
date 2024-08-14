@@ -14,7 +14,7 @@ const PropertiesList = ({ companyId }: { companyId: string }) => {
         }
         return (
             <div className='flex flex-wrap gap-4 items-stretch'>
-                {data?.map(property => <PropertyCard property={property} />)}
+                {data?.map(property => <PropertyCard property={property} key={property.id} />)}
             </div>
         )
     }

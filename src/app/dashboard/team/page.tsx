@@ -14,6 +14,10 @@ import TeamTable from './TeamTable'
 const TeamPage = async () => {
     const userWithCompany = await getUserAndCompany();
 
+    if (!userWithCompany) {
+        return null;
+    }
+
     const createNewInvite = async (email: string, roleId: string): Promise<Invite> => {
         'use server'
         try {

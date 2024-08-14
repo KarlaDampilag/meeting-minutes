@@ -13,7 +13,12 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     const handleAssignPendingRole = async (role: "First Admin" | "Admin" | "Property Manager") => {
         'use server'
-        return await assignPendingRole(user, role);
+        if (user) {
+            return await assignPendingRole(user, role);
+        } else {
+            console.error('Cannot assign pending role, user not found')
+            return false;
+        }
     }
 
     const Content = () => {
