@@ -3,10 +3,17 @@ import { and, eq } from "drizzle-orm";
 
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
+import { getUser } from "@/utils/serverActions";
 
 // GET /api/propertyManagers/:companyId
 export const GET = async (request: NextRequest, context: { params: { companyId: string } }) => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            return new Response('Unauthorized', { status: 401 });
+        }
+
         const result = await db.query.users.findMany({
             where: and(
                 eq(users.company_id, context.params.companyId),

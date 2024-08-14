@@ -38,9 +38,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
         const zipCode = target.zipCode.value;
         const country = target.country.value;
         const propertyManagerId = target.propertyManagerId.value;
-        // toast.info("Please wait...");
         onAddProperty(companyId, propertyName, street, city, zipCode, country, propertyManagerId);
-        // onClose();
     }
 
     return (
@@ -114,7 +112,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     validationBehavior='native'
                                 />
                                 <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' />
-                                <div className='flex justify-end items-center gap-2'>
+                                <div className='flex justify-start items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
                                         Close
                                     </Button>
