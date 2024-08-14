@@ -1,4 +1,4 @@
-import { Invite, PropertyWithManager, User } from "@/db/schema";
+import { Invite, Owner, PropertyWithManager, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -90,6 +90,19 @@ export class QueryService {
             throw new Error('Failed to fetch property');
         } catch (error) {
             throw new Error('Failed to fetch property');
+        }
+    }
+
+    async fetchPropertyOwners(companyId: string, propertyId: string): Promise<Owner[]> {
+        try {
+            const res = await fetch(`/api/propertyOwners/${companyId}/${propertyId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch property owners');
+        } catch (error) {
+            throw new Error('Failed to fetch property owners');
         }
     }
 
@@ -199,6 +212,34 @@ export class QueryService {
             throw new Error('Failed to fetch property');
         } catch (error) {
             throw new Error('Failed to fetch property');
+        }
+    }
+
+    async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null }): Promise<Owner> {
+        try {
+            const formData = new FormData();
+            formData.append("firstName", props.firstName);
+            formData.append("lastName", props.lastName);
+
+            if (props.telephone) {
+                formData.append("telephone", props.telephone);
+            }
+            if (props.email) {
+                formData.append("email", props.email);
+            }
+            if (props.ownershipPercentage) {
+                formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            }
+
+            const res = await fetch(`/api/propertyOwners/${props.companyId}/${props.propertyId}`, { method: 'POST', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to add property');
+        } catch (error) {
+            throw new Error('Failed to add property');
         }
     }
 }

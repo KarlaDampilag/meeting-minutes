@@ -58,7 +58,7 @@ const TeamTable = ({ user }: { user: UserWithCompany | undefined }) => {
                         </TableColumn>
                     )}
                 </TableHeader>
-                <TableBody items={users || []} isLoading={isLoading || isRefetching} loadingContent={<Spinner label="Loading..." />}>
+                <TableBody items={users || []} isLoading={isLoading || isRefetching} loadingContent={<Spinner />}>
                     {(item) => (
                         <TableRow key={item.id}>
                             {(columnKey) => <TableCell>{renderCell(item, columnKey as string)}</TableCell>}

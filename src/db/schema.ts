@@ -42,6 +42,7 @@ export type CompanyAndSubmittingUser = { companies: Company, users: User | null 
 export type Invite = typeof invites.$inferSelect;
 export type Property = typeof properties.$inferSelect;
 export type PropertyWithManager = Property & { propertyManager: User }
+export type Owner = typeof owners.$inferSelect;
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -94,7 +95,8 @@ export const propertiesRelations = relations(properties, ({ one }) => ({
 
 export const owners = pgTable('owners', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
-    name: varchar('name', { length: 256 }).notNull(),
+    first_name: varchar('first_name', { length: 256 }).notNull(),
+    last_name: varchar('last_name', { length: 256 }).notNull(),
     telephone: varchar('telephone', { length: 256 }),
     email: varchar('email', { length: 256 }),
     ownership_share: decimal('ownership_share'),

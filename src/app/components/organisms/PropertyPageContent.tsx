@@ -6,6 +6,7 @@ import { useGetProperty } from '@/rq-hooks/useGetProperty'
 import { PropertyWithManager } from '@/db/schema';
 
 import PropertyBasicInfo from './PropertyBasicInfo';
+import PropertyOwners from './PropertyOwners';
 import UpdatePropertyForm from './UpdatePropertyForm';
 
 const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, companyId: string }) => {
@@ -54,7 +55,9 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                                 <span>Owners</span>
                             </div>
                         }
-                    />
+                    >
+                        <PropertyOwners companyId={companyId} propertyId={(data as PropertyWithManager).id} />
+                    </Tab>
                     <Tab
                         key="videos"
                         title={
