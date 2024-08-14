@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import NextTopLoader from 'nextjs-toploader';
 
 import Providers from "@/providers/Providers";
 import TopNav from "./components/layout/TopNav";
@@ -27,6 +28,7 @@ export default async function RootLayout({
     return (
         <html lang={locale}>
             <body className={inter.className}>
+                <NextTopLoader />
                 <NextIntlClientProvider messages={messages}> {/** Not part of Providers component because getMessages() is server-side */}
                     <Providers>
                         <main>
