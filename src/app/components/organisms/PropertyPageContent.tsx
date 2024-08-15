@@ -5,6 +5,7 @@ import { Tabs, Tab, Spinner } from "@nextui-org/react";
 import { useGetProperty } from '@/rq-hooks/useGetProperty'
 import { PropertyWithManager } from '@/db/schema';
 
+import Suppliers from './Suppliers';
 import PropertyBasicInfo from './PropertyBasicInfo';
 import PropertyOwners from './PropertyOwners';
 import UpdatePropertyForm from './UpdatePropertyForm';
@@ -65,7 +66,9 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                                 <span>Suppliers</span>
                             </div>
                         }
-                    />
+                    >
+                        <Suppliers companyId={companyId} propertyId={(data as PropertyWithManager).id} />
+                    </Tab>
                 </Tabs>
             </div>
         </>

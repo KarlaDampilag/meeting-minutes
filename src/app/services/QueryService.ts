@@ -1,4 +1,4 @@
-import { Invite, Owner, PropertyWithManager, User } from "@/db/schema";
+import { Invite, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -103,6 +103,19 @@ export class QueryService {
             throw new Error('Failed to fetch property owners');
         } catch (error) {
             throw new Error('Failed to fetch property owners');
+        }
+    }
+
+    async fetchSuppliers(companyId: string, propertyId: string): Promise<Supplier[]> {
+        try {
+            const res = await fetch(`/api/suppliers/${companyId}/${propertyId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch suppliers');
+        } catch (error) {
+            throw new Error('Failed to fetch suppliers');
         }
     }
 
@@ -282,6 +295,70 @@ export class QueryService {
             throw new Error('Failed to delete property owner');
         } catch (error) {
             throw new Error('Failed to delete property owner');
+        }
+    }
+
+    async addSupplier(props: { companyId: string, propertyId: string, name: string, service: string, telephone: string | null, email: string | null }): Promise<Supplier> {
+        try {
+            const formData = new FormData();
+            formData.append("name", props.name);
+            formData.append("service", props.service);
+
+            if (props.telephone) {
+                formData.append("telephone", props.telephone);
+            }
+            if (props.email) {
+                formData.append("email", props.email);
+            }
+
+            const res = await fetch(`/api/suppliers/${props.companyId}/${props.propertyId}`, { method: 'POST', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to add supplier');
+        } catch (error) {
+            throw new Error('Failed to add supplier');
+        }
+    }
+
+    async updateSupplier(props: { supplierId: string, companyId: string, propertyId: string, name: string, service: string, telephone: string | null, email: string | null }): Promise<Supplier> {
+        try {
+            const formData = new FormData();
+            formData.append("name", props.name);
+            formData.append("service", props.service);
+
+            if (props.telephone) {
+                formData.append("telephone", props.telephone);
+            }
+            if (props.email) {
+                formData.append("email", props.email);
+            }
+
+            const res = await fetch(`/api/suppliers/${props.companyId}/${props.propertyId}/${props.supplierId}`, { method: 'PUT', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to update supplier');
+        } catch (error) {
+            throw new Error('Failed to update supplier');
+        }
+    }
+
+    async deleteSupplier(props: { supplierId: string, companyId: string, propertyId: string }): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/suppliers/${props.companyId}/${props.propertyId}/${props.supplierId}`, { method: 'DELETE' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete supplier');
+        } catch (error) {
+            throw new Error('Failed to delete supplier');
         }
     }
 }

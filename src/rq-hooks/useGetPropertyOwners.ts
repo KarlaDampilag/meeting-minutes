@@ -19,6 +19,6 @@ export const useGetPropertyOwners = (params: QueryParams) => {
     return useQuery<Owner[], Error>({
         queryKey: QUERY_KEY,
         queryFn: () => getPropertyOwners(params),
-        enabled: !!params.companyId
+        enabled: !!params.companyId && !!params.propertyId
     });
 };
