@@ -23,15 +23,17 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     const Content = () => {
         if (!!user && user.role_id) {
-            if (user.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) {
+            if (user.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) { // admin
                 return children;
-            } else if (user.role_id === process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID) {
-                if (user.company_id) {
+            } else if (user.role_id === process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) { // property manager
+                redirect('/dashboard');
+            } else if (user.role_id === process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID) { // pending first admin
+                if (user.company_id) { // has company in db
                     return <FirstAdminPendingApprovalCard />;
-                } else {
-                    redirect('/dashboard/company-settings');
+                } else { // no company yet (children will be company-settings page content)
+                    return children;
                 }
-            } else if (user.role_id === process.env.PENDING_NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.PENDING_NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) {
+            } else if (user.role_id === process.env.PENDING_NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.PENDING_NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) { // pending admin & pending property manager 
                 return <PendingApprovalCard />;
             }
         }

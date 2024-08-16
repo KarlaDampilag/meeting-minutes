@@ -1,13 +1,18 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify';
 import { Button, Checkbox, Input } from '@nextui-org/react'
 
-import { Company } from '@/db/schema'
+import { UserWithCompany } from '@/db/schema'
 import Text from '@/app/components/atoms/Text';
 
-const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formData: FormData, billingSameAsAddress: boolean) => Promise<void>, currentCompanyData: Company | undefined | null }) => {
+interface Props {
+    userWithCompany: UserWithCompany;
+    onSubmit: (userWithCompany: UserWithCompany, formData: FormData, billingSameAsAddress: boolean) => Promise<boolean>;
+}
+
+const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = React.useState(false);
     const [billingSameAsAddress, setBillingSameAsAddress] = React.useState(true);
@@ -17,11 +22,15 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
             setIsLoading(true);
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
-            await onSubmit(formData, billingSameAsAddress);
-            toast.success("Updated successfully");
-            setTimeout(() => {
-                router.refresh();
-            }, 2000);
+            const success = await onSubmit(userWithCompany, formData, billingSameAsAddress);
+            if (success) {
+                toast.success("Updated successfully");
+                setTimeout(() => {
+                    router.refresh();
+                }, 2000);
+            } else {
+                toast.error("Something went wrong, please contact support")
+            }
         } catch (error) {
             console.error('Failed to create or update company details');
             console.error(error);
@@ -43,7 +52,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.name}
+                defaultValue={userWithCompany?.company?.name}
             />
 
             <Input
@@ -57,7 +66,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.street}
+                defaultValue={userWithCompany?.company?.address?.street}
             />
             <Input
                 variant='bordered'
@@ -70,21 +79,8 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.city}
+                defaultValue={userWithCompany?.company?.address?.city}
             />
-            {/* <Input
-                variant='bordered'
-                label="State"
-                placeholder="Bern"
-                type='text'
-                name='state'
-                isRequired
-                labelPlacement='outside'
-                radius='sm'
-                classNames={{ inputWrapper: 'border border-gray-300' }}
-                validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.state}
-            /> */}
             <Input
                 variant='bordered'
                 label={<Text localeParent='Company Settings' localeKey='Zip code' />}
@@ -96,7 +92,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.zipCode}
+                defaultValue={userWithCompany?.company?.address?.zipCode}
             />
             <Input
                 variant='bordered'
@@ -109,7 +105,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.country}
+                defaultValue={userWithCompany?.company?.address?.country}
             />
             <Input
                 variant='bordered'
@@ -122,7 +118,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 validationBehavior='native'
-                defaultValue={currentCompanyData?.address?.telephone}
+                defaultValue={userWithCompany?.company?.address?.telephone}
             />
 
             <hr className='my-3' />
@@ -142,7 +138,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         labelPlacement='outside'
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.street}
+                        defaultValue={userWithCompany?.company?.billing_address?.street}
                     />
                     <Input
                         variant='bordered'
@@ -154,20 +150,8 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         labelPlacement='outside'
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.city}
+                        defaultValue={userWithCompany?.company?.billing_address?.city}
                     />
-                    {/* <Input
-                        variant='bordered'
-                        label="State"
-                        placeholder="Bern"
-                        type='text'
-                        name='billing-state'
-                        isRequired
-                        labelPlacement='outside'
-                        radius='sm'
-                        classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.state}
-                    /> */}
                     <Input
                         variant='bordered'
                         label={<Text localeParent='Company Settings' localeKey='Zip code' />}
@@ -178,7 +162,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         labelPlacement='outside'
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.zipCode}
+                        defaultValue={userWithCompany?.company?.billing_address?.zipCode}
                     />
                     <Input
                         variant='bordered'
@@ -190,7 +174,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         labelPlacement='outside'
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.country}
+                        defaultValue={userWithCompany?.company?.billing_address?.country}
                     />
                     <Input
                         variant='bordered'
@@ -202,7 +186,7 @@ const CompanyDetailsForm = ({ onSubmit, currentCompanyData }: { onSubmit: (formD
                         labelPlacement='outside'
                         radius='sm'
                         classNames={{ inputWrapper: 'border border-gray-300' }}
-                        defaultValue={currentCompanyData?.billing_address?.telephone}
+                        defaultValue={userWithCompany?.company?.billing_address?.telephone}
                     />
                 </>
             )}
