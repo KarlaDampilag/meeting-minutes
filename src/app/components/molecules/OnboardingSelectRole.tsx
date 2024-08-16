@@ -105,7 +105,7 @@ const HasCompanyAccountSelect = ({ assignPendingRole }: { assignPendingRole: (ro
             try {
                 const success = await assignPendingRole("First Admin");
                 if (success) {
-                    router.push('/dashboard/company-settings');
+                    window.location.href = '/dashboard/company-settings'
                 } else {
                     throw new Error('Failed to assign pending first admin role')
                 }
