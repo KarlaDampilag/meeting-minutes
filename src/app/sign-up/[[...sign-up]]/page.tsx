@@ -5,8 +5,11 @@ import { useSignUp } from "@clerk/nextjs";
 import SignupForm from "@/app/components/molecules/SignupForm";
 import VerifyForm from "@/app/components/molecules/VerifyForm";
 import { QueryService } from "@/app/services/QueryService";
+import { Spinner } from "@nextui-org/react";
 
 const Signup = () => {
+    const [isLoadingUserFromInvite, setIsLoadingUserFromInvite] = React.useState(false);
+
     const { isLoaded, signUp, setActive } = useSignUp();
     const [clerkError, setClerkError] = useState("");
     const router = useRouter();
@@ -20,10 +23,12 @@ const Signup = () => {
     React.useEffect(() => {
         const getUserByInviteId = async () => {
             if (inviteId) {
+                setIsLoadingUserFromInvite(true);
                 const user = await queryService.fetchUserByInviteId(inviteId);
                 if (!!user) {
                     router.push(`/sign-in?id=${inviteId}`);
                 }
+                setIsLoadingUserFromInvite(false);
             }
         }
         getUserByInviteId();
@@ -89,6 +94,10 @@ const Signup = () => {
             console.log("Error:", JSON.stringify(err, null, 2));
         }
     };
+
+    if (isLoadingUserFromInvite) {
+        return <div className="w-full h-full flex items-center justify-center"><Spinner /></div>
+    }
 
     return (
         <>

@@ -56,7 +56,7 @@ export class QueryService {
 
     async fetchUserByInviteId(id: string): Promise<User | null> {
         try {
-            const res = await fetch(`/api/invites/byUserId/${id}`);
+            const res = await fetch(`/api/invites/userById/${id}`);
             if (res.status === 200) {
                 const data = await res.json()
                 return data;

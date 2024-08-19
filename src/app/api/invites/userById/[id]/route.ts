@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db/db";
 import { invites, users } from "@/db/schema";
 
-// GET /api/invites/byUserId/:id
+// GET /api/invites/userById/:id
 export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
     try {
 
