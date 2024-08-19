@@ -10,7 +10,6 @@ import Text from '@/app/components/atoms/Text';
 import { createOrUpdateCompany, getUserAndCompany } from '@/utils/serverActions';
 
 const CompanySettingsPage = async () => {
-
     const user = await getUserAndCompany();
 
     if (!user) {

@@ -3,9 +3,12 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify';
 import { Button, Checkbox, Input } from '@nextui-org/react'
+import { ImageListType } from 'react-images-uploading';
 
 import { UserWithCompany } from '@/db/schema'
+import ImageInput from '@/app/components/atoms/ImageInput';
 import Text from '@/app/components/atoms/Text';
+import Image from 'next/image';
 
 interface Props {
     userWithCompany: UserWithCompany;
@@ -16,12 +19,18 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = React.useState(false);
     const [billingSameAsAddress, setBillingSameAsAddress] = React.useState(true);
+    const [images, setImages] = React.useState<ImageListType>([]);
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         try {
             setIsLoading(true);
             event.preventDefault();
+
             const formData = new FormData(event.currentTarget);
+            if (!!images[0]?.file) {
+                formData.append("logo", images[0].file as File);
+            }
+
             const success = await onSubmit(userWithCompany, formData, billingSameAsAddress);
             if (success) {
                 toast.success("Updated successfully");
@@ -120,6 +129,13 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
                 validationBehavior='native'
                 defaultValue={userWithCompany?.company?.address?.telephone}
             />
+            <div>
+                <label htmlFor='image' className='block mb-2 text-sm'>Logo</label>
+                <div className='current-logo w-full max-w-16 mb-3'>
+                    {(userWithCompany?.company?.logo && images.length === 0) && <Image src={userWithCompany.company.logo} alt="logo" width={0} height={0} sizes='100vw' className='w-full h-auto object-cover' />}
+                </div>
+                <ImageInput value={images} onChange={setImages} />
+            </div>
 
             <hr className='my-3' />
 

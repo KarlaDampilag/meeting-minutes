@@ -1,8 +1,10 @@
 'use server'
 import { db } from "@/db/db";
 import { companies, Company, User, users, UserWithCompany } from "@/db/schema";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
+
+import cloudinary from "@/config/cloudinary";
 
 export const getUser = async () => {
     const { userId } = auth();
@@ -72,6 +74,25 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
         const zipCode = formData.get('zipCode')?.toString() || "";
         const country = formData.get('country')?.toString() || "";
         const telephone = formData.get('telephone')?.toString() || "";
+        const image = formData.get('logo') as File;
+        let logoUrl = null;
+
+        // upload image to Cloudinary
+        if (image) {
+            const imageBuffer = await image.arrayBuffer();
+            const imageArray = Array.from(new Uint8Array(imageBuffer));
+            const imageData = Buffer.from(imageArray);
+
+            // convert image data to base64
+            const imageBase64 = imageData.toString('base64');
+            const uploadResult = await cloudinary.uploader.upload(
+                `data:image/png;base64,${imageBase64}`,
+                {
+                    folder: 'easy-protokoll'
+                }
+            );
+            logoUrl = await uploadResult.secure_url;
+        }
 
         let billingStreet, billingCity, billingZipCode, billingCountry, billingTelephone;
 
@@ -109,7 +130,8 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                             zipCode: billingZipCode,
                             country: billingCountry,
                             telephone: billingTelephone
-                        }
+                        },
+                        logo: logoUrl
                     })
                     .where(eq(companies.id, userWithCompany.company_id))
                     .returning();
@@ -134,6 +156,7 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                         country: billingCountry,
                         telephone: billingTelephone
                     },
+                    logo: logoUrl,
                     created_by: userWithCompany.id,
                     approved: false
                 }).onConflictDoUpdate({

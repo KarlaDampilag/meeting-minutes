@@ -57,6 +57,7 @@ export const companies = pgTable('companies', {
     created_at: timestamp('created_at').defaultNow(),
     address: json('address').$type<Address>(),
     billing_address: json('billing_address').$type<Address>(),
+    logo: varchar('logo', { length: 256 }),
     created_by: uuid('created_by').unique(),
     approved: boolean('approved'),
     trial_end_date: date('trial_end_date')

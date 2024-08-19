@@ -12,11 +12,14 @@ import { eq } from 'drizzle-orm';
 
 import { NavLink } from '../atoms/NavLink';
 import Text from '../atoms/Text';
+import Image from 'next/image';
 
 const LeftNav = async () => {
 
     let companyApproved = false;
     let isAdmin;
+    let companyLogo = null;
+    let companyName = null;
     const { userId } = auth();
 
     if (userId) {
@@ -26,11 +29,22 @@ const LeftNav = async () => {
         if (userResult?.length > 0 && userResult[0].companies?.approved) {
             companyApproved = true;
             isAdmin = userResult[0].users.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID;
+            companyLogo = userResult[0].companies?.logo;
+            companyName = userResult[0].companies?.name;
         }
     }
 
     return (
         <div className='left-nav'>
+            {companyApproved && (
+                <>
+                <div className='flex items-center justify-start gap-2 mt-2 mb-5 ml-6'>
+                    {!!companyLogo && <div className='max-w-10 w-fit'><Image src={companyLogo} alt="logo" width={0} height={0} sizes='100vw' className='w-full h-auto object-cover' /></div>}
+                    <p className='mb-0 font-medium text-sm text-stone-700'>{companyName}</p>
+                    </div>
+                    <hr className='border-stone-200' />
+                </>
+            )}
             <ul>
                 <li>
                     <NavLink
