@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import SignupForm from "@/app/components/molecules/SignupForm";
@@ -16,6 +16,18 @@ const Signup = () => {
     const queryService = QueryService.getInstance();
     const searchParams = useSearchParams();
     const inviteId = searchParams.get('id');
+
+    React.useEffect(() => {
+        const getUserByInviteId = async () => {
+            if (inviteId) {
+                const user = await queryService.fetchUserByInviteId(inviteId);
+                if (!!user) {
+                    router.push(`/sign-in?id=${inviteId}`);
+                }
+            }
+        }
+        getUserByInviteId();
+    }, [inviteId]);
 
     const signUpWithEmail = async ({
         firstName,

@@ -54,6 +54,21 @@ export class QueryService {
         }
     }
 
+    async fetchUserByInviteId(id: string): Promise<User | null> {
+        try {
+            const res = await fetch(`/api/invites/byUserId/${id}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            } else if (res.status === 404) {
+                return null;
+            }
+            throw new Error('Failed to fetch user');
+        } catch (error) {
+            throw new Error('Failed to fetch user');
+        }
+    }
+
     async fetchPropertyManagers(companyId: string): Promise<User[]> {
         try {
             const res = await fetch(`/api/propertyManagers/${companyId}`);
