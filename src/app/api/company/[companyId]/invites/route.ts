@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { and, eq, ne } from "drizzle-orm";
+import { and, eq, isNull, ne } from "drizzle-orm";
 
 import { db } from "@/db/db";
 import { getUser } from "@/utils/serverActions";
@@ -18,7 +18,7 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
             with: { role: true },
             where: and(
                 eq(invites.company_id, context.params.companyId),
-                ne(invites.accepted, true)
+                isNull(invites.accepted)
             )
         });
 
