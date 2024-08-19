@@ -23,10 +23,8 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
     const Content = () => {
         if (!!user && user.role_id) {
-            if (user.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID) { // admin
+            if (user.role_id === process.env.NEXT_PUBLIC_ADMIN_ROLE_ID || user.role_id === process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) { // admin or property manager
                 return children;
-            } else if (user.role_id === process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID) { // property manager
-                redirect('/dashboard');
             } else if (user.role_id === process.env.PENDING_FIRST_NEXT_PUBLIC_ADMIN_ROLE_ID) { // pending first admin
                 if (user.company_id) { // has company in db
                     return <FirstAdminPendingApprovalCard />;
