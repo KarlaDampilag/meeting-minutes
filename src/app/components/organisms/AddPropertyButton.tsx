@@ -13,7 +13,7 @@ const AddPropertyButton = ({ user }: { user: User }) => {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
     const { mutate: addProperty, isSuccess, isPending, isError, reset } = useAddProperty();
-    const { refetch } = useGetProperties({ companyId: user.company_id });
+    const { refetch } = useGetProperties({ companyId: user.company_id, propertyManagerId: 'all' });
 
     const handleAddProperty = (companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string) => {
         addProperty({ companyId, propertyName, street, city, zipCode, country, propertyManagerId });
