@@ -1,20 +1,19 @@
 import React from 'react'
 
-import { getUser } from '@/utils/serverActions'
-import AddPropertyButton from '@/app/components/organisms/AddPropertyButton';
-import PropertiesList from '@/app/components/organisms/PropertiesList';
+import { getUserAndCompany } from '@/utils/serverActions'
+
+import PropertiesListWithActions from '@/app/components/organisms/PropertiesListWithActions';
 
 const PropertiesPage = async () => {
-    const userWithCompany = await getUser();
+    const user = await getUserAndCompany();
 
-    if (!userWithCompany || !userWithCompany.company_id) {
+    if (!user || !user.company_id) {
         return null;
     }
 
     return (
-        <div className='flex flex-col gap-7 max-w-screen-xl mx-auto'>
-            <AddPropertyButton user={userWithCompany} />
-            <PropertiesList companyId={userWithCompany.company_id} />
+        <div className='max-w-screen-xl mx-auto'>
+            <PropertiesListWithActions userWithCompany={user} />
         </div>
     )
 }

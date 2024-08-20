@@ -95,6 +95,19 @@ export class QueryService {
         }
     }
 
+    async fetchPropertiesByPropertyManager(propertyManagerId: string): Promise<PropertyWithManager[]> {
+        try {
+            const res = await fetch(`/api/propertiesByPropertyManager/${propertyManagerId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch properties');
+        } catch (error) {
+            throw new Error('Failed to fetch properties');
+        }
+    }
+
     async fetchProperty(companyId: string, propertyId: string): Promise<PropertyWithManager> {
         try {
             const res = await fetch(`/api/properties/${companyId}/${propertyId}`);

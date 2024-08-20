@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { db } from "@/db/db";
 import { properties } from "@/db/schema";
@@ -10,12 +10,15 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
     try {
         const user = await getUser();
 
-        if (!user) {
+        if (!user || !user.company_id) {
             return new Response('Unauthorized', { status: 401 });
         }
         
         const result = await db.query.properties.findMany({
-            where: eq(properties.company_id, context.params.companyId),
+            where: and(
+                eq(properties.company_id, context.params.companyId),
+                eq(properties.company_id, user.company_id)
+            ),
             with: {
                 propertyManager: true
             }

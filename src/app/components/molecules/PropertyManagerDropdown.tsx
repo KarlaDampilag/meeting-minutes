@@ -13,10 +13,14 @@ interface Props {
     className: string;
     useAriaLabel?: boolean;
     autoFocus?: boolean;
+    startContent?: JSX.Element;
+    customPlaceholder?: string | JSX.Element;
+    allowAll?: boolean;
 }
 
-const PropertyManagerDropdown = ({ companyId, selectedUserId, onChange, labelPlacement, className, useAriaLabel, autoFocus }: Props) => {
+const PropertyManagerDropdown = ({ companyId, selectedUserId, onChange, labelPlacement, className, useAriaLabel, autoFocus, startContent, customPlaceholder, allowAll }: Props) => {
     const { data: propertyManagers, isLoading } = useGetPropertyManagers({ companyId });
+    const items = allowAll ? [{ id: 'all', first_name: '', last_name: 'All' }].concat(propertyManagers || []) : propertyManagers || [];
 
     const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         onChange(e.target.value);
@@ -37,15 +41,25 @@ const PropertyManagerDropdown = ({ companyId, selectedUserId, onChange, labelPla
             value={selectedUserId}
             defaultSelectedKeys={selectedUserId ? [selectedUserId] : []}
             onChange={handleOnChange}
-            placeholder='Select property manager'
+            placeholder={customPlaceholder || 'Select property manager'}
             autoFocus={autoFocus}
             isLoading={isLoading}
+            startContent={startContent}
         >
-            {(propertyManagers || []).map((user) => (
-                <SelectItem key={user.id as string} value={user.id} >
-                    {`${user.last_name}, ${user.first_name}`}
-                </SelectItem>
-            ))}
+            {items.map((user) => {
+                if (user.id === 'all') {
+                    return (
+                        <SelectItem key={user.id as string} value={user.id} >
+                            {user.last_name}
+                        </SelectItem>
+                    )
+                }
+                return (
+                    <SelectItem key={user.id as string} value={user.id} >
+                        {`${user.last_name}, ${user.first_name}`}
+                    </SelectItem>
+                )
+            })}
         </Select>
     )
 }
