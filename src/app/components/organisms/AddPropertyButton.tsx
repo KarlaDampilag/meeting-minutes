@@ -13,7 +13,7 @@ const AddPropertyButton = ({ user }: { user: User }) => {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
     const { mutate: addProperty, isSuccess, isPending, isError, reset } = useAddProperty();
-    const { refetch } = useGetProperties({ companyId: user.company_id, propertyManagerId: 'all' });
+    const { refetch } = useGetProperties({ companyId: user.company_id, propertyManagerId: 'all', searchTerm: null });
 
     const handleAddProperty = (companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string) => {
         addProperty({ companyId, propertyName, street, city, zipCode, country, propertyManagerId });
@@ -31,10 +31,10 @@ const AddPropertyButton = ({ user }: { user: User }) => {
     }
 
     return (
-        <>
+        <div className='mb-3'>
             <Button onPress={onOpen} color="primary" variant='bordered' startContent={<IoMdAdd size={18} className='min-w-fit' />} radius='sm' className='max-w-fit text-medium'>Add Property</Button>
             <AddCompanyModal companyId={user.company_id as string} isPending={isPending} isOpen={isOpen} onAddProperty={handleAddProperty} onClose={onClose} onOpenChange={onOpenChange} />
-        </>
+        </div>
     )
 }
 

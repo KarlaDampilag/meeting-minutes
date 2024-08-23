@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, date, decimal, json, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, decimal, jsonb, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -55,8 +55,8 @@ export const companies = pgTable('companies', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
     name: varchar('name', { length: 256 }).notNull(),
     created_at: timestamp('created_at').defaultNow(),
-    address: json('address').$type<Address>(),
-    billing_address: json('billing_address').$type<Address>(),
+    address: jsonb('address').$type<Address>(),
+    billing_address: jsonb('billing_address').$type<Address>(),
     logo: varchar('logo', { length: 256 }),
     created_by: uuid('created_by').unique(),
     approved: boolean('approved'),
@@ -84,7 +84,7 @@ export const properties = pgTable('properties', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
     company_id: uuid('company_id').references(() => companies.id).notNull(),
     name: varchar('name', { length: 256 }).notNull(),
-    address: json('address').$type<Address>(),
+    address: jsonb('address').$type<Address>(),
     property_manager_id: uuid('property_manager_id').references(() => users.id).notNull(),
 });
 

@@ -82,9 +82,16 @@ export class QueryService {
         }
     }
 
-    async fetchProperties(companyId: string): Promise<PropertyWithManager[]> {
+    async fetchProperties(companyId: string, searchTerm?: string | null): Promise<PropertyWithManager[]> {
         try {
-            const res = await fetch(`/api/properties/${companyId}`);
+            let res;
+
+            if (!!searchTerm) {
+                res = await fetch(`/api/properties/${companyId}?searchTerm=${searchTerm}`);
+            } else {
+                res = await fetch(`/api/properties/${companyId}`);
+            }
+
             if (res.status === 200) {
                 const data = await res.json()
                 return data;
@@ -95,9 +102,14 @@ export class QueryService {
         }
     }
 
-    async fetchPropertiesByPropertyManager(propertyManagerId: string): Promise<PropertyWithManager[]> {
+    async fetchPropertiesByPropertyManager(propertyManagerId: string, searchTerm?: string | null): Promise<PropertyWithManager[]> {
         try {
-            const res = await fetch(`/api/propertiesByPropertyManager/${propertyManagerId}`);
+            let res;
+            if (!!searchTerm) {
+                res = await fetch(`/api/propertiesByPropertyManager/${propertyManagerId}?searchTerm=${searchTerm}`);
+            } else {
+                res = await fetch(`/api/propertiesByPropertyManager/${propertyManagerId}`);
+            }
             if (res.status === 200) {
                 const data = await res.json()
                 return data;
