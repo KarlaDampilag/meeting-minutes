@@ -6,16 +6,16 @@ import { toast } from 'react-toastify';
 interface Props {
     isMutationPending: boolean;
     isOpen: boolean;
-    onDeleteUserFromCompany: () => void;
+    onDelete: () => void;
     onClose: () => void;
     onOpenChange: () => void;
 }
 
-const DeleteUserFromCompanyModal = ({ isMutationPending, isOpen, onDeleteUserFromCompany, onClose, onOpenChange }: Props) => {
+const DeleteInviteModal = ({ isMutationPending, isOpen, onDelete, onClose, onOpenChange }: Props) => {
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         toast.info("Please wait...");
-        onDeleteUserFromCompany();
+        onDelete();
         onClose();
     }
 
@@ -30,10 +30,10 @@ const DeleteUserFromCompanyModal = ({ isMutationPending, isOpen, onDeleteUserFro
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1 pb-1">Delete User</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 pb-1">Delete Invite</ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
                             <form onSubmit={handleFormSubmit} className='flex flex-col gap-5'>
-                                <p className='mb-0'>Are you sure? Deleting a user from your company is irreversible!</p>
+                                <p className='mb-0'>Are you sure? Deleting an invite is irreversible!</p>
                                 <div className='flex justify-end items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
                                         Close
@@ -51,4 +51,4 @@ const DeleteUserFromCompanyModal = ({ isMutationPending, isOpen, onDeleteUserFro
     )
 }
 
-export default DeleteUserFromCompanyModal
+export default DeleteInviteModal

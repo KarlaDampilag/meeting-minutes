@@ -39,6 +39,21 @@ export class QueryService {
         }
     }
 
+    async fetchInviteById(id: string): Promise<Invite | null> {
+        try {
+            const res = await fetch(`/api/invites/byId/${id}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            } else if (res.status === 404) {
+                return null;
+            }
+            throw new Error('Failed to fetch invite');
+        } catch (error) {
+            throw new Error('Failed to fetch invite');
+        }
+    }
+
     async fetchInviteByUserEmail(email: string): Promise<Invite | null> {
         try {
             const res = await fetch(`/api/invites/byEmail/${email}`);
@@ -399,6 +414,20 @@ export class QueryService {
             throw new Error('Failed to delete supplier');
         } catch (error) {
             throw new Error('Failed to delete supplier');
+        }
+    }
+
+    async deleteInvite(inviteId: string): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/invites/byId/${inviteId}`, { method: 'DELETE' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete invite');
+        } catch (error) {
+            throw new Error('Failed to delete invite');
         }
     }
 }

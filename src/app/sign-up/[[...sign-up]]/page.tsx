@@ -24,6 +24,10 @@ const Signup = () => {
         const getUserByInviteId = async () => {
             if (inviteId) {
                 setIsLoadingUserFromInvite(true);
+                const invite = await queryService.fetchInviteById(inviteId);
+                if (!invite) {
+                    router.push('/no-invite')
+                }
                 const user = await queryService.fetchUserByInviteId(inviteId);
                 if (!!user) {
                     router.push(`/sign-in?id=${inviteId}`);

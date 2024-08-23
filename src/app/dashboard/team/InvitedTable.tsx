@@ -7,6 +7,8 @@ import { invitedColumns } from './data';
 import { UserWithCompany } from '@/db/schema';
 import { useGetOpenInvites } from '@/rq-hooks/useGetOpenInvites';
 
+import DeleteInviteButton from '@/app/components/organisms/DeleteInviteButton';
+
 const InvitedTable = ({ user }: { user: UserWithCompany | undefined }) => {
     const { data: openInvites, isLoading, refetch } = useGetOpenInvites({ companyId: user?.company_id });
 
@@ -24,6 +26,14 @@ const InvitedTable = ({ user }: { user: UserWithCompany | undefined }) => {
                 return (
                     <div className="flex flex-col">
                         <p className="text-bold text-sm capitalize">{cellValue?.name}</p>
+                    </div>
+                );
+            case "actions":
+                return (
+                    <div className="relative flex items-center justify-center gap-4">
+                        <span className="text-lg cursor-pointer">
+                            <DeleteInviteButton inviteId={invite.id} />
+                        </span>
                     </div>
                 );
             default:

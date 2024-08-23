@@ -15,12 +15,10 @@ export const GET = async (request: NextRequest, context: { params: { id: string 
         if (!invite) {
             return new Response('Invite does not exist', { status: 401 })
         }
-        console.log(invite)
 
         const user = await db.query.users.findFirst({
             where: eq(users.email, invite.invited_email)
         });
-        console.log(user)
 
         if (user === undefined) {
             return new Response(undefined, { status: 404 });
