@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
@@ -17,7 +17,10 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
         const result = await db.query.users.findMany({
             where: and(
                 eq(users.company_id, context.params.companyId),
-                eq(users.role_id, process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID as string)
+                or(
+                    eq(users.role_id, process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID as string),
+                    eq(users.role_id, process.env.NEXT_PUBLIC_ADMIN_ROLE_ID as string)
+                )
             )
         });
 
