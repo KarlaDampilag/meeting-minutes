@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, date, decimal, jsonb, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, decimal, integer, jsonb, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -86,6 +86,7 @@ export const properties = pgTable('properties', {
     name: varchar('name', { length: 256 }).notNull(),
     address: jsonb('address').$type<Address>(),
     property_manager_id: uuid('property_manager_id').references(() => users.id).notNull(),
+    total_ownership_shares: integer('total_ownership_shares')
 });
 
 export const propertiesRelations = relations(properties, ({ one }) => ({

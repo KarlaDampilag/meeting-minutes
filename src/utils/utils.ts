@@ -11,3 +11,10 @@ export function debounce<T extends (...args: any[]) => void>(func: T, delay: num
         }, delay);
     };
 }
+
+
+export const onKeyDownPreventPeriodInput = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+    if (ev.key === '.' || ev.key === ',' || ev.key === ' ') {
+        ev.preventDefault();
+    }
+}

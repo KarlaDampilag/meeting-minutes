@@ -1,15 +1,18 @@
 'use client'
 import React from 'react'
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, Input, Tooltip } from "@nextui-org/react";
+import { RxQuestionMarkCircled } from "react-icons/rx";
+
 
 import Text from '../atoms/Text';
 import PropertyManagerDropdown from './PropertyManagerDropdown';
+import { onKeyDownPreventPeriodInput } from '@/utils/utils';
 
 interface Props {
     companyId: string;
     isPending: boolean;
     isOpen: boolean;
-    onAddProperty: (companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string) => void;
+    onAddProperty: (companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string, totalOwnershipShares: string | null) => void;
     onClose: () => void;
     onOpenChange: () => void;
 }
@@ -31,6 +34,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
             zipCode: { value: string | null };
             country: { value: string | null };
             propertyManagerId: { value: string };
+            totalOwnershipShares: { value: string | null };
         };
         const propertyName = target.propertyName.value;
         const street = target.street.value;
@@ -38,7 +42,8 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
         const zipCode = target.zipCode.value;
         const country = target.country.value;
         const propertyManagerId = target.propertyManagerId.value;
-        onAddProperty(companyId, propertyName, street, city, zipCode, country, propertyManagerId);
+        const totalOwnershipShares = target.totalOwnershipShares.value;
+        onAddProperty(companyId, propertyName, street, city, zipCode, country, propertyManagerId, totalOwnershipShares);
     }
 
     return (
@@ -112,6 +117,26 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     validationBehavior='native'
                                 />
                                 <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' />
+                                <div className='flex items-center justify-start gap-2'>
+                                    <Input
+                                        variant='bordered'
+                                        label="Total ownership shares"
+                                        placeholder="900"
+                                        type='number'
+                                        name='totalOwnershipShares'
+                                        isRequired
+                                        labelPlacement='outside'
+                                        radius='sm'
+                                        classNames={{ base: 'max-w-56', inputWrapper: 'border border-gray-300' }}
+                                        validationBehavior='native'
+                                        onKeyDown={onKeyDownPreventPeriodInput}
+                                    />
+                                    <Tooltip showArrow={true} content="The total number of ownership parts for this property. This represents the sum of all shares of owners." radius='sm'>
+                                        <div className='flex items-center justify-center mt-6'>
+                                            <RxQuestionMarkCircled className='text-gray-700 cursor-pointer' />
+                                        </div>
+                                    </Tooltip>
+                                </div>
                                 <div className='flex justify-start items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
                                         Close

@@ -27,7 +27,8 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
                     address: properties.address,
                     company_id: properties.company_id,
                     property_manager_id: properties.property_manager_id,
-                    propertyManager: users
+                    propertyManager: users,
+                    total_ownership_shares: properties.total_ownership_shares
                 })
                 .from(properties)
                 .leftJoin(users, eq(properties.property_manager_id, users.id))
@@ -77,6 +78,7 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
         const zipCode = formData.get('zipCode')?.toString() || "";
         const country = formData.get('country')?.toString() || "";
         const telephone = formData.get('telephone')?.toString() || "";
+        const totalOwnershipShares = formData.get('totalOwnershipShares')?.toString() || null;
 
         if (!name || !propertyManagerId) {
             return new Response("Property name or property manager not found", { status: 400 });
@@ -92,7 +94,8 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
                 zipCode: zipCode,
                 country: country,
                 telephone: telephone
-            }
+            },
+            total_ownership_shares: totalOwnershipShares ? parseInt(totalOwnershipShares) : null
         }).returning();
 
         if (!insertResult || insertResult.length === 0) {

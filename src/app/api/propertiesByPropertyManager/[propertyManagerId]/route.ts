@@ -27,7 +27,8 @@ export const GET = async (request: NextRequest, context: { params: { propertyMan
                     address: properties.address,
                     company_id: properties.company_id,
                     property_manager_id: properties.property_manager_id,
-                    propertyManager: users
+                    propertyManager: users,
+                    total_ownership_shares: properties.total_ownership_shares
                 })
                 .from(properties)
                 .leftJoin(users, eq(properties.property_manager_id, users.id))

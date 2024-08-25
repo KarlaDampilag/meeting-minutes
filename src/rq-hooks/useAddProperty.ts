@@ -10,11 +10,12 @@ export type MutationParams = {
     zipCode: string | null;
     country: string | null;
     propertyManagerId: string;
+    totalOwnershipShares: string | null;
 }
 
 const addProperty = async (params: MutationParams) => {
     const queryService = QueryService.getInstance();
-    const data = await queryService.addProperty({ companyId: params.companyId, propertyName: params.propertyName, street: params.street, city: params.city, zipCode: params.zipCode, country: params.country, propertyManagerId: params.propertyManagerId });
+    const data = await queryService.addProperty({ companyId: params.companyId, propertyName: params.propertyName, street: params.street, city: params.city, zipCode: params.zipCode, country: params.country, propertyManagerId: params.propertyManagerId, totalOwnershipShares: params.totalOwnershipShares });
     return data;
 };
 

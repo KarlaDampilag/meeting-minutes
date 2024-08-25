@@ -49,6 +49,7 @@ export const PUT = async (request: NextRequest, context: { params: { companyId: 
         const zipCode = formData.get('zipCode')?.toString() || "";
         const country = formData.get('country')?.toString() || "";
         const telephone = formData.get('telephone')?.toString() || "";
+        const totalOwnershipShares = formData.get('totalOwnershipShares')?.toString() || null;
 
         if (!name || !propertyManagerId) {
             return new Response("Property name or property manager not found", { status: 400 });
@@ -65,7 +66,8 @@ export const PUT = async (request: NextRequest, context: { params: { companyId: 
                     zipCode: zipCode,
                     country: country,
                     telephone: telephone
-                }
+                },
+                total_ownership_shares: totalOwnershipShares ? parseInt(totalOwnershipShares) : null
             })
             .where(
                 and(

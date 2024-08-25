@@ -1,7 +1,8 @@
 
 import React from 'react'
-import { Button, cn, Input } from '@nextui-org/react';
+import { Button, cn, Input, Tooltip } from '@nextui-org/react';
 import { toast } from 'react-toastify';
+import { RxQuestionMarkCircled } from 'react-icons/rx';
 
 import PropertyManagerDropdown from '../molecules/PropertyManagerDropdown';
 import Text from '../atoms/Text';
@@ -9,6 +10,7 @@ import Text from '../atoms/Text';
 import { PropertyWithManager } from '@/db/schema';
 import { useUpdateProperty } from '@/rq-hooks/useUpdateProperty';
 import { useGetProperty } from '@/rq-hooks/useGetProperty';
+import { onKeyDownPreventPeriodInput } from '@/utils/utils';
 
 const UpdatePropertyForm = ({ companyId, property }: { companyId: string, property: PropertyWithManager }) => {
     const { mutate, isPending, isSuccess, isError, reset } = useUpdateProperty({ propertyId: property.id });
@@ -24,6 +26,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
             zipCode: { value: string | null };
             country: { value: string | null };
             propertyManagerId: { value: string };
+            totalOwnershipShares: { value: string | null };
         };
         const propertyName = target.propertyName.value;
         const street = target.street.value;
@@ -31,7 +34,8 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
         const zipCode = target.zipCode.value;
         const country = target.country.value;
         const propertyManagerId = target.propertyManagerId.value;
-        mutate({ companyId, propertyId: property.id, propertyName, street, city, zipCode, country, propertyManagerId });
+        const totalOwnershipShares = target.totalOwnershipShares.value;
+        mutate({ companyId, propertyId: property.id, propertyName, street, city, zipCode, country, propertyManagerId, totalOwnershipShares });
     }
 
     if (isSuccess) {
@@ -108,6 +112,26 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                 defaultValue={property.address?.country}
             />
             <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' />
+            <div className='flex items-center justify-start gap-2'>
+                <Input
+                    variant='bordered'
+                    label="Total ownership shares"
+                    placeholder="900"
+                    type='number'
+                    name='totalOwnershipShares'
+                    isRequired
+                    labelPlacement='outside'
+                    radius='sm'
+                    classNames={{ base: 'max-w-56', inputWrapper: 'border border-gray-300' }}
+                    validationBehavior='native'
+                    onKeyDown={onKeyDownPreventPeriodInput}
+                />
+                <Tooltip showArrow={true} content="The total number of ownership parts for this property. This represents the sum of all shares of owners." radius='sm'>
+                    <div className='flex items-center justify-center mt-6'>
+                        <RxQuestionMarkCircled className='text-gray-700 cursor-pointer' />
+                    </div>
+                </Tooltip>
+            </div>
             <div className='flex justify-start items-center gap-2'>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
                     Update Property

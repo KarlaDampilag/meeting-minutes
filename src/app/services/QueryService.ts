@@ -222,7 +222,7 @@ export class QueryService {
         }
     }
 
-    async addProperty(props: { companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string }): Promise<PropertyWithManager> {
+    async addProperty(props: { companyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string, totalOwnershipShares: string | null }): Promise<PropertyWithManager> {
         try {
             const formData = new FormData();
             formData.append("propertyName", props.propertyName);
@@ -240,6 +240,9 @@ export class QueryService {
                 formData.append("country", props.country);
             }
             formData.append("propertyManagerId", props.propertyManagerId);
+            if (props.totalOwnershipShares) {
+                formData.append("totalOwnershipShares", props.totalOwnershipShares);
+            }
 
             const res = await fetch(`/api/properties/${props.companyId}`, { method: 'POST', body: formData });
 
@@ -253,7 +256,7 @@ export class QueryService {
         }
     }
 
-    async updateProperty(props: { companyId: string, propertyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string }): Promise<PropertyWithManager> {
+    async updateProperty(props: { companyId: string, propertyId: string, propertyName: string, street: string | null, city: string | null, zipCode: string | null, country: string | null, propertyManagerId: string, totalOwnershipShares: string | null }): Promise<PropertyWithManager> {
         try {
             const formData = new FormData();
             formData.append("propertyName", props.propertyName);
@@ -271,6 +274,9 @@ export class QueryService {
                 formData.append("country", props.country);
             }
             formData.append("propertyManagerId", props.propertyManagerId);
+            if (props.totalOwnershipShares) {
+                formData.append("totalOwnershipShares", props.totalOwnershipShares);
+            }
 
             const res = await fetch(`/api/properties/${props.companyId}/${props.propertyId}`, { method: 'PUT', body: formData });
             if (res.status === 200) {
