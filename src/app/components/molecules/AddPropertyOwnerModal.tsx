@@ -10,7 +10,7 @@ interface Props {
     property: Property;
     isPending: boolean;
     isOpen: boolean;
-    onAdd: (companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null) => void;
+    onAdd: (companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownedParts: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null) => void;
     onClose: () => void;
     onOpenChange: () => void;
 }
@@ -24,7 +24,7 @@ const AddPropertyOwnerModal = ({ companyId, property, isPending, isOpen, onAdd, 
             lastName: { value: string };
             telephone: { value: string | null };
             email: { value: string | null };
-            ownershipPercentage: { value: number | null };
+            ownedParts: { value: number | null };
             addressSameAsProperty?: { checked: boolean },
             street: { value: string | null };
             city: { value: string | null };
@@ -35,7 +35,7 @@ const AddPropertyOwnerModal = ({ companyId, property, isPending, isOpen, onAdd, 
         const lastName = target.lastName.value;
         const telephone = target.telephone.value;
         const email = target.email.value;
-        const ownershipPercentage = target.ownershipPercentage.value;
+        const ownedParts = target.ownedParts.value;
         const addressSameAsProperty = target.addressSameAsProperty?.checked;
 
         let street, city, zipCode, country: string | null = null;
@@ -51,7 +51,7 @@ const AddPropertyOwnerModal = ({ companyId, property, isPending, isOpen, onAdd, 
             country = target.country.value;
         }
 
-        onAdd(companyId, property.id, firstName, lastName, telephone, email, ownershipPercentage, street, city, zipCode, country);
+        onAdd(companyId, property.id, firstName, lastName, telephone, email, ownedParts, street, city, zipCode, country);
     }
 
     return (

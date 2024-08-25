@@ -289,7 +289,7 @@ export class QueryService {
         }
     }
 
-    async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
+    async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownedParts: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
         try {
             const formData = new FormData();
             formData.append("firstName", props.firstName);
@@ -301,8 +301,8 @@ export class QueryService {
             if (props.email) {
                 formData.append("email", props.email);
             }
-            if (props.ownershipPercentage) {
-                formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            if (props.ownedParts) {
+                formData.append("ownedParts", props.ownedParts.toString());
             }
             if (props.street) {
                 formData.append("street", props.street);
@@ -329,7 +329,7 @@ export class QueryService {
         }
     }
 
-    async updatePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
+    async updatePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownedParts: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
         try {
             const formData = new FormData();
             formData.append("firstName", props.firstName);
@@ -341,8 +341,8 @@ export class QueryService {
             if (props.email) {
                 formData.append("email", props.email);
             }
-            if (props.ownershipPercentage) {
-                formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            if (props.ownedParts) {
+                formData.append("ownedParts", props.ownedParts.toString());
             }
             if (props.street) {
                 formData.append("street", props.street);

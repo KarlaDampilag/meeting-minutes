@@ -30,7 +30,7 @@ const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, 
             lastName: { value: string };
             telephone: { value: string | null };
             email: { value: string | null };
-            ownershipPercentage: { value: number | null };
+            ownedParts: { value: number | null };
             addressSameAsProperty?: { checked: boolean },
             street: { value: string | null };
             city: { value: string | null };
@@ -41,7 +41,7 @@ const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, 
         const lastName = target.lastName.value;
         const telephone = target.telephone.value;
         const email = target.email.value;
-        const ownershipPercentage = target.ownershipPercentage.value;
+        const ownedParts = target.ownedParts.value;
         const addressSameAsProperty = target.addressSameAsProperty?.checked;
 
         let street, city, zipCode, country: string | null = null;
@@ -57,7 +57,7 @@ const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, 
             country = target.country.value;
         }
 
-        mutate({ companyId, propertyId: propertyOwner.property_id, propertyOwnerId: propertyOwner.id, firstName, lastName, email, telephone, ownershipPercentage, street, city, zipCode, country });
+        mutate({ companyId, propertyId: propertyOwner.property_id, propertyOwnerId: propertyOwner.id, firstName, lastName, email, telephone, ownedParts, street, city, zipCode, country });
     }
 
     if (isSuccess) {

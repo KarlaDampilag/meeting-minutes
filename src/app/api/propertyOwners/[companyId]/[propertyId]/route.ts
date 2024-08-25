@@ -43,7 +43,7 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
         const lastName = formData.get("lastName");
         const telephone = formData.get('telephone')?.toString() || "";
         const email = formData.get('email')?.toString() || "";
-        const ownershipPercentage = formData.get('ownershipPercentage')?.toString() || "";
+        const ownedParts = formData.get('ownedParts')?.toString() || "";
         const street = formData.get('street')?.toString() || "";
         const city = formData.get('city')?.toString() || "";
         const zipCode = formData.get('zipCode')?.toString() || "";
@@ -58,7 +58,7 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
             last_name: lastName.toString(),
             telephone,
             email,
-            ownership_share: ownershipPercentage,
+            ownership_share: ownedParts,
             property_id: context.params.propertyId,
             address: {
                 street: street,

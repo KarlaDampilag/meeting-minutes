@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, cn, Input, Checkbox } from "@nextui-org/react";
 
 import Text from '../atoms/Text';
+import { onKeyDownPreventPeriodInput } from '@/utils/utils';
 
 interface Props {
     onSubmit: React.FormEventHandler<HTMLFormElement>;
@@ -64,17 +65,17 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
             />
             <Input
                 variant='bordered'
-                label="Ownership percentage"
-                placeholder="Enter ownership percentage"
+                label="Owned parts"
+                placeholder="Enter owned parts"
                 type='number'
                 min="1"
                 max="100"
-                name='ownershipPercentage'
+                name="ownedParts"
                 // isRequired
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
-                endContent={'%'}
+                onKeyDown={onKeyDownPreventPeriodInput}
             />
 
             <div>

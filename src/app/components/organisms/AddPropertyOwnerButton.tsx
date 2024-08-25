@@ -15,8 +15,8 @@ const AddPropertyOwnerButton = ({ property }: { property: Property }) => {
     const { mutate: addPropertyOwner, isSuccess, isPending, isError, reset } = useAddPropertyOwner();
     const { refetch } = useGetPropertyOwners({ companyId: property.id, propertyId: property.id });
 
-    const handleAdd = (companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null) => {
-        addPropertyOwner({ companyId, propertyId, firstName, lastName, telephone, email, ownershipPercentage, street, city, zipCode, country });
+    const handleAdd = (companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownedParts: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null) => {
+        addPropertyOwner({ companyId, propertyId, firstName, lastName, telephone, email, ownedParts, street, city, zipCode, country });
     }
 
     if (isSuccess) {

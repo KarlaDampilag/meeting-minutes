@@ -12,7 +12,7 @@ const columns = [
     { name: "EMAIL", uid: "email" },
     { name: "TELEPHONE", uid: "telephone" },
     { name: "ADDRESS", uid: "address" },
-    { name: "OWNERSHIP PERCENTAGE", uid: "ownershipPercentage" },
+    { name: "OWNED PARTS", uid: "ownedParts" },
     { name: "ACTIONS", uid: "actions" },
 ];
 
@@ -47,10 +47,10 @@ const PropertyOwnersTable = ({ property }: { property: Property }) => {
                             {cellValue && <p className="text-bold text-sm">{cellValue.street} {cellValue.city} {cellValue.zipCode} {cellValue.country}</p>}
                         </div>
                     );
-            case "ownershipPercentage":
+            case "ownedParts":
                 return (
                     <div className="flex flex-col">
-                        <p className="text-bold text-sm">{owner.ownership_share}%</p>
+                        <p className="text-bold text-sm">{owner.ownership_share} / {property.total_ownership_shares}</p>
                     </div>
                 );
             case "actions":

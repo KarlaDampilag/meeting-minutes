@@ -3,6 +3,7 @@ import { Button, cn, Input, Checkbox } from "@nextui-org/react";
 
 import Text from '../atoms/Text';
 import { Owner, Property } from '@/db/schema';
+import { onKeyDownPreventPeriodInput } from '@/utils/utils';
 
 interface Props {
     property: Property;
@@ -73,17 +74,17 @@ const UpdatePropertyOwnerForm = ({ property, propertyOwner, onSubmit, isPending,
             />
             <Input
                 variant='bordered'
-                label="Ownership percentage"
-                placeholder="Enter ownership percentage"
+                label="Owned parts"
+                placeholder="Enter owned parts"
                 type='number'
                 min="1"
                 max="100"
-                name='ownershipPercentage'
+                name='ownedParts'
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
-                endContent={'%'}
                 defaultValue={propertyOwner.ownership_share || undefined}
+                onKeyDown={onKeyDownPreventPeriodInput}
             />
 
             <div>

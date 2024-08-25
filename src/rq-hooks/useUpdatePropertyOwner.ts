@@ -10,7 +10,7 @@ export type MutationParams = {
     lastName: string;
     telephone: string | null;
     email: string | null;
-    ownershipPercentage: number | null;
+    ownedParts: number | null;
     street: string | null;
     city: string | null;
     zipCode: string | null;
@@ -27,7 +27,7 @@ const updatePropertyOwner = async (params: MutationParams) => {
         lastName: params.lastName,
         telephone: params.telephone,
         email: params.email,
-        ownershipPercentage: params.ownershipPercentage,
+        ownedParts: params.ownedParts,
         street: params.street,
         city: params.city,
         zipCode: params.zipCode,
