@@ -283,7 +283,7 @@ export class QueryService {
         }
     }
 
-    async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null }): Promise<Owner> {
+    async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
         try {
             const formData = new FormData();
             formData.append("firstName", props.firstName);
@@ -297,6 +297,18 @@ export class QueryService {
             }
             if (props.ownershipPercentage) {
                 formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            }
+            if (props.street) {
+                formData.append("street", props.street);
+            }
+            if (props.city) {
+                formData.append("city", props.city);
+            }
+            if (props.zipCode) {
+                formData.append("zipCode", props.zipCode);
+            }
+            if (props.country) {
+                formData.append("country", props.country);
             }
 
             const res = await fetch(`/api/propertyOwners/${props.companyId}/${props.propertyId}`, { method: 'POST', body: formData });
@@ -305,13 +317,13 @@ export class QueryService {
                 const data = await res.json()
                 return data;
             }
-            throw new Error('Failed to add property');
+            throw new Error('Failed to add property owner');
         } catch (error) {
-            throw new Error('Failed to add property');
+            throw new Error('Failed to add property owner');
         }
     }
 
-    async updatePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null }): Promise<Owner> {
+    async updatePropertyOwner(props: { propertyOwnerId: string, companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownershipPercentage: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
         try {
             const formData = new FormData();
             formData.append("firstName", props.firstName);
@@ -325,6 +337,18 @@ export class QueryService {
             }
             if (props.ownershipPercentage) {
                 formData.append("ownershipPercentage", props.ownershipPercentage.toString());
+            }
+            if (props.street) {
+                formData.append("street", props.street);
+            }
+            if (props.city) {
+                formData.append("city", props.city);
+            }
+            if (props.zipCode) {
+                formData.append("zipCode", props.zipCode);
+            }
+            if (props.country) {
+                formData.append("country", props.country);
             }
 
             const res = await fetch(`/api/propertyOwners/${props.companyId}/${props.propertyId}/${props.propertyOwnerId}`, { method: 'PUT', body: formData });

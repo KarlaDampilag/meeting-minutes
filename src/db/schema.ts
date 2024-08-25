@@ -103,6 +103,7 @@ export const owners = pgTable('owners', {
     email: varchar('email', { length: 256 }),
     ownership_share: decimal('ownership_share'),
     property_id: uuid('property_id').references(() => properties.id).notNull(),
+    address: jsonb('address').$type<Address>(),
 });
 
 export const suppliers = pgTable('suppliers', {

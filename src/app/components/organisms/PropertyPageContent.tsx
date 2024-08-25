@@ -57,7 +57,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                             </div>
                         }
                     >
-                        <PropertyOwners companyId={companyId} propertyId={(data as PropertyWithManager).id} />
+                        <PropertyOwners property={(data as PropertyWithManager)} />
                     </Tab>
                     <Tab
                         key="videos"

@@ -10,11 +10,27 @@ export type MutationParams = {
     telephone: string | null;
     email: string | null;
     ownershipPercentage: number | null;
+    street: string | null;
+    city: string | null;
+    zipCode: string | null;
+    country: string | null;
 }
 
 const addPropertyOwner = async (params: MutationParams) => {
     const queryService = QueryService.getInstance();
-    const data = await queryService.addPropertyOwner({ companyId: params.companyId, propertyId: params.propertyId, firstName: params.firstName, lastName: params.lastName, telephone: params.telephone, email: params.email, ownershipPercentage: params.ownershipPercentage });
+    const data = await queryService.addPropertyOwner({
+        companyId: params.companyId,
+        propertyId: params.propertyId,
+        firstName: params.firstName,
+        lastName: params.lastName,
+        telephone: params.telephone,
+        email: params.email,
+        ownershipPercentage: params.ownershipPercentage,
+        street: params.street,
+        city: params.city,
+        zipCode: params.zipCode,
+        country: params.country
+    });
     return data;
 };
 

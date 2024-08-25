@@ -5,17 +5,19 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Spinne
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
 import UpdatePropertyOwnerButton from '../organisms/UpdatePropertyOwnerButton';
 import DeletePropertyOwnerButton from '../organisms/DeletePropertyOwnerButton';
+import { Property } from '@/db/schema';
 
 const columns = [
     { name: "NAME", uid: "name" },
     { name: "EMAIL", uid: "email" },
     { name: "TELEPHONE", uid: "telephone" },
+    { name: "ADDRESS", uid: "address" },
     { name: "OWNERSHIP PERCENTAGE", uid: "ownershipPercentage" },
     { name: "ACTIONS", uid: "actions" },
 ];
 
-const PropertyOwnersTable = ({ companyId, propertyId }: { companyId: string, propertyId: string }) => {
-    const { data, isLoading, isRefetching } = useGetPropertyOwners({ companyId, propertyId });
+const PropertyOwnersTable = ({ property }: { property: Property }) => {
+    const { data, isLoading, isRefetching } = useGetPropertyOwners({ companyId: property.company_id, propertyId: property.id });
 
     const renderCell = React.useCallback((owner: any, columnKey: string) => { // FIXME change type any
         const cellValue = owner[columnKey];
@@ -39,6 +41,12 @@ const PropertyOwnersTable = ({ companyId, propertyId }: { companyId: string, pro
                         <p className="text-bold text-sm">{cellValue}</p>
                     </div>
                 );
+                case "address":
+                    return (
+                        <div className="flex flex-col">
+                            {cellValue && <p className="text-bold text-sm">{cellValue.street} {cellValue.city} {cellValue.zipCode} {cellValue.country}</p>}
+                        </div>
+                    );
             case "ownershipPercentage":
                 return (
                     <div className="flex flex-col">
@@ -49,10 +57,10 @@ const PropertyOwnersTable = ({ companyId, propertyId }: { companyId: string, pro
                 return (
                     <div className="relative flex items-center justify-center gap-4">
                         <span className="text-lg cursor-pointer">
-                            <UpdatePropertyOwnerButton companyId={companyId} propertyOwner={owner} />
+                            <UpdatePropertyOwnerButton companyId={property.company_id} property={property} propertyOwner={owner} />
                         </span>
                         <span className="text-lg cursor-pointer">
-                            <DeletePropertyOwnerButton companyId={companyId} propertyId={owner.property_id} propertyOwnerId={owner.id} />
+                            <DeletePropertyOwnerButton companyId={property.company_id} propertyId={owner.property_id} propertyOwnerId={owner.id} />
                         </span>
                     </div>
                 );

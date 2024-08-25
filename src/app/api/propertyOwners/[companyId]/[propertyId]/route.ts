@@ -44,6 +44,10 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
         const telephone = formData.get('telephone')?.toString() || "";
         const email = formData.get('email')?.toString() || "";
         const ownershipPercentage = formData.get('ownershipPercentage')?.toString() || "";
+        const street = formData.get('street')?.toString() || "";
+        const city = formData.get('city')?.toString() || "";
+        const zipCode = formData.get('zipCode')?.toString() || "";
+        const country = formData.get('country')?.toString() || "";
 
         if (!firstName || !lastName) {
             return new Response("Property owner name not found", { status: 400 });
@@ -55,7 +59,14 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
             telephone,
             email,
             ownership_share: ownershipPercentage,
-            property_id: context.params.propertyId
+            property_id: context.params.propertyId,
+            address: {
+                street: street,
+                city: city,
+                zipCode: zipCode,
+                country: country,
+                telephone: telephone
+            }
         }).returning();
 
         if (!insertResult || insertResult.length === 0) {

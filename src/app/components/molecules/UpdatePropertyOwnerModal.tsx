@@ -1,23 +1,24 @@
 'use client'
 import React from 'react'
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
 import { toast } from 'react-toastify';
 
 import { useUpdatePropertyOwner } from '@/rq-hooks/useUpdatePropertyOwner';
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
-import { Owner } from '@/db/schema';
+import { Owner, Property } from '@/db/schema';
 
-import Text from '../atoms/Text';
+import UpdatePropertyOwnerForm from './UpdatePropertyOwnerForm';
 
 interface Props {
     companyId: string;
+    property: Property;
     propertyOwner: Owner;
     isOpen: boolean;
     onClose: () => void;
     onOpenChange: () => void;
 }
 
-const UpdatePropertyOwnerModal = ({ companyId, propertyOwner, isOpen, onClose, onOpenChange }: Props) => {
+const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, onClose, onOpenChange }: Props) => {
     const { mutate, isPending, isSuccess, isError, reset } = useUpdatePropertyOwner({ propertyOwnerId: propertyOwner.id });
     const { refetch } = useGetPropertyOwners({ companyId, propertyId: propertyOwner.property_id });
 
@@ -30,13 +31,33 @@ const UpdatePropertyOwnerModal = ({ companyId, propertyOwner, isOpen, onClose, o
             telephone: { value: string | null };
             email: { value: string | null };
             ownershipPercentage: { value: number | null };
+            addressSameAsProperty?: { checked: boolean },
+            street: { value: string | null };
+            city: { value: string | null };
+            zipCode: { value: string | null };
+            country: { value: string | null };
         };
         const firstName = target.firstName.value;
         const lastName = target.lastName.value;
         const telephone = target.telephone.value;
         const email = target.email.value;
         const ownershipPercentage = target.ownershipPercentage.value;
-        mutate({ companyId, propertyId: propertyOwner.property_id, propertyOwnerId: propertyOwner.id, firstName, lastName, email, telephone, ownershipPercentage });
+        const addressSameAsProperty = target.addressSameAsProperty?.checked;
+
+        let street, city, zipCode, country: string | null = null;
+        if (addressSameAsProperty) {
+            street = property.address?.street || null;
+            city = property.address?.city || null;
+            zipCode = property.address?.zipCode || null;
+            country = property.address?.country || null;
+        } else {
+            street = target.street.value;
+            city = target.city.value;
+            zipCode = target.zipCode.value;
+            country = target.country.value;
+        }
+
+        mutate({ companyId, propertyId: propertyOwner.property_id, propertyOwnerId: propertyOwner.id, firstName, lastName, email, telephone, ownershipPercentage, street, city, zipCode, country });
     }
 
     if (isSuccess) {
@@ -63,75 +84,13 @@ const UpdatePropertyOwnerModal = ({ companyId, propertyOwner, isOpen, onClose, o
                     <>
                         <ModalHeader className="flex flex-col gap-1 pb-1">Update Owner</ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
-                            <form onSubmit={handleFormSubmit} className='flex flex-col gap-5'>
-                                <Input
-                                    variant='bordered'
-                                    label={<Text localeParent='User' localeKey='First name' />}
-                                    placeholder="Enter first name"
-                                    type='text'
-                                    name='firstName'
-                                    isRequired
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
-                                    defaultValue={propertyOwner.first_name}
-                                />
-                                <Input
-                                    variant='bordered'
-                                    label={<Text localeParent='User' localeKey='Last name' />}
-                                    placeholder="Enter last name"
-                                    type='text'
-                                    name='lastName'
-                                    isRequired
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
-                                    defaultValue={propertyOwner.last_name}
-                                />
-                                <Input variant='bordered'
-                                    label={<Text localeParent='User' localeKey='Email address' />}
-                                    placeholder="user@company.com"
-                                    type='email'
-                                    name='email'
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
-                                    defaultValue={propertyOwner.email || undefined}
-                                />
-                                <Input
-                                    variant='bordered'
-                                    label={<Text localeParent='Company Settings' localeKey='Telephone number' />}
-                                    placeholder="Enter telephone"
-                                    type='text'
-                                    name='telephone'
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
-                                    defaultValue={propertyOwner.telephone || undefined}
-                                />
-                                <Input
-                                    variant='bordered'
-                                    label="Ownership percentage"
-                                    placeholder="Enter ownership percentage"
-                                    type='number'
-                                    min="1"
-                                    max="100"
-                                    name='ownershipPercentage'
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
-                                    endContent={'%'}
-                                    defaultValue={propertyOwner.ownership_share || undefined}
-                                />
-                                <div className='flex justify-end items-center gap-2'>
-                                    <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                                        Close
-                                    </Button>
-                                    <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                                        Update
-                                    </Button>
-                                </div>
-                            </form>
+                            <UpdatePropertyOwnerForm
+                                property={property}
+                                propertyOwner={propertyOwner}
+                                isPending={isPending}
+                                onSubmit={handleFormSubmit}
+                                onClose={onClose}
+                            />
                         </ModalBody>
                     </>
                 )}
