@@ -2,6 +2,7 @@
 import React from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn } from "@nextui-org/react";
 import { toast } from 'react-toastify';
+import Text from '../atoms/Text';
 
 interface Props {
     isMutationPending: boolean;
@@ -33,13 +34,13 @@ const DeleteUserFromCompanyModal = ({ isMutationPending, isOpen, onDeleteUserFro
                         <ModalHeader className="flex flex-col gap-1 pb-1">Delete User</ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
                             <form onSubmit={handleFormSubmit} className='flex flex-col gap-5'>
-                                <p className='mb-0'>Are you sure? Deleting a user from your company is irreversible!</p>
+                                <p className='mb-0'><Text localeParent="Team" localeKey="deleteUserConfirmation" /></p>
                                 <div className='flex justify-end items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                                        Close
+                                        <Text localeParent="Common" localeKey="Close" />
                                     </Button>
                                     <Button type='submit' color={isMutationPending ? "default" : "danger"} isLoading={isMutationPending} isDisabled={isMutationPending} className={cn({ "cursor-not-allowed": isMutationPending })} radius='sm'>
-                                        Delete
+                                    <Text localeParent="Common" localeKey="Delete" />
                                     </Button>
                                 </div>
                             </form>

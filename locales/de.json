@@ -11,7 +11,12 @@
     "Verification Code": "Bestätigungscode"
   },
   "Common": {
+    "Choose": "Auswählen",
     "Continue": "Weiter",
+    "Close": "Schliessen",
+    "Delete": "Löschen",
+    "Enter email": "Email deines Teammitglieds",
+    "Refresh": "Aktualisieren",
     "Submit": "Senden"
   },
   "Company Settings": {
@@ -38,19 +43,29 @@
     "companyAccountStatusDescription": "Hat deine Firma bereits ein Konto mit",
     "Company Account Exists": "Firmenkonto besteht",
     "Company Account Status": "Status des Firmenkontos",
+    "firstAdminPendingDescription": "Vielen Dank für das Einreichen deiner Firmendetails. Wir werden dich per Email benachrichtigen, sobald wir deine Informationen überprüft und dein Konto freigeschalten haben.",
+    "firstAdminPendingTitle": "Firmendetails erfolgreich zur Verifikation eingereicht",
     "noExistingCompanyAccountDescription": "Neues Firmenkonto erstellen",
     "No Existing Company Account": "Kein bestehendes Firmenkonto",
     "selectYourRoleDescription": "Was ist deine Rolle in der Firma?",
-    "Select Your Role": "Wähle deine Rolle "
+    "Select Your Role": "Wähle deine Rolle ",
+    "waitingForInvitationDescription": "Um Easy Protokoll nutzen zu können, muss dich jemand aus deiner Firma mit einem Admin Konto einladen. Erstelle ein Admin Konto oder bitte den bestehenden Admin deiner Firma, dich einzuladen. Du wirst anschliessend eine Email mit deiner Einladung erhalten.",
+    "waitingForInvitationTitle": "Einladung abwarten"
   },
   "Properties": {
-    "Properties": "Liegenschaften"
+    "Add Property": "Liegenschaft hinzufügen",
+    "Add Property button": "Hinzufügen",
+    "No properties": "Keine Liegenschaften",
+    "Properties": "Liegenschaften",
+    "Property name": "Name Liegenschaft"
   },
   "Roles": {
     "Admin": "Admin",
     "adminDescription": "Firmenkonto einrichten, Team Mitglieder und Liegenschaften verwalten",
     "Property Manager": "Bewirtschafter:In",
-    "propertyManagerDescription": "Liegenschaften verwalten, zu Versammlungen einladen und abhalten"
+    "propertyManagerDescription": "Liegenschaften verwalten, zu Versammlungen einladen und abhalten",
+    "Role": "Rolle",
+    "Select role": "Rolle auswählen"
   },
   "Suppliers": {
     "Suppliers": "Lieferanten"
@@ -59,6 +74,11 @@
     "Tasks": "Aufgaben"
   },
   "Team": {
+    "deleteUserConfirmation": "Bist du sicher? Das Löschen eines Users ist unumkehrbar.",
+    "Invite team members description": "Teammitglieder zu deinem Firmenkonto einladen",
+    "Invite team members title": "Teammitglieder einladen",
+    "Pending Invites": "Ausstehende Einladungen",
+    "Send Invite": "Einladung senden",
     "Team": "Team"
   },
   "User": {

@@ -2,6 +2,8 @@
 import React from 'react'
 import { Select, SelectItem } from '@nextui-org/react'
 
+import Text from '../atoms/Text';
+
 interface Props {
     selectedRoleId: string | undefined;
     onChange: (selectedRoleId: string) => void;
@@ -15,11 +17,11 @@ const RoleDropdown = ({ selectedRoleId, onChange, labelPlacement, className, use
     const roles = [
         {
             id: process.env.NEXT_PUBLIC_ADMIN_ROLE_ID,
-            label: "Admin"
+            label: <Text localeParent='Roles' localeKey='Admin' />
         },
         {
             id: process.env.NEXT_PUBLIC_PROPERTY_MANAGER_ROLE_ID,
-            label: "Property Manager"
+            label: <Text localeParent='Roles' localeKey='Property Manager' />
         }
     ];
 
@@ -29,8 +31,8 @@ const RoleDropdown = ({ selectedRoleId, onChange, labelPlacement, className, use
 
     return (
         <Select
-            aria-label="Role"
-            label={useAriaLabel ? "" : "Role"}
+            aria-label="Rolle"
+            label={useAriaLabel ? "" : <Text localeParent="Roles" localeKey="Role" />}
             name="roleId"
             className={className}
             variant='bordered'
@@ -42,7 +44,7 @@ const RoleDropdown = ({ selectedRoleId, onChange, labelPlacement, className, use
             value={selectedRoleId}
             defaultSelectedKeys={selectedRoleId ? [selectedRoleId] : []}
             onChange={handleOnChange}
-            placeholder='Select role'
+            placeholder='Rolle auswählen'
             autoFocus={autoFocus}
         >
             {roles.map((role) => (

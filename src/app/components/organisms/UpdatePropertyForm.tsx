@@ -52,8 +52,8 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
         <form onSubmit={handleFormSubmit} className='flex flex-col gap-6'>
             <Input
                 variant='bordered'
-                label="Property name"
-                placeholder="Enter property name"
+                label={<Text localeParent='Properties' localeKey='Property name' />}
+                placeholder="XYZ Liegenschaft"
                 type='text'
                 name='propertyName'
                 isRequired
@@ -111,7 +111,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                 validationBehavior='native'
                 defaultValue={property.address?.country}
             />
-            <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' />
+            <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' customPlaceholder={<Text localeParent="Common" localeKey="Choose" />} />
             <div className='flex items-center justify-start gap-2'>
                 <Input
                     variant='bordered'

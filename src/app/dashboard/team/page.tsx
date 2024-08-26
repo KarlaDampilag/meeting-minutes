@@ -52,7 +52,7 @@ const TeamPage = async () => {
         const { error } = await resend.emails.send({
             from: from,
             to: to,
-            subject: `${process.env.NEXT_PUBLIC_APP_NAME}: You've Been Invited`,
+            subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Du wurdest eingeladen`,
             react: UserInviteEmailTemplate({ inviteId, companyName,  }),
         });
 

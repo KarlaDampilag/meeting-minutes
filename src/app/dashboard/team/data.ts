@@ -1,13 +1,13 @@
 const teamColumns = [
     { name: "NAME", uid: "email" },
-    { name: "ROLE", uid: "role" },
-    { name: "ACTIONS", uid: "actions" },
+    { name: "ROLLE", uid: "role" },
+    { name: "AKTION", uid: "actions" },
 ];
 
 const invitedColumns = [
     { name: "EMAIL", uid: "email" },
-    { name: "ROLE", uid: "role" },
-    { name: "ACTIONS", uid: "actions" },
+    { name: "ROLLE", uid: "role" },
+    { name: "AKTION", uid: "actions" },
 ];
 
 export { teamColumns, invitedColumns };

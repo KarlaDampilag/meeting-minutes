@@ -11,7 +11,12 @@
     "Verification Code": "Verification Code"
   },
   "Common": {
+    "Choose": "Choose",
     "Continue": "Continue",
+    "Close": "Close",
+    "Delete": "Delete",
+    "Enter email": "Enter email",
+    "Refresh": "Refresh",
     "Submit": "Submit"
   },
   "Company Settings": {
@@ -38,19 +43,29 @@
     "companyAccountStatusDescription": "Does your company already have an account with",
     "Company Account Exists": "Company Account Exists",
     "Company Account Status": "Company Account Status",
+    "firstAdminPendingDescription": "Thank you for submitting your company information. We will notify you via email once the verification is complete and your account has been approved.",
+    "firstAdminPendingTitle": "Company details submitted for verification",
     "noExistingCompanyAccountDescription": "Create a new company account for verification.",
     "No Existing Company Account": "No Existing Company Account",
     "selectYourRoleDescription": "What's your role within the company?",
-    "Select Your Role": "Select Your Role"
+    "Select Your Role": "Select Your Role",
+    "waitingForInvitationDescription": "To access your company's features, an existing admin must invite you. Please contact your company admin for an invitation. You'll receive an email notification once the invitation is sent.",
+    "waitingForInvitationTitle": "Awaiting Invitation"
   },
   "Properties": {
-    "Properties": "Properties"
+    "Add Property": "Add Property",
+    "Add Property button": "Add Property",
+    "No properties": "No properties",
+    "Properties": "Properties",
+    "Property name": "Property name"
   },
   "Roles": {
     "Admin": "Admin",
     "adminDescription": "Set up the company account, manage team members, and access all the features available to Property Managers.",
     "Property Manager": "Property Manager",
-    "propertyManagerDescription": "Manage property details, schedule meetings, record and document meeting minutes, and manage meeting attachments."
+    "propertyManagerDescription": "Manage property details, schedule meetings, record and document meeting minutes, and manage meeting attachments.",
+    "Role": "Role",
+    "Select role": "Select role"
   },
   "Suppliers": {
     "Suppliers": "Suppliers"
@@ -59,6 +74,11 @@
     "Tasks": "Tasks"
   },
   "Team": {
+    "deleteUserConfirmation": "Are you sure? Deleting a user from your company is irreversible!",
+    "Invite team members description": "Invite users to your company account",
+    "Invite team members title": "Invite team members",
+    "Pending Invites": "Pending Invites",
+    "Send Invite": "Send Invite",
     "Team": "Team"
   },
   "User": {

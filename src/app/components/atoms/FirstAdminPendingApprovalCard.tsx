@@ -1,14 +1,16 @@
 import React from 'react'
-import Card from './Card'
 import { FaCheckCircle } from 'react-icons/fa'
+
+import Card from './Card'
+import Text from './Text'
 
 const FirstAdminPendingApprovalCard = () => {
     return (
         <div className='flex justify-center h-fit w-full'>
-            <Card>
+            <Card className='!max-w-lg'>
                 <FaCheckCircle size={40} className='text-primary mb-6 mx-auto' />
-                <h3 className='text-center mb-6'>Company details submitted for verification</h3>
-                <p className='text-center'>Thank you for submitting your company information. We will notify you via email once the verification is complete and your account has been approved.</p>
+                <h3 className='text-center mb-6'><Text localeParent='Onboarding' localeKey='firstAdminPendingTitle' /></h3>
+                <p className='text-center'><Text localeParent='Onboarding' localeKey='firstAdminPendingDescription' /></p>
             </Card>
         </div>
     )

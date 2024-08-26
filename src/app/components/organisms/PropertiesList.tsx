@@ -6,13 +6,14 @@ import { useGetProperties } from '@/rq-hooks/useGetProperties'
 import { UserWithCompany } from '@/db/schema';
 
 import PropertyCard from '@/app/components/molecules/PropertyCard';
+import Text from '../atoms/Text';
 
 const PropertiesList = ({ userWithCompany, propertyManagerId, searchTerm }: { userWithCompany: UserWithCompany, propertyManagerId: string | undefined, searchTerm: string | undefined }) => {
     const { data, isLoading, isRefetching, isFetched } = useGetProperties({ companyId: userWithCompany.company_id, propertyManagerId, searchTerm });
 
     if (isFetched) {
         if (data?.length === 0) {
-            return <p>No properties</p>
+            return <p><Text localeParent='Properties' localeKey='No properties' /></p>
         }
 
         return (

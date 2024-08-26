@@ -57,13 +57,13 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1 pb-3">Add Property</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 pb-3"><Text localeParent='Properties' localeKey='Add Property' /></ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
                             <form onSubmit={handleFormSubmit} className='flex flex-col gap-6'>
                                 <Input
                                     variant='bordered'
-                                    label="Property name"
-                                    placeholder="Enter property name"
+                                    label={<Text localeParent='Properties' localeKey='Property name' />}
+                                    placeholder="XYZ Liegenschaft"
                                     type='text'
                                     name='propertyName'
                                     isRequired
@@ -116,7 +116,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     classNames={{ inputWrapper: 'border border-gray-300' }}
                                     validationBehavior='native'
                                 />
-                                <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' />
+                                <PropertyManagerDropdown companyId={companyId} selectedUserId={propertyManagerId} onChange={setPropertyManagerId} labelPlacement='outside' className='' customPlaceholder={<Text localeParent="Common" localeKey="Choose" />} />
                                 <div className='flex items-center justify-start gap-2'>
                                     <Input
                                         variant='bordered'
@@ -139,10 +139,10 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                 </div>
                                 <div className='flex justify-start items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                                        Close
+                                        <Text localeParent="Common" localeKey="Close" />
                                     </Button>
                                     <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                                        Add Property
+                                        <Text localeParent="Properties" localeKey="Add Property button" />
                                     </Button>
                                 </div>
                             </form>

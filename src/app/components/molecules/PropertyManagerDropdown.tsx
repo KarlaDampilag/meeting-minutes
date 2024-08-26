@@ -28,7 +28,7 @@ const PropertyManagerDropdown = ({ companyId, selectedUserId, onChange, labelPla
 
     return (
         <Select
-            aria-label="Property Manager"
+            aria-label="Bewirtschafter:In"
             label={useAriaLabel ? "" : <Text localeParent="Roles" localeKey="Property Manager" />}
             name="propertyManagerId"
             className={className}

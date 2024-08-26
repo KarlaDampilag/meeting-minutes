@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import RoleDropdown from './RoleDropdown';
+import Text from '../atoms/Text';
 
 const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: string) => Promise<boolean> }) => {
     const router = useRouter();
@@ -39,14 +40,14 @@ const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: 
 
     return (
         <div className='bg-white py-6 px-8 pb-9 my-5 rounded-lg border-stone-200 border shadow-sm'>
-            <h3 className='mb-0'>Invite team members</h3>
-            <p className='mb-5'>Invite users to your company account</p>
+            <h3 className='mb-0'><Text localeParent='Team' localeKey='Invite team members title' /></h3>
+            <p className='mb-5'><Text localeParent='Team' localeKey='Invite team members description' /></p>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-row items-start gap-4 justify-start'>
                     <Input
                         variant='bordered'
                         aria-label="Email"
-                        placeholder="Enter email"
+                        placeholder="Email deines Teammitglieds"
                         type='email'
                         name='email'
                         isRequired
@@ -60,7 +61,9 @@ const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: 
                         onValueChange={setEmail}
                     />
                     <RoleDropdown selectedRoleId={roleId} onChange={setRoleId} labelPlacement='inside' className='max-w-44' useAriaLabel />
-                    <Button color={isLoading || !email || !roleId ? 'default' : 'primary'} type='submit' size='sm' className={cn('h-10 text-sm px-4', { 'cursor-not-allowed': isLoading || !email || !roleId })} radius='sm' isLoading={isLoading} isDisabled={isLoading || !email || !roleId}>Send Invite</Button>
+                    <Button color={isLoading || !email || !roleId ? 'default' : 'primary'} type='submit' size='sm' className={cn('h-10 text-sm px-4', { 'cursor-not-allowed': isLoading || !email || !roleId })} radius='sm' isLoading={isLoading} isDisabled={isLoading || !email || !roleId}>
+                        <Text localeParent='Team' localeKey='Send Invite' />
+                    </Button>
                 </div> 
             </form>
         </div>

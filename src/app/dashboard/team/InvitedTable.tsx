@@ -8,6 +8,7 @@ import { UserWithCompany } from '@/db/schema';
 import { useGetOpenInvites } from '@/rq-hooks/useGetOpenInvites';
 
 import DeleteInviteButton from '@/app/components/organisms/DeleteInviteButton';
+import Text from '@/app/components/atoms/Text';
 
 const InvitedTable = ({ user }: { user: UserWithCompany | undefined }) => {
     const { data: openInvites, isLoading, refetch } = useGetOpenInvites({ companyId: user?.company_id });
@@ -43,7 +44,7 @@ const InvitedTable = ({ user }: { user: UserWithCompany | undefined }) => {
 
     return (
         <div className='mt-10'>
-            <h3>Pending Invites</h3>
+            <h3><Text localeParent='Team' localeKey='Pending Invites' /></h3>
             <Button
                 color='primary'
                 variant='bordered'
@@ -53,7 +54,7 @@ const InvitedTable = ({ user }: { user: UserWithCompany | undefined }) => {
                 onClick={() => refetch()}
                 className='text-medium mb-3'
             >
-                Refresh
+                <Text localeParent='Common' localeKey='Refresh' />
             </Button>
             <Table aria-label="Team table" radius='sm'>
                 <TableHeader columns={invitedColumns}>

@@ -45,7 +45,7 @@ const PendingCompaniesPage = async () => {
         const { error } = await resend.emails.send({
             from: from,
             to: to,
-            subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Account Approved`,
+            subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Konto aktiviert`,
             react: CompanyApprovedEmailTemplate({ firstName, companyName }),
         });
 

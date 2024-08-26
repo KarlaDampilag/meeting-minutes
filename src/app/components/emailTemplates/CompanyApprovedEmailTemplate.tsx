@@ -11,16 +11,17 @@ export const CompanyApprovedEmailTemplate: React.FC<Readonly<EmailTemplateProps>
     companyName
 }) => (
     <div>
-        <h1>Congratulations! Your company account on {process.env.NEXT_PUBLIC_APP_NAME} is approved!</h1>
-        <p>Hi {firstName},</p>
-        <p>We&apos;re excited to welcome you as the Admin for your company, {companyName}. You can now proceed with the following steps:</p>
+        <h1>Glückwunsch! Dein Firmenkonto bei {process.env.NEXT_PUBLIC_APP_NAME} wurde aktiviert!</h1>
+        <p>Hallo {firstName}</p>
+        <p>Wir freuen uns dich als Admin deiner {companyName}, auf {process.env.NEXT_PUBLIC_APP_NAME} willkommen zu heissen.</p>
+        <p>Du kannst nun mit den folgenden Schritten fortfahren:</p>
         <ul className='list-disc ml-6'>
-            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/team`}>Invite your team members and assign their roles</Link></li>
-            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/properties`}>Manage and update property details</Link></li>
-            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/company-settings`}>Review and update your company details</Link></li>
+            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/team`}>Teammitglieder einladen und ihnen Rollen zuweisen</Link></li>
+            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/properties`}>Liegenschaften eröffnen und verwalten</Link></li>
+            <li><Link href={`${process.env.NEXT_PUBLIC_APP_URL}/dashboard/company-settings`}>Deine Firmendaten aktualisieren</Link></li>
         </ul>
-        <p>As a new user, your team can enjoy a 7-day free trial to explore all features.</p>
-        <p>We&apos;re thrilled to have you on board and look forward to supporting your success!</p>
-        <p>Best regards,<br />{process.env.NEXT_PUBLIC_APP_NAME} Team</p>
+        <p>Als neuer Benutzer können du und dein Team Easy Protokoll vollumfänglich während 7 Tagen kostenlos nutzen.</p>
+        <p>Wir freuen uns, dass du Easy Protokoll nutzt und unterstützen dich gerne bei der Anwendung.</p>
+        <p>Beste Grüsse,<br />Dein {process.env.NEXT_PUBLIC_APP_NAME} Team</p>
     </div>
 );

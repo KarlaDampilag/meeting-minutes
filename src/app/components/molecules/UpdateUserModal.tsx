@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 import { User } from '@/db/schema';
 import RoleDropdown from './RoleDropdown';
+import Text from '../atoms/Text';
 
 interface Props {
     user: User;
@@ -15,7 +16,7 @@ interface Props {
     onOpenChange: () => void;
 }
 
-const UpdateUserModal = ({ user, isUpdateUserRolePending, isOpen, onUpdateUser, onClose , onOpenChange }: Props) => {
+const UpdateUserModal = ({ user, isUpdateUserRolePending, isOpen, onUpdateUser, onClose, onOpenChange }: Props) => {
     const [roleId, setRoleId] = React.useState<string | undefined>(user.role_id || undefined);
 
     const handleModalClose = () => {
@@ -58,7 +59,7 @@ const UpdateUserModal = ({ user, isUpdateUserRolePending, isOpen, onUpdateUser, 
                                 <RoleDropdown selectedRoleId={roleId} onChange={(value) => setRoleId(value)} labelPlacement='inside' className='max-w-full' autoFocus />
                                 <div className='flex justify-end items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                                        Close
+                                        <Text localeParent="Common" localeKey="Close" />
                                     </Button>
                                     <Button type='submit' color={isUpdateUserRolePending ? "default" : "primary"} isLoading={isUpdateUserRolePending} isDisabled={isUpdateUserRolePending} className={cn({ "cursor-not-allowed": isUpdateUserRolePending })} radius='sm'>
                                         Update
