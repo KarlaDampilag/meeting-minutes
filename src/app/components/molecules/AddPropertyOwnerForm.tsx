@@ -65,7 +65,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
             />
             <Input
                 variant='bordered'
-                label="Owned parts"
+                label={<Text localeParent='Owners' localeKey='Owned parts' />}
                 placeholder="Enter owned parts"
                 type='number'
                 min="1"
@@ -139,10 +139,10 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
 
             <div className='flex justify-start items-center gap-2 mt-2'>
                 <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                    Close
+                <Text localeParent='Common' localeKey='Close' />
                 </Button>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                    Add Owner
+                    <Text localeParent='Owners' localeKey='Add Owner' />
                 </Button>
             </div>
         </form>

@@ -3,6 +3,8 @@ import React from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react";
 
 import AddPropertyOwnerForm from './AddPropertyOwnerForm';
+import Text from '../atoms/Text';
+
 import { Property } from '@/db/schema';
 
 interface Props {
@@ -65,7 +67,7 @@ const AddPropertyOwnerModal = ({ companyId, property, isPending, isOpen, onAdd, 
             <ModalContent >
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1 pb-3">Add Owner</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 pb-3"><Text localeParent='Owners' localeKey='Add Owner' /></ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
                             <AddPropertyOwnerForm
                                 onSubmit={handleFormSubmit}

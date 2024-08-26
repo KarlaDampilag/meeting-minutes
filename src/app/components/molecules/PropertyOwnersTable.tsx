@@ -10,10 +10,10 @@ import { Property } from '@/db/schema';
 const columns = [
     { name: "NAME", uid: "name" },
     { name: "EMAIL", uid: "email" },
-    { name: "TELEPHONE", uid: "telephone" },
-    { name: "ADDRESS", uid: "address" },
-    { name: "OWNED PARTS", uid: "ownedParts" },
-    { name: "ACTIONS", uid: "actions" },
+    { name: "TELEFON", uid: "telephone" },
+    { name: "ADRESSE", uid: "address" },
+    { name: "ANTEILE", uid: "ownedParts" },
+    { name: "AKTIONEN", uid: "actions" },
 ];
 
 const PropertyOwnersTable = ({ property }: { property: Property }) => {

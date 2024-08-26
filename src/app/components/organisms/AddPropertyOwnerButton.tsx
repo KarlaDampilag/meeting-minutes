@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { IoMdAdd } from 'react-icons/io';
 
 import AddPropertyOwnerModal from '../molecules/AddPropertyOwnerModal';
+import Text from '../atoms/Text';
+
 import { useAddPropertyOwner } from '@/rq-hooks/useAddPropertyOwner';
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
 import { Property } from '@/db/schema';
@@ -32,7 +34,7 @@ const AddPropertyOwnerButton = ({ property }: { property: Property }) => {
 
     return (
         <>
-            <Button onPress={onOpen} color="primary" variant='bordered' startContent={<IoMdAdd size={16} className='min-w-fit' />} radius='sm' className='max-w-fit'>Add Owner</Button>
+            <Button onPress={onOpen} color="primary" variant='bordered' startContent={<IoMdAdd size={16} className='min-w-fit' />} radius='sm' className='max-w-fit'><Text localeParent='Owners' localeKey='Add Owner' /></Button>
             <AddPropertyOwnerModal companyId={property.company_id} property={property} isPending={isPending} isOpen={isOpen} onAdd={handleAdd} onClose={onClose} onOpenChange={onOpenChange} />
         </>
     )

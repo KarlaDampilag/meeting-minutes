@@ -134,7 +134,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
             </div>
             <div className='flex justify-start items-center gap-2'>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                    Update Property
+                    <Text localeParent='Properties' localeKey='Update Property' />
                 </Button>
             </div>
         </form>

@@ -52,12 +52,20 @@
     "waitingForInvitationDescription": "Um Easy Protokoll nutzen zu können, muss dich jemand aus deiner Firma mit einem Admin Konto einladen. Erstelle ein Admin Konto oder bitte den bestehenden Admin deiner Firma, dich einzuladen. Du wirst anschliessend eine Email mit deiner Einladung erhalten.",
     "waitingForInvitationTitle": "Einladung abwarten"
   },
+  "Owners": {
+    "Add Owner": "Eigentümer:In hinzufügen",
+    "Owned parts": "Anteile"
+  },
   "Properties": {
     "Add Property": "Liegenschaft hinzufügen",
     "Add Property button": "Hinzufügen",
+    "Basic": "Informationen",
     "No properties": "Keine Liegenschaften",
+    "Owners": "Eigentümer",
     "Properties": "Liegenschaften",
-    "Property name": "Name Liegenschaft"
+    "Property name": "Name Liegenschaft",
+    "Suppliers": "Lieferanten",
+    "Update Property": "Update Liegenschaft"
   },
   "Roles": {
     "Admin": "Admin",

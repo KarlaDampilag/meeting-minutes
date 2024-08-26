@@ -8,6 +8,7 @@ import { PropertyWithManager } from '@/db/schema';
 import Suppliers from './Suppliers';
 import PropertyBasicInfo from './PropertyBasicInfo';
 import PropertyOwners from './PropertyOwners';
+import Text from '../atoms/Text';
 import UpdatePropertyForm from './UpdatePropertyForm';
 
 const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, companyId: string }) => {
@@ -43,7 +44,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                         key="photos"
                         title={
                             <div className="flex items-center space-x-2">
-                                <span>Basic</span>
+                                <span><Text localeParent='Properties' localeKey='Basic' /></span>
                             </div>
                         }
                     >
@@ -53,7 +54,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                         key="music"
                         title={
                             <div className="flex items-center space-x-2">
-                                <span>Owners</span>
+                                <span><Text localeParent='Properties' localeKey='Owners' /></span>
                             </div>
                         }
                     >
@@ -63,7 +64,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                         key="videos"
                         title={
                             <div className="flex items-center space-x-2">
-                                <span>Suppliers</span>
+                                <span><Text localeParent='Properties' localeKey='Suppliers' /></span>
                             </div>
                         }
                     >

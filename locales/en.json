@@ -52,12 +52,20 @@
     "waitingForInvitationDescription": "To access your company's features, an existing admin must invite you. Please contact your company admin for an invitation. You'll receive an email notification once the invitation is sent.",
     "waitingForInvitationTitle": "Awaiting Invitation"
   },
+  "Owners": {
+    "Add Owner": "Add Owner",
+    "Owned parts": "Owned parts"
+  },
   "Properties": {
     "Add Property": "Add Property",
     "Add Property button": "Add Property",
+    "Basic": "Basic",
     "No properties": "No properties",
+    "Owners": "Owners",
     "Properties": "Properties",
-    "Property name": "Property name"
+    "Property name": "Property name",
+    "Suppliers": "Suppliers",
+    "Update Property": "Update Property"
   },
   "Roles": {
     "Admin": "Admin",
