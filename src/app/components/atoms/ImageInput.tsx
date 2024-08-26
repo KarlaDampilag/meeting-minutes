@@ -65,7 +65,7 @@ export default function ImageInput(props: Properties) {
                         <div className='flex flex-col gap-4 mt-4 max-w-16'>
                             {imageList.map((image, index) => (
                                 <div key={index} className='flex items-center gap-1 relative w-96 max-w-full'>
-                                    <Image src={image['data_url']} alt='' width={0} height={0} sizes='100vw' className='w-full h-auto rounded-xl object-cover' />
+                                    <Image src={image['data_url']} alt='' width={0} height={0} sizes='100vw' className='w-full h-auto rounded-md object-cover' />
                                 </div>
                             ))}
                         </div>

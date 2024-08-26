@@ -132,7 +132,7 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
             <div>
                 <label htmlFor='image' className='block mb-2 text-sm'>Logo</label>
                 <div className='current-logo w-full max-w-16 mb-3'>
-                    {(userWithCompany?.company?.logo && images.length === 0) && <Image src={userWithCompany.company.logo} alt="logo" width={0} height={0} sizes='100vw' className='w-full h-auto object-cover' />}
+                    {(userWithCompany?.company?.logo && images.length === 0) && <Image src={userWithCompany.company.logo} alt="logo" width={0} height={0} sizes='100vw' className='w-full h-auto object-cover rounded-md' />}
                 </div>
                 <ImageInput value={images} onChange={setImages} />
             </div>

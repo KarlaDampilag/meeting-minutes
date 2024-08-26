@@ -39,7 +39,7 @@ const LeftNav = async () => {
             {companyApproved && (
                 <>
                 <div className='flex items-center justify-start gap-2 mt-2 mb-5 ml-6'>
-                    {!!companyLogo && <div className='max-w-10 w-10 min-w-fit'><Image src={companyLogo} alt="logo" width={40} height={0} sizes='100vw' className='h-auto' /></div>}
+                    {!!companyLogo && <div className='max-w-10 w-10 min-w-fit'><Image src={companyLogo} alt="logo" width={40} height={0} sizes='100vw' className='h-auto rounded-md' /></div>}
                     <p className='mb-0 font-medium text-sm text-stone-700'>{companyName}</p>
                     </div>
                     <hr className='border-stone-200' />
