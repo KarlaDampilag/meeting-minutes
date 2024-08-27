@@ -47,7 +47,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 placeholder="user@company.com"
                 type='email'
                 name='email'
-                // isRequired
+                isRequired
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}

@@ -56,6 +56,7 @@ const UpdatePropertyOwnerForm = ({ property, propertyOwner, onSubmit, isPending,
                 placeholder="user@company.com"
                 type='email'
                 name='email'
+                isRequired
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}

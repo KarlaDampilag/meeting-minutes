@@ -101,7 +101,7 @@ export const owners = pgTable('owners', {
     first_name: varchar('first_name', { length: 256 }).notNull(),
     last_name: varchar('last_name', { length: 256 }).notNull(),
     telephone: varchar('telephone', { length: 256 }),
-    email: varchar('email', { length: 256 }),
+    email: varchar('email', { length: 256 }).notNull(),
     ownership_share: decimal('ownership_share'),
     property_id: uuid('property_id').references(() => properties.id).notNull(),
     address: jsonb('address').$type<Address>(),
