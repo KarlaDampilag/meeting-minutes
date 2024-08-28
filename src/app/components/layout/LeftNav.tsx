@@ -88,14 +88,14 @@ const LeftNav = async () => {
                         text={<Text localeParent='Tasks' localeKey='Tasks' />}
                     />
                 </li>
-                <li>
+                {/* <li>
                     <NavLink
                         href='/dashboard/suppliers'
                         className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
                         icon={<IoCartOutline size={20} className='min-w-fit' />}
                         text={<Text localeParent='Suppliers' localeKey='Suppliers' />}
                     />
-                </li>
+                </li> */}
                 {isAdmin && (
                     <li>
                         <NavLink
