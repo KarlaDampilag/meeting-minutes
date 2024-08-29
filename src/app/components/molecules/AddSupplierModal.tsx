@@ -63,6 +63,7 @@ const AddSupplierModal = ({ companyId, propertyId, isPending, isOpen, onAdd, onC
                                     labelPlacement='outside'
                                     radius='sm'
                                     classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    validationBehavior='native'
                                 />
                                 <Input variant='bordered'
                                     label={<Text localeParent='User' localeKey='Email address' />}

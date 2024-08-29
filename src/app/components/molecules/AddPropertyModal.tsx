@@ -70,6 +70,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     labelPlacement='outside'
                                     radius='sm'
                                     classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    validationBehavior='native'
                                 />
                                 <Input variant='bordered'
                                     label={<Text localeParent='Company Settings' localeKey='Street' />}
@@ -80,6 +81,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     labelPlacement='outside'
                                     radius='sm'
                                     classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    validationBehavior='native'
                                 />
                                 <Input
                                     variant='bordered'
@@ -91,6 +93,7 @@ const AddPropertyModal = ({ companyId, isPending, isOpen, onAddProperty, onClose
                                     labelPlacement='outside'
                                     radius='sm'
                                     classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    validationBehavior='native'
                                 />
                                 <Input
                                     variant='bordered'

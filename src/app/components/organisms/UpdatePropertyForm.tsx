@@ -61,6 +61,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 defaultValue={property.name}
+                validationBehavior='native'
             />
             <Input variant='bordered'
                 label={<Text localeParent='Company Settings' localeKey='Street' />}
@@ -72,6 +73,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 defaultValue={property.address?.street}
+                validationBehavior='native'
             />
             <Input
                 variant='bordered'
@@ -84,6 +86,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 defaultValue={property.address?.city}
+                validationBehavior='native'
             />
             <Input
                 variant='bordered'
@@ -123,6 +126,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
                     labelPlacement='outside'
                     radius='sm'
                     classNames={{ base: 'max-w-56', inputWrapper: 'border border-gray-300' }}
+                    defaultValue={property.total_ownership_shares?.toString()}
                     validationBehavior='native'
                     onKeyDown={onKeyDownPreventPeriodInput}
                 />

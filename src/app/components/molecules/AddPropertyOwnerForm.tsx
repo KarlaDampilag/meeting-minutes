@@ -30,6 +30,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
             />
             <Input
                 variant='bordered'
@@ -41,6 +42,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
             />
             <Input variant='bordered'
                 label={<Text localeParent='User' localeKey='Email address' />}
@@ -51,6 +53,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
             />
             <Input
                 variant='bordered'
@@ -62,6 +65,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 labelPlacement='outside'
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
             />
             <Input
                 variant='bordered'
@@ -76,6 +80,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 radius='sm'
                 classNames={{ inputWrapper: 'border border-gray-300' }}
                 onKeyDown={onKeyDownPreventPeriodInput}
+                validationBehavior='native'
             />
 
             <div>
