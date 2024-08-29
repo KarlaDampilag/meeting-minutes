@@ -40,7 +40,7 @@ const InviteTeamMemberForm = ({ onSubmit }: { onSubmit: (email: string, roleId: 
 
     return (
         <div className='bg-white py-6 px-8 pb-9 my-5 rounded-lg border-stone-200 border shadow-sm'>
-            <h3 className='mb-0'><Text localeParent='Team' localeKey='Invite team members title' /></h3>
+            <h3 className='mb-2.5'><Text localeParent='Team' localeKey='Invite team members title' /></h3>
             <p className='mb-5'><Text localeParent='Team' localeKey='Invite team members description' /></p>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-row items-start gap-4 justify-start'>
