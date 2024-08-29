@@ -40,6 +40,10 @@ a {
     /* @apply inline-block text-primary border-b border-transparent hover:border-primary transition-colors; */
 }
 
+.datepicker > div {
+    @apply border border-gray-300;
+}
+
 .root-container {
     @apply mx-auto w-full flex flex-col ;
     height: 100%;
@@ -70,6 +74,16 @@ a {
 
         a {
             @apply w-full py-3 px-6 border-none text-black hover:bg-primary-50 flex items-center justify-start gap-2 transition-colors;
+
+            span {
+                @apply flex items-center justify-center overflow-hidden;
+                width: 20px;
+                height: 20px;
+            }
+
+            div {
+                @apply flex items-center justify-center;
+            }
         }
 
         a.active {
