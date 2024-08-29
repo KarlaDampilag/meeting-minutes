@@ -1,8 +1,9 @@
 import React from 'react'
 import { cn } from '@nextui-org/react';
 import { auth } from "@clerk/nextjs/server";
+import { FiUsers } from "react-icons/fi";
 import { HiOutlineBuildingOffice } from 'react-icons/hi2'
-import { HiOutlineViewGrid } from 'react-icons/hi';
+import { HiOutlineUsers, HiOutlineViewGrid } from 'react-icons/hi';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { IoCalendarClearOutline, IoCartOutline, IoPersonOutline, IoSettingsOutline } from 'react-icons/io5'
 
@@ -13,6 +14,7 @@ import { eq } from 'drizzle-orm';
 import { NavLink } from '../atoms/NavLink';
 import Text from '../atoms/Text';
 import Image from 'next/image';
+import { LuUsers } from 'react-icons/lu';
 
 const LeftNav = async () => {
 
@@ -67,7 +69,7 @@ const LeftNav = async () => {
                         <NavLink
                             href='/dashboard/team'
                             className={cn({ 'cursor-not-allowed hover:!bg-transparent !text-gray-400': !companyApproved })}
-                            icon={<IoPersonOutline size={20} className='min-w-fit' />}
+                            icon={<LuUsers size={20} className='min-w-fit' />}
                             text={<Text localeParent='Team' localeKey='Team' />}
                         />
                     </li>

@@ -12,6 +12,6 @@ export const NavLink = ({ href, text, icon, className }: { href: string, text: s
     ].join(' ');
 
     return (
-        <Link href={href} className={classNameFinal}>{icon} {text}</Link>
+        <Link href={href} className={classNameFinal}><span>{icon}</span> <div>{text}</div></Link>
     )
 }
