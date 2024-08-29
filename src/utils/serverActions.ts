@@ -77,21 +77,23 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
         const image = formData.get('logo') as File;
         let logoUrl = null;
 
-        // upload image to Cloudinary
         if (image) {
-            const imageBuffer = await image.arrayBuffer();
-            const imageArray = Array.from(new Uint8Array(imageBuffer));
-            const imageData = Buffer.from(imageArray);
+            // upload image to Cloudinary
+            if (image) {
+                const imageBuffer = await image.arrayBuffer();
+                const imageArray = Array.from(new Uint8Array(imageBuffer));
+                const imageData = Buffer.from(imageArray);
 
-            // convert image data to base64
-            const imageBase64 = imageData.toString('base64');
-            const uploadResult = await cloudinary.uploader.upload(
-                `data:image/png;base64,${imageBase64}`,
-                {
-                    folder: 'easy-protokoll'
-                }
-            );
-            logoUrl = await uploadResult.secure_url;
+                // convert image data to base64
+                const imageBase64 = imageData.toString('base64');
+                const uploadResult = await cloudinary.uploader.upload(
+                    `data:image/png;base64,${imageBase64}`,
+                    {
+                        folder: 'easy-protokoll'
+                    }
+                );
+                logoUrl = await uploadResult.secure_url;
+            }
         }
 
         let billingStreet, billingCity, billingZipCode, billingCountry, billingTelephone;
@@ -114,31 +116,56 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
             throw new Error('Cannot create or update company details, required fields are not defined.');
         } else {
             if (!!userWithCompany.company_id && userWithCompany.company?.approved === true) {
-                const updatedCompanyResult = await db.update(companies)
-                    .set({
-                        name: name,
-                        address: {
-                            street: street,
-                            city: city,
-                            zipCode: zipCode,
-                            country: country,
-                            telephone: telephone
-                        },
-                        billing_address: {
-                            street: billingStreet,
-                            city: billingCity,
-                            zipCode: billingZipCode,
-                            country: billingCountry,
-                            telephone: billingTelephone
-                        },
-                        logo: logoUrl
-                    })
-                    .where(eq(companies.id, userWithCompany.company_id))
-                    .returning();
-                    if (!updatedCompanyResult || updatedCompanyResult.length === 0) {
-                        throw new Error('Cannot update company details, failed at db update operation');
-                    }
-                    return updatedCompanyResult[0];
+                let updatedCompanyResult;
+                if (image) {
+                    updatedCompanyResult = await db.update(companies)
+                        .set({
+                            name: name,
+                            address: {
+                                street: street,
+                                city: city,
+                                zipCode: zipCode,
+                                country: country,
+                                telephone: telephone
+                            },
+                            billing_address: {
+                                street: billingStreet,
+                                city: billingCity,
+                                zipCode: billingZipCode,
+                                country: billingCountry,
+                                telephone: billingTelephone
+                            },
+                            logo: logoUrl
+                        })
+                        .where(eq(companies.id, userWithCompany.company_id))
+                        .returning();
+                } else {
+                    updatedCompanyResult = await db.update(companies)
+                        .set({
+                            name: name,
+                            address: {
+                                street: street,
+                                city: city,
+                                zipCode: zipCode,
+                                country: country,
+                                telephone: telephone
+                            },
+                            billing_address: {
+                                street: billingStreet,
+                                city: billingCity,
+                                zipCode: billingZipCode,
+                                country: billingCountry,
+                                telephone: billingTelephone
+                            }
+                        })
+                        .where(eq(companies.id, userWithCompany.company_id))
+                        .returning();
+                }
+
+                if (!updatedCompanyResult || updatedCompanyResult.length === 0) {
+                    throw new Error('Cannot update company details, failed at db update operation');
+                }
+                return updatedCompanyResult[0];
             } else {
                 const newCompanyResult = await db.insert(companies).values({
                     name: name,

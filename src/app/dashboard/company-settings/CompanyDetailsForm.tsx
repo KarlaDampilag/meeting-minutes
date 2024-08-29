@@ -15,11 +15,18 @@ interface Props {
     onSubmit: (userWithCompany: UserWithCompany, formData: FormData, billingSameAsAddress: boolean) => Promise<boolean>;
 }
 
-const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
+const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props) => {
     const router = useRouter();
+
+    const isAddressSameAsProperty =
+        userWithCompany.company?.address?.street == userWithCompany.company?.billing_address?.street &&
+        userWithCompany.company?.address?.city == userWithCompany.company?.billing_address?.city &&
+        userWithCompany.company?.address?.zipCode == userWithCompany.company?.billing_address?.zipCode &&
+        userWithCompany.company?.address?.country == userWithCompany.company?.billing_address?.country;
+
     const [isLoading, setIsLoading] = React.useState(false);
-    const [billingSameAsAddress, setBillingSameAsAddress] = React.useState(true);
-    const [images, setImages] = React.useState<ImageListType>([]);
+    const [billingSameAsAddress, setBillingSameAsAddress] = React.useState(isAddressSameAsProperty);
+    const [images, setImages] = React.useState<ImageListType>(!!userWithCompany.company?.logo ? [{ dataURL: userWithCompany.company.logo }] : []);
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         try {
@@ -131,9 +138,6 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props ) => {
             />
             <div>
                 <label htmlFor='image' className='block mb-2 text-sm'>Logo</label>
-                <div className='current-logo w-full max-w-16 mb-3'>
-                    {(userWithCompany?.company?.logo && images.length === 0) && <Image src={userWithCompany.company.logo} alt="logo" width={0} height={0} sizes='100vw' className='w-full h-auto object-cover rounded-md' />}
-                </div>
                 <ImageInput value={images} onChange={setImages} />
             </div>
 
