@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, date, decimal, integer, jsonb, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, decimal, integer, interval, jsonb, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -44,6 +44,8 @@ export type Property = typeof properties.$inferSelect;
 export type PropertyWithManager = Property & { propertyManager: User }
 export type Owner = typeof owners.$inferSelect;
 export type Supplier = typeof suppliers.$inferSelect;
+export type Meeting = typeof meetings.$inferSelect;
+export type MeetingWithProperty = Meeting & { property: Property }
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -114,4 +116,22 @@ export const suppliers = pgTable('suppliers', {
     email: varchar('email', { length: 256 }),
     service: decimal('service').notNull(),
     property_id: uuid('property_id').references(() => properties.id).notNull(),
+});
+
+export const meetings = pgTable('meetings', {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    name: varchar('name', { length: 256 }).notNull(),
+    property_id: uuid('property_id').references(() => properties.id).notNull(),
+    date: timestamp('date').notNull(),
+    duration: interval('duration').notNull(),
+    location: varchar('location').notNull(),
+    created_at: timestamp('created_at').defaultNow()
+});
+
+export const agendaItems = pgTable('agendaItems', {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    name: varchar('name', { length: 256 }).notNull(),
+    meeting_id: uuid('property_id').references(() => meetings.id).notNull(),
+    description: text('description'),
+    created_at: timestamp('created_at').defaultNow()
 });
