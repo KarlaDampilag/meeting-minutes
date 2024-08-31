@@ -1,3 +1,5 @@
+import { ValidationError } from '@react-types/shared';
+
 export function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
     let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -17,4 +19,9 @@ export const onKeyDownPreventPeriodInput = (ev: React.KeyboardEvent<HTMLInputEle
     if (ev.key === '.' || ev.key === ',' || ev.key === ' ') {
         ev.preventDefault();
     }
+}
+
+
+export const validateNumberPreventNegative = (value: string): true | ValidationError | null | undefined => {
+    return parseInt(value) >= 0 || "Please enter a valid number";
 }

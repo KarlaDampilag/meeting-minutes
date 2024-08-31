@@ -131,7 +131,7 @@ export const meetings = pgTable('meetings', {
 export const agendaItems = pgTable('agendaItems', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
     name: varchar('name', { length: 256 }).notNull(),
-    meeting_id: uuid('property_id').references(() => meetings.id).notNull(),
+    meeting_id: uuid('meeting_id').references(() => meetings.id).notNull(),
     description: text('description'),
     created_at: timestamp('created_at').defaultNow()
 });

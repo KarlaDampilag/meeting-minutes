@@ -36,6 +36,15 @@
     "Dashboard": "Dashboard"
   },
   "Meetings": {
+    "Agenda Items": {
+      "welcomingDeterminingQuorum": "Begrüssung und Feststellung der Beschlussfähigkeit",
+      "electionOfResponsiblePerson": "Wahl des Protokollführers",
+      "approvalOfLastYearsMinutes": "Genehmigung des letztjährigen Protokolls",
+      "acceptanceOfAnnualFinancialStatements": "Abnahme der Jahresrechnung vom",
+      "renewalFund": "Erneuerungsfonds",
+      "acceptanceOfBudget": "Abname des Budgets vom",
+      "miscellaneous": "Verschiedenes, Mitteilungen"
+    },
     "Meetings": "Versammlungen"
   },
   "Onboarding": {
@@ -63,6 +72,7 @@
     "No properties": "Keine Liegenschaften",
     "Owners": "Eigentümer",
     "Properties": "Liegenschaften",
+    "Property": "Liegenschaft",
     "Property name": "Name Liegenschaft",
     "Suppliers": "Lieferanten",
     "Update Property": "Update Liegenschaft"

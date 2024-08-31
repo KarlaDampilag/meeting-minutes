@@ -1,4 +1,4 @@
-import { Invite, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
+import { Invite, Meeting, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -458,6 +458,34 @@ export class QueryService {
             throw new Error('Failed to delete invite');
         } catch (error) {
             throw new Error('Failed to delete invite');
+        }
+    }
+
+    async addMeeting(props: { propertyId: string, name: string, location: string, date: string, hours: string | null, minutes: string | null, agendaTopics: string[] }): Promise<Meeting> {
+        try {
+            const formData = new FormData();
+            formData.append("propertyId", props.propertyId);
+            formData.append("name", props.name);
+            formData.append("location", props.location);
+            formData.append("date", props.date);
+            formData.append("agendaTopics", props.agendaTopics.join(','));
+
+            if (props.hours) {
+                formData.append("hours", props.hours);
+            }
+            if (props.minutes) {
+                formData.append("minutes", props.minutes);
+            }
+
+            const res = await fetch(`/api/meetings`, { method: 'POST', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to add meeting agenda and its items');
+        } catch (error) {
+            throw new Error('Failed to add meeting agenda and its items');
         }
     }
 }
