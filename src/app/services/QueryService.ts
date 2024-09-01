@@ -1,4 +1,4 @@
-import { Invite, Meeting, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
+import { Invite, Meeting, MeetingWithProperty, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -486,6 +486,44 @@ export class QueryService {
             throw new Error('Failed to add meeting agenda and its items');
         } catch (error) {
             throw new Error('Failed to add meeting agenda and its items');
+        }
+    }
+
+    async fetchMeetings(companyId: string, searchTerm?: string | null): Promise<MeetingWithProperty[]> {
+        try {
+            let res;
+
+            if (!!searchTerm) {
+                res = await fetch(`/api/meetings/${companyId}?searchTerm=${searchTerm}`);
+            } else {
+                res = await fetch(`/api/meetings/${companyId}`);
+            }
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch meetings');
+        } catch (error) {
+            throw new Error('Failed to fetch meetings');
+        }
+    }
+
+    async fetchMeetingsByProperty(propertyId: string, searchTerm?: string | null): Promise<MeetingWithProperty[]> {
+        try {
+            let res;
+            if (!!searchTerm) {
+                res = await fetch(`/api/meetingsByProperty/${propertyId}?searchTerm=${searchTerm}`);
+            } else {
+                res = await fetch(`/api/meetingsByProperty/${propertyId}`);
+            }
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch meetings');
+        } catch (error) {
+            throw new Error('Failed to fetch meetings');
         }
     }
 }

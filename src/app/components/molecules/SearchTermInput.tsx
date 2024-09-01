@@ -3,7 +3,7 @@ import { Input } from '@nextui-org/react';
 
 import { debounce } from '@/utils/utils';
 
-const PropertiesSearchTermInput = ({ value, onChange }: { value: string | undefined; onChange: (value: string) => void }) => {
+const SearchTermInput = ({ value, onChange }: { value: string | undefined; onChange: (value: string) => void }) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const debouncedOnChange = useRef(debounce((newValue: string) => {
@@ -42,4 +42,4 @@ const PropertiesSearchTermInput = ({ value, onChange }: { value: string | undefi
     );
 };
 
-export default PropertiesSearchTermInput;
+export default SearchTermInput;

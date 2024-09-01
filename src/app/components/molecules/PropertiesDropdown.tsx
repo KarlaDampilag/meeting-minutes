@@ -15,11 +15,13 @@ interface Props {
     autoFocus?: boolean;
     startContent?: JSX.Element;
     customPlaceholder?: string | JSX.Element;
+    allowAll?: boolean;
 }
 
-const PropertiesDropdown = ({ companyId, selectedId, onChange, labelPlacement, className, useAriaLabel, autoFocus, startContent, customPlaceholder }: Props) => {
+const PropertiesDropdown = ({ companyId, selectedId, onChange, labelPlacement, className, useAriaLabel, autoFocus, startContent, customPlaceholder, allowAll }: Props) => {
     const { data, isLoading } = useGetProperties({ companyId, propertyManagerId: 'all', searchTerm: undefined });
-    const items = data?.sort((a, b) => a.name.localeCompare(b.name)) || [];
+    const items = allowAll ? [{ id: 'all', name: 'All' }].concat(data || []) : data || [];
+    const sortedItems = items.sort((a, b) => a.name.localeCompare(b.name));
 
     const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         onChange(e.target.value);
@@ -45,7 +47,7 @@ const PropertiesDropdown = ({ companyId, selectedId, onChange, labelPlacement, c
             isLoading={isLoading}
             startContent={startContent}
         >
-            {items.map((property) => {
+            {sortedItems.map((property) => {
                 return (
                     <SelectItem key={property.id as string} value={property.id} >
                         {property.name}
