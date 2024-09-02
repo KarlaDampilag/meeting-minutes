@@ -526,4 +526,17 @@ export class QueryService {
             throw new Error('Failed to fetch meetings');
         }
     }
+
+    async fetchMeeting(companyId: string, meetingId: string): Promise<MeetingWithProperty> {
+        try {
+            const res = await fetch(`/api/meetings/${companyId}/${meetingId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch meeting');
+        } catch (error) {
+            throw new Error('Failed to fetch meeting');
+        }
+    }
 }

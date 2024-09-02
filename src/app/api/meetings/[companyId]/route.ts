@@ -31,7 +31,8 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
                     duration: meetings.duration,
                     company_id: properties.company_id,
                     property: {
-                        name: properties.name
+                        name: properties.name,
+                        address: properties.address
                     }
                 })
                 .from(meetings)
@@ -56,7 +57,8 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
                     duration: meetings.duration,
                     company_id: properties.company_id,
                     property: {
-                        name: properties.name
+                        name: properties.name,
+                        address: properties.address
                     }
                 })
                 .from(meetings)

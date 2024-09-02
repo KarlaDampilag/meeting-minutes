@@ -128,6 +128,13 @@ export const meetings = pgTable('meetings', {
     created_at: timestamp('created_at').defaultNow()
 });
 
+export const meetingsRelations = relations(meetings, ({ one }) => ({
+    property: one(properties, {
+        fields: [meetings.property_id],
+        references: [properties.id]
+    })
+}))
+
 export const agendaItems = pgTable('agendaItems', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
     name: varchar('name', { length: 256 }).notNull(),

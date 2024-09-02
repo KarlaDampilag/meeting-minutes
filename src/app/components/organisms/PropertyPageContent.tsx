@@ -41,7 +41,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                     }}
                 >
                     <Tab
-                        key="photos"
+                        key="basic"
                         title={
                             <div className="flex items-center space-x-2">
                                 <span><Text localeParent='Properties' localeKey='Basic' /></span>
@@ -51,7 +51,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                         <UpdatePropertyForm companyId={companyId} property={data as PropertyWithManager} />
                     </Tab>
                     <Tab
-                        key="music"
+                        key="owners"
                         title={
                             <div className="flex items-center space-x-2">
                                 <span><Text localeParent='Properties' localeKey='Owners' /></span>
@@ -61,7 +61,7 @@ const PropertyPageContent = ({ propertyId, companyId }: { propertyId: string, co
                         <PropertyOwners property={(data as PropertyWithManager)} />
                     </Tab>
                     <Tab
-                        key="videos"
+                        key="suppliers"
                         title={
                             <div className="flex items-center space-x-2">
                                 <span><Text localeParent='Properties' localeKey='Suppliers' /></span>
