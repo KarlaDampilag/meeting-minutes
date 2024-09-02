@@ -43,6 +43,10 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
             minutes: { value: string | null };
             agendaTopics: RadioNodeList;
             propertyId: { value: string };
+            acceptanceOfAnnualFinancialStatementsStartDate: { value: string | null };
+            acceptanceOfAnnualFinancialStatementsEndDate: { value: string | null };
+            acceptanceOfBudgetStartDate: { value: string | null };
+            acceptanceOfBudgetEndDate: { value: string | null };
         };
         const name = target.name.value;
         const location = target.location.value;
@@ -54,7 +58,17 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
         agendaTopics.forEach(agendaTopic => {
             if ((agendaTopic as HTMLInputElement).checked) {
                 const agendaTopicLocalesKey = (agendaTopic as HTMLInputElement).value;
-                checkedAgendaTopics.push(t(agendaTopicLocalesKey));
+                if (agendaTopicLocalesKey === "acceptanceOfAnnualFinancialStatements" && target.acceptanceOfAnnualFinancialStatementsStartDate.value && target.acceptanceOfAnnualFinancialStatementsEndDate.value) {
+                    const startDate = new Date(target.acceptanceOfAnnualFinancialStatementsStartDate.value).toLocaleDateString("de-CH");
+                    const endDate = new Date(target.acceptanceOfAnnualFinancialStatementsEndDate.value).toLocaleDateString("de-CH");
+                    checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
+                } else if (agendaTopicLocalesKey == "acceptanceOfBudget" && target.acceptanceOfBudgetStartDate.value && target.acceptanceOfBudgetEndDate.value) {
+                    const startDate = new Date(target.acceptanceOfBudgetStartDate.value).toLocaleDateString("de-CH");
+                    const endDate = new Date(target.acceptanceOfBudgetEndDate.value).toLocaleDateString("de-CH");
+                    checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
+                } else {
+                    checkedAgendaTopics.push(t(agendaTopicLocalesKey));
+                }
             }
         });
         const propertyId = target.propertyId.value;
@@ -155,7 +169,6 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <PropertiesDropdown companyId={companyId} selectedId={propertyId} onChange={setPropertyId} labelPlacement='outside' className='' />
                                 <hr className='mt-3' />
                                 <div className='flex flex-col gap-1.5'>
-                                    {/* <p className='mb-1 font-medium'>Select Agenda Topics</p> */}
                                     <CheckboxGroup
                                         label="Select Agenda Topics"
                                         classNames={{ label: 'text-stone-700' }}
@@ -177,14 +190,30 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         </div>
                                         <div className='flex items-center gap-1.5 flex-wrap'>
                                             <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfAnnualFinancialStatements' aria-label='Acceptance of the annual financial statements'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfAnnualFinancialStatements' />
+                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfAnnualFinancialStatementsLabel' />
                                             </Checkbox>
                                             <div className='inline-block'>
-                                                <DatePicker variant='bordered' radius='sm' size='sm' classNames={{ base: 'datepicker' }} name='acceptanceOfAnnualFinancialStatementsStartDate' aria-label='Start date for Acceptance of the annual financial statements' />
+                                                <DatePicker
+                                                    variant='bordered'
+                                                    radius='sm'
+                                                    size='sm'
+                                                    classNames={{ base: 'datepicker' }}
+                                                    name='acceptanceOfAnnualFinancialStatementsStartDate'
+                                                    aria-label='Start date for Acceptance of the annual financial statements'
+                                                    showMonthAndYearPickers
+                                                />
                                             </div>
                                             <span>-</span>
                                             <div className='inline-block'>
-                                                <DatePicker variant='bordered' radius='sm' size='sm' classNames={{ base: 'datepicker' }} name='acceptanceOfAnnualFinancialStatementsEndDate' aria-label='End date for Acceptance of the annual financial statements' />
+                                                <DatePicker
+                                                    variant='bordered'
+                                                    radius='sm'
+                                                    size='sm'
+                                                    classNames={{ base: 'datepicker' }}
+                                                    name='acceptanceOfAnnualFinancialStatementsEndDate'
+                                                    aria-label='End date for Acceptance of the annual financial statements'
+                                                    showMonthAndYearPickers
+                                                />
                                             </div>
                                         </div>
                                         <div className='h-8 flex items-center'>
@@ -194,14 +223,30 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         </div>
                                         <div className='flex items-center gap-1.5 flex-wrap'>
                                             <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfBudget' aria-label='Acceptance of the budget'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfBudget' />
+                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfBudgetLabel' />
                                             </Checkbox>
                                             <div className='inline-block'>
-                                                <DatePicker variant='bordered' radius='sm' size='sm' classNames={{ base: 'datepicker' }} name='acceptanceOfBudgetStartDate' aria-label='Start date for Acceptance of the budget' />
+                                                <DatePicker
+                                                    variant='bordered'
+                                                    radius='sm'
+                                                    size='sm'
+                                                    classNames={{ base: 'datepicker' }}
+                                                    name='acceptanceOfBudgetStartDate'
+                                                    aria-label='Start date for Acceptance of the budget'
+                                                    showMonthAndYearPickers
+                                                />
                                             </div>
                                             <span>-</span>
                                             <div className='inline-block'>
-                                                <DatePicker variant='bordered' radius='sm' size='sm' classNames={{ base: 'datepicker' }} name='acceptanceOfBudgetEndDate' aria-label='End date for Acceptance of the budget' />
+                                                <DatePicker
+                                                    variant='bordered'
+                                                    radius='sm'
+                                                    size='sm'
+                                                    classNames={{ base: 'datepicker' }}
+                                                    name='acceptanceOfBudgetEndDate'
+                                                    aria-label='End date for Acceptance of the budget'
+                                                    showMonthAndYearPickers
+                                                />
                                             </div>
                                         </div>
                                         <div className='h-8 flex items-center'>

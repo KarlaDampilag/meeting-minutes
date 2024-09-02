@@ -40,9 +40,11 @@
       "welcomingDeterminingQuorum": "Begrüssung und Feststellung der Beschlussfähigkeit",
       "electionOfResponsiblePerson": "Wahl des Protokollführers",
       "approvalOfLastYearsMinutes": "Genehmigung des letztjährigen Protokolls",
-      "acceptanceOfAnnualFinancialStatements": "Abnahme der Jahresrechnung vom",
+      "acceptanceOfAnnualFinancialStatements": "Abnahme der Jahresrechnung vom {startDate} - {endDate}",
+      "acceptanceOfAnnualFinancialStatementsLabel": "Abnahme der Jahresrechnung vom",
       "renewalFund": "Erneuerungsfonds",
-      "acceptanceOfBudget": "Abname des Budgets vom",
+      "acceptanceOfBudget": "Abname des Budgets vom {startDate} - {endDate}",
+      "acceptanceOfBudgetLabel": "Abname des Budgets vom",
       "miscellaneous": "Verschiedenes, Mitteilungen"
     },
     "Meetings": "Versammlungen"

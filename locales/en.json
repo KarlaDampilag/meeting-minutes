@@ -40,9 +40,11 @@
       "welcomingDeterminingQuorum": "Welcoming and determining the quorum",
       "electionOfResponsiblePerson": "Election of the person responsible for the minutes",
       "approvalOfLastYearsMinutes": "Approval of the last year's minutes",
-      "acceptanceOfAnnualFinancialStatements": "Acceptance of the annual financial statements from",
+      "acceptanceOfAnnualFinancialStatements": "Acceptance of the annual financial statements from {startDate} - {endDate}",
+      "acceptanceOfAnnualFinancialStatementsLabel": "Acceptance of the annual financial statements from",
       "renewalFund": "Renewal fund",
-      "acceptanceOfBudget": "Acceptance of the budget for",
+      "acceptanceOfBudget": "Acceptance of the budget for {startDate} - {endDate}",
+      "acceptanceOfBudgetLabel": "Acceptance of the budget for",
       "miscellaneous": "Miscellaneous"
     },
     "Meetings": "Meetings"
