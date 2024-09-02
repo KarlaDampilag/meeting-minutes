@@ -60,6 +60,8 @@ export const companies = pgTable('companies', {
     address: jsonb('address').$type<Address>(),
     billing_address: jsonb('billing_address').$type<Address>(),
     logo: varchar('logo', { length: 256 }),
+    website: varchar('website', { length: 256 }).notNull(),
+    email: varchar('email', { length: 256 }).notNull(),
     created_by: uuid('created_by').unique(),
     approved: boolean('approved'),
     trial_end_date: date('trial_end_date')

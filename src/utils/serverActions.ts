@@ -74,6 +74,8 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
         const zipCode = formData.get('zipCode')?.toString() || "";
         const country = formData.get('country')?.toString() || "";
         const telephone = formData.get('telephone')?.toString() || "";
+        const website = formData.get('website')?.toString() || "";
+        const email = formData.get('email')?.toString() || "";
         const image = formData.get('logo') as File;
         let logoUrl = null;
 
@@ -135,7 +137,9 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                                 country: billingCountry,
                                 telephone: billingTelephone
                             },
-                            logo: logoUrl
+                            logo: logoUrl,
+                            website,
+                            email
                         })
                         .where(eq(companies.id, userWithCompany.company_id))
                         .returning();
@@ -156,7 +160,9 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                                 zipCode: billingZipCode,
                                 country: billingCountry,
                                 telephone: billingTelephone
-                            }
+                            },
+                            website,
+                            email
                         })
                         .where(eq(companies.id, userWithCompany.company_id))
                         .returning();
@@ -185,7 +191,9 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                     },
                     logo: logoUrl,
                     created_by: userWithCompany.id,
-                    approved: false
+                    approved: false,
+                    website,
+                    email
                 }).onConflictDoUpdate({
                     target: companies.created_by,
                     set: {
@@ -205,7 +213,9 @@ export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, fo
                             telephone: billingTelephone
                         },
                         created_by: userWithCompany.id,
-                        approved: false
+                        approved: false,
+                        website,
+                        email
                     },
                 }).returning();
                 if (!newCompanyResult || newCompanyResult.length === 0) {

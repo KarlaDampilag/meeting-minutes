@@ -136,6 +136,32 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props) => {
                 validationBehavior='native'
                 defaultValue={userWithCompany?.company?.address?.telephone}
             />
+            <Input
+                variant='bordered'
+                label='Website'
+                placeholder="www.acme.com"
+                type='text'
+                name='website'
+                isRequired
+                labelPlacement='outside'
+                radius='sm'
+                classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
+                defaultValue={userWithCompany?.company?.website || undefined}
+            />
+            <Input
+                variant='bordered'
+                label='Email'
+                placeholder="info@acme.com"
+                type='text'
+                name='email'
+                isRequired
+                labelPlacement='outside'
+                radius='sm'
+                classNames={{ inputWrapper: 'border border-gray-300' }}
+                validationBehavior='native'
+                defaultValue={userWithCompany?.company?.email || undefined}
+            />
             <div>
                 <label htmlFor='image' className='block mb-2 text-sm'>Logo</label>
                 <ImageInput value={images} onChange={setImages} />
