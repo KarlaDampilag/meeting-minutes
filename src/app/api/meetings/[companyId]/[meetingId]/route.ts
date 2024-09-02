@@ -2,10 +2,10 @@ import { NextRequest } from "next/server";
 import { and, eq } from "drizzle-orm";
 
 import { db } from "@/db/db";
-import { meetings, properties } from "@/db/schema";
+import { meetings } from "@/db/schema";
 import { getUser } from "@/utils/serverActions";
 
-// GET /api/meetings/:companyId/:propertyId
+// GET /api/meetings/:companyId/:meetingId
 export const GET = async (request: NextRequest, context: { params: { companyId: string, meetingId: string } }) => {
     try {
         const user = await getUser();
@@ -14,27 +14,17 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
             return new Response('Unauthorized', { status: 401 });
         }
 
-        const result = await db.select({
-            id: meetings.id,
-            name: meetings.name,
-            location: meetings.location,
-            property_id: meetings.property_id,
-            date: meetings.date,
-            duration: meetings.duration,
-            company_id: properties.company_id,
-            property: {
-                name: properties.name,
-                address: properties.address
+        const result = await db.query.meetings.findMany({
+            where: (
+                and(
+                    eq(meetings.id, context.params.meetingId)
+                )
+            ),
+            with: {
+                property: true,
+                agendaItems: true
             }
-        })
-        .from(meetings)
-        .leftJoin(properties, eq(properties.id, meetings.property_id))
-        .where(
-            and(
-                eq(properties.company_id, context.params.companyId),
-                eq(properties.company_id, user.company_id),
-            )
-        )
+        });
 
         if (!result) {
             return new Response('Something went wrong', { status: 500 });

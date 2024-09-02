@@ -45,7 +45,9 @@ export type PropertyWithManager = Property & { propertyManager: User }
 export type Owner = typeof owners.$inferSelect;
 export type Supplier = typeof suppliers.$inferSelect;
 export type Meeting = typeof meetings.$inferSelect;
+export type AgendaItem = typeof agendaItems.$inferSelect;
 export type MeetingWithProperty = Meeting & { property: Property }
+export type MeetingWithPropertyAngAgendaItems = MeetingWithProperty & { agendaItems: AgendaItem[] }
 
 export const roles = pgTable('roles', {
     id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
@@ -93,11 +95,12 @@ export const properties = pgTable('properties', {
     total_ownership_shares: integer('total_ownership_shares')
 });
 
-export const propertiesRelations = relations(properties, ({ one }) => ({
+export const propertiesRelations = relations(properties, ({ one, many }) => ({
     propertyManager: one(users, {
         fields: [properties.property_manager_id],
         references: [users.id]
-    })
+    }),
+    meetings: many(meetings, { relationName: 'propertyMeetings' })
 }))
 
 export const owners = pgTable('owners', {
@@ -130,11 +133,13 @@ export const meetings = pgTable('meetings', {
     created_at: timestamp('created_at').defaultNow()
 });
 
-export const meetingsRelations = relations(meetings, ({ one }) => ({
+export const meetingsRelations = relations(meetings, ({ one, many }) => ({
     property: one(properties, {
         fields: [meetings.property_id],
-        references: [properties.id]
-    })
+        references: [properties.id],
+        relationName: 'propertyMeetings'
+    }),
+    agendaItems: many(agendaItems, { relationName: 'meetingAgendaItems' })
 }))
 
 export const agendaItems = pgTable('agendaItems', {
@@ -144,3 +149,11 @@ export const agendaItems = pgTable('agendaItems', {
     description: text('description'),
     created_at: timestamp('created_at').defaultNow()
 });
+
+export const agendaItemsRelations = relations(agendaItems, ({ one }) => ({
+    meeting: one(meetings, {
+        fields: [agendaItems.meeting_id],
+        references: [meetings.id],
+        relationName: 'meetingAgendaItems'
+    })
+}))

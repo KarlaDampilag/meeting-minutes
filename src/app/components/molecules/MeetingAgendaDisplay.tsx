@@ -1,25 +1,38 @@
-import { Company, MeetingWithProperty } from '@/db/schema'
+import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema'
+import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 import React from 'react'
 
-const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: React.RefObject<HTMLDivElement>; company: Company, meeting: MeetingWithProperty }) => {
+const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: React.RefObject<HTMLDivElement>; company: Company, meeting: MeetingWithPropertyAngAgendaItems }) => {
+    const t = useTranslations('Meetings.Agenda Document');
+
+    const dateFormatOptions: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZoneName: 'short'
+    };
+
     return (
         <div id='pdf-content' ref={contentRef} className='py-16 px-24'>
             <div className='flex gap-3 justify-between text-xs mb-16'>
                 <div className='flex flex-col gap-0.5'>
-                    <span>Biland Immobilien Management AG</span>
-                    <span>Nordstresse 14</span>
-                    <span>4665 Oftringen</span>
+                    <span>{company.name}</span>
+                    <span>{company.address?.street}</span>
+                    <span>{company.address?.zipCode} {company.address?.city}</span>
                 </div>
 
                 <div className='flex flex-col gap-0.5'>
-                    <span>Tel. +41 62 791 18 90</span>
-                    <span>www.biland-immobilien.ch</span>
-                    <span>info@biland-immobilien.ch</span>
+                    <span>Tel. {company.address?.telephone}</span>
+                    <span>{company.website}</span>
+                    <span>{company.email}</span>
                 </div>
 
                 <div className='min-w-fit'>
-                    {company.logo && <Image src={company.logo} alt={company.name} width={0} height={0} sizes='100vw' className='w-auto h-14 object-cover' />}
+                    {company.logo && <Image src={company.logo} alt={company.name} width={0} height={0} sizes='100vw' className='w-auto h-11 object-cover' />}
                 </div>
             </div>
 
@@ -30,25 +43,24 @@ const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: Re
 
             <h1 className='text-center font-bold text-2xl tracking-widest mb-16'>PROTOKOLL</h1>
 
-            <p className='text-center'>der ordentlichen Eigentumerversammlung der Stockwerkeigentumerschaft vom 26. Juni 2024 um 18.00 Uhr im Mehrzweckraum Nr. 2 Gemeinde Niedergosgen, Hauptstrasse 50, 5013 Niedergosgen</p>
+            <p className='text-center w-11/12'>{t('intro', { date: new Intl.DateTimeFormat('de-DE', dateFormatOptions).format(new Date(meeting.date)).replace(', ', ' um ').replace(':', '.').replace(' MESZ', ' Uhr'), location: meeting.location })}</p>
 
             <hr className='mt-10 mb-5 border-stone-400' />
 
             <div className='flex flex-col gap-2.5 mb-4'>
                 <p className='font-bold mb-0'>Traktanden:</p>
                 <div className='flex flex-col gap-2.5'>
-                    <div className='flex items-center gap-1'><span>1.</span><span>Begrüssung und Feststellung der Beschlussfähigkeit</span></div>
-                    <div className='flex items-center gap-1'><span>2.</span><span>Wahl des Protokollführers</span></div>
-                    <div className='flex items-center gap-1'><span>3.</span><span>Genehmigung des letztjährigen Protokolls</span></div>
-                    <div className='flex items-center gap-1'><span>4.</span><span>Abnahme der Jahresrechnung vom 01.01.2023 - 31.12.2023</span></div>
+                    {meeting.agendaItems.map((agendaItem, index) => (
+                        <div className='flex items-center gap-1'><span>{index + 1}.</span><span>{agendaItem.name}</span></div>
+                    ))}
                 </div>
             </div>
 
             <hr className='mt-6 mb-14 border-stone-400' />
 
-            <p className='font-bold mb-5'>Biland Immobilien Managment AG</p>
+            <p className='font-bold mb-5'>{company.name}</p>
 
-            <div className='flex items-center gap-40'>
+            {/* <div className='flex items-center gap-40'>
                 <div className='flex flex-col gap-0.25'>
                     [signature]
                     <span>Sascha Biland</span>
@@ -59,7 +71,7 @@ const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: Re
                     <span>Sascha Biland</span>
                     <span className='font-bold'>Vorstiz</span>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

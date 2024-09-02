@@ -17,7 +17,11 @@
     "Delete": "Löschen",
     "Enter email": "Email deines Teammitglieds",
     "Refresh": "Aktualisieren",
-    "Submit": "Senden"
+    "Submit": "Senden",
+    "Prepositions": {
+      "at": "um",
+      "on": "vom"
+    }
   },
   "Company Settings": {
     "Billing Details": "Rechnungsadresse",
@@ -36,6 +40,9 @@
     "Dashboard": "Dashboard"
   },
   "Meetings": {
+    "Agenda Document": {
+      "intro": "der ordentlichen Eigentumerversammlung der Stockwerkeigentumerschaft vom {date} im {location}"
+    },
     "Agenda Items": {
       "welcomingDeterminingQuorum": "Begrüssung und Feststellung der Beschlussfähigkeit",
       "electionOfResponsiblePerson": "Wahl des Protokollführers",

@@ -6,10 +6,11 @@ import { Margin, usePDF } from 'react-to-pdf';
 
 import MeetingAgendaDisplay from '../molecules/MeetingAgendaDisplay';
 import MeetingBasicInfo from './MeetingBasicInfo'
-import { Company, MeetingWithProperty } from '@/db/schema';
 import SendMeetingInviteButton from './SendMeetingInviteButton';
-import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
 import Text from '../atoms/Text';
+
+import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema';
+import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
 
 const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingId: string }) => {
     const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
@@ -37,7 +38,7 @@ const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingI
     return (
         <>
             <div className='bg-white border border-stone-100 shadow-sm rounded-lg p-8 md:px-10 transition-shadow flex flex-col gap-6'>
-                <MeetingBasicInfo meeting={meeting as MeetingWithProperty} />
+                <MeetingBasicInfo meeting={meeting as MeetingWithPropertyAngAgendaItems} />
                 <div className='flex items-center gap-2'>
                     <Button color='primary' radius='sm' variant='bordered' onClick={handleDownloadPDF}>Download PDF</Button>
                     <SendMeetingInviteButton />
@@ -77,7 +78,7 @@ const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingI
                             </div>
                         }
                     >
-                        <MeetingAgendaDisplay company={company} meeting={meeting as MeetingWithProperty} contentRef={targetRef} />
+                        <MeetingAgendaDisplay company={company} meeting={meeting as MeetingWithPropertyAngAgendaItems} contentRef={targetRef} />
                     </Tab>
                 </Tabs>
             </div>

@@ -13,7 +13,7 @@ const PropertyCard = ({ property }: { property: PropertyWithManager }) => {
             <div className='flex flex-col gap-5'>
                 <div className='flex items-center gap-4'>
                     <div className='rounded-full bg-primary-100 w-9 h-9 flex items-center justify-center font-normal'>{property.name.charAt(0)}</div>
-                    <p className='font-bold mb-0'>{property.name}</p>
+                    <p className='font-bold mb-0 line-clamp-1'>{property.name}</p>
                 </div>
                 <PropertyAddressAndManager property={property} />
             </div>

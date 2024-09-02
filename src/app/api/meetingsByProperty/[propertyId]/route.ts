@@ -29,9 +29,8 @@ export const GET = async (request: NextRequest, context: { params: { propertyId:
                     date: meetings.date,
                     duration: meetings.duration,
                     company_id: properties.company_id,
-                    property: {
-                        name: properties.name
-                    }
+                    property: properties
+
                 })
                 .from(meetings)
                 .leftJoin(properties, eq(properties.id, meetings.property_id))
@@ -54,9 +53,7 @@ export const GET = async (request: NextRequest, context: { params: { propertyId:
                     date: meetings.date,
                     duration: meetings.duration,
                     company_id: properties.company_id,
-                    property: {
-                        name: properties.name
-                    }
+                    property: properties
                 })
                 .from(meetings)
                 .leftJoin(properties, eq(properties.id, meetings.property_id))

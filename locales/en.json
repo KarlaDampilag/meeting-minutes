@@ -17,7 +17,11 @@
     "Delete": "Delete",
     "Enter email": "Enter email",
     "Refresh": "Refresh",
-    "Submit": "Submit"
+    "Submit": "Submit",
+    "Prepositions": {
+      "at": "at",
+      "on": "on"
+    }
   },
   "Company Settings": {
     "Billing Details": "Billing Details",
@@ -36,6 +40,9 @@
     "Dashboard": "Dashboard"
   },
   "Meetings": {
+    "Agenda Document": {
+      "intro": "the ordinary owners' meeting of the condominium ownership association on {date} in {location}"
+    },
     "Agenda Items": {
       "welcomingDeterminingQuorum": "Welcoming and determining the quorum",
       "electionOfResponsiblePerson": "Election of the person responsible for the minutes",

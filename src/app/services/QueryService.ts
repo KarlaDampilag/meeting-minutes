@@ -1,4 +1,4 @@
-import { Invite, Meeting, MeetingWithProperty, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
+import { Invite, Meeting, MeetingWithProperty, MeetingWithPropertyAngAgendaItems, Owner, PropertyWithManager, Supplier, User } from "@/db/schema";
 
 export class QueryService {
     private static instance: QueryService;
@@ -527,7 +527,7 @@ export class QueryService {
         }
     }
 
-    async fetchMeeting(companyId: string, meetingId: string): Promise<MeetingWithProperty> {
+    async fetchMeeting(companyId: string, meetingId: string): Promise<MeetingWithPropertyAngAgendaItems> {
         try {
             const res = await fetch(`/api/meetings/${companyId}/${meetingId}`);
             if (res.status === 200) {
