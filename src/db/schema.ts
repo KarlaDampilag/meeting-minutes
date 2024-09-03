@@ -10,7 +10,8 @@ export const users = pgTable('users', {
     role_id: uuid('role_id').references(() => roles.id),
     created_at: timestamp('created_at').defaultNow(),
     auth_id: varchar('auth_id', { length: 256 }).unique().notNull(),
-    company_id: uuid('company_id').references(() => companies.id)
+    company_id: uuid('company_id').references(() => companies.id),
+    signature: text('signature')
 });
 
 export const usersRelations = relations(users, ({ one }) => ({

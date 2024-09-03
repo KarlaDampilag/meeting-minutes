@@ -106,3 +106,7 @@ a {
     @apply grid grid-cols-3;
     grid-column-gap: 12px;
 }
+
+.signature-canvas {
+    @apply border border-neutral-300;
+}

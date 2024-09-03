@@ -59,6 +59,22 @@ export const assignPendingRole = async (user: User | undefined, role: "First Adm
     }
 }
 
+export const saveUserSignature = async (userId: string, dataUrl: string) => {
+    try {
+        const updatedUser = await db.update(users).set({ signature: dataUrl }).where(eq(users.id, userId)).returning();
+        if (!!updatedUser) {
+            return true;
+        } else {
+            console.error('Failed to save user signature');
+            return false;
+        }
+    } catch (error) {
+        console.error('Failed to save user signature');
+        console.error(error);
+        return false;
+    }
+}
+
 export const createOrUpdateCompany = async (userWithCompany: UserWithCompany, formData: FormData, billingSameAsAddress: boolean): Promise<Company> => {
     'use server'
     try {
