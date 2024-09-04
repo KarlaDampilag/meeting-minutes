@@ -13,7 +13,7 @@ const UserSignature = ({ userId, className }: { userId: string | undefined, clas
 
     if (isFetched && data && (data as User).signature) {
         return (
-            <img alt="user signature" src={(data as User).signature} className={className} />
+            <img alt="user signature" src={(data as User).signature || undefined} className={className} />
         )
     }
 

@@ -9,9 +9,10 @@ import PropertiesDropdown from '../molecules/PropertiesDropdown';
 import Text from '../atoms/Text';
 
 import { MeetingWithPropertyAngAgendaItems } from '@/db/schema';
-import { getCalendarDateFromDate, getDefaultCheckedAgendaItems, getEndDateFromMeetingByAgendaNameKey, getIsMeetingDateUnavailable, getStartDateFromMeetingByAgendaNameKey, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
+import { getCalendarDateFromDate, getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 import { useUpdateMeeting } from '@/rq-hooks/useUpdateMeeting';
 import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
+import { useDefaultCheckedAgendaItems, useStartDateFromMeetingByAgendaNameKey, useEndDateFromMeetingByAgendaNameKey } from '@/custom-hooks/customHooks';
 
 const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, meeting: MeetingWithPropertyAngAgendaItems }) => {
     const t = useTranslations('Meetings.Agenda Items');
@@ -79,7 +80,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
 
     const [hours, minutes, seconds] = meeting.duration.split(":").map(String);
 
-    const checkedAgendaItems = getDefaultCheckedAgendaItems(meeting);
+    const checkedAgendaItems = useDefaultCheckedAgendaItems(meeting);
     console.log(checkedAgendaItems)
 
     console.log(checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))
@@ -201,7 +202,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                 name='acceptanceOfAnnualFinancialStatementsStartDate'
                                 aria-label='Start date for Acceptance of the annual financial statements'
                                 showMonthAndYearPickers
-                                defaultValue={checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements') ? getStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements') : undefined}
+                                defaultValue={useStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements', checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))}
                             />
                         </div>
                         <span>-</span>
@@ -214,7 +215,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                 name='acceptanceOfAnnualFinancialStatementsEndDate'
                                 aria-label='End date for Acceptance of the annual financial statements'
                                 showMonthAndYearPickers
-                                defaultValue={checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements') ? getEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements') : undefined}
+                                defaultValue={useEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements', checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))}
                             />
                         </div>
                     </div>
@@ -236,7 +237,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                 name='acceptanceOfBudgetStartDate'
                                 aria-label='Start date for Acceptance of the budget'
                                 showMonthAndYearPickers
-                                defaultValue={checkedAgendaItems.includes('acceptanceOfBudget') ? getStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget') : undefined}
+                                defaultValue={useStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget', checkedAgendaItems.includes('acceptanceOfBudget'))}
                             />
                         </div>
                         <span>-</span>
@@ -249,7 +250,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                 name='acceptanceOfBudgetEndDate'
                                 aria-label='End date for Acceptance of the budget'
                                 showMonthAndYearPickers
-                                defaultValue={checkedAgendaItems.includes('acceptanceOfBudget') ? getEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget') : undefined}
+                                defaultValue={useEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget', checkedAgendaItems.includes('acceptanceOfBudget'))}
                             />
                         </div>
                     </div>
