@@ -2,8 +2,9 @@ import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema'
 import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 import React from 'react'
+import { ISignee } from '../organisms/MeetingPageContent';
 
-const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: React.RefObject<HTMLDivElement>; company: Company, meeting: MeetingWithPropertyAngAgendaItems }) => {
+const MeetingAgendaDisplay = ({ contentRef, company, meeting, signees }: { contentRef: React.RefObject<HTMLDivElement>; company: Company, meeting: MeetingWithPropertyAngAgendaItems, signees: ISignee[] }) => {
     const t = useTranslations('Meetings.Agenda Document');
 
     const dateFormatOptions: Intl.DateTimeFormatOptions = {
@@ -51,27 +52,24 @@ const MeetingAgendaDisplay = ({ contentRef, company, meeting }: { contentRef: Re
                 <p className='font-bold mb-0'>Traktanden:</p>
                 <div className='flex flex-col gap-2.5'>
                     {meeting.agendaItems.map((agendaItem, index) => (
-                        <div className='flex items-center gap-1'><span>{index + 1}.</span><span>{agendaItem.name}</span></div>
+                        <div className='flex items-center gap-1' key={index}><span>{index + 1}.</span><span>{agendaItem.name}</span></div>
                     ))}
                 </div>
             </div>
 
             <hr className='mt-6 mb-14 border-stone-400' />
 
-            <p className='font-bold mb-5'>{company.name}</p>
+            <p className='font-bold mb-20'>{company.name}</p>
 
-            {/* <div className='flex items-center gap-40'>
-                <div className='flex flex-col gap-0.25'>
-                    [signature]
-                    <span>Sascha Biland</span>
-                    <span className='font-bold'>Vorstiz</span>
-                </div>
-                <div className='flex flex-col gap-0.25'>
-                    [signature]
-                    <span>Sascha Biland</span>
-                    <span className='font-bold'>Vorstiz</span>
-                </div>
-            </div> */}
+            <div className='flex items-center gap-10 w-full justify-between'>
+                {signees.map(signee => (
+                    <div className='flex flex-col gap-0.25 w-1/2' key={signee.userId}>
+                        [signature]
+                        <span>Name</span>
+                        <span className='font-bold'>{signee.title || 'Title'}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

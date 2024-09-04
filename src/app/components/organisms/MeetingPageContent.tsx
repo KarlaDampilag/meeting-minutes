@@ -1,21 +1,29 @@
 'use client'
 
 import React from 'react'
-import { Button, Spinner, Tab, Tabs } from '@nextui-org/react';
-import { Margin, usePDF } from 'react-to-pdf';
+import { Spinner, Tab, Tabs } from '@nextui-org/react';
+import { usePDF } from 'react-to-pdf';
 
+import DownloadMeetingAgendaPDFButton from './DownloadMeetingAgendaPDFButton';
 import MeetingAgendaDisplay from '../molecules/MeetingAgendaDisplay';
 import MeetingBasicInfo from './MeetingBasicInfo'
 import SendMeetingInviteButton from './SendMeetingInviteButton';
 import Text from '../atoms/Text';
 
-import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema';
+import { Company, MeetingWithPropertyAngAgendaItems, UserWithCompany } from '@/db/schema';
 import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
 
-const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingId: string }) => {
+export interface ISignee {
+    userId: string | undefined;
+    title: string | undefined;
+}
+
+const MeetingPageContent = ({ userWithCompany, meetingId }: { userWithCompany: UserWithCompany, meetingId: string }) => {
     const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
     
-    const { data: meeting, isLoading, isFetched } = useGetMeeting({ companyId: company.id, meetingId });
+    const { data: meeting, isLoading, isFetched } = useGetMeeting({ companyId: userWithCompany.company_id, meetingId });
+
+    const [signees, setSignees] = React.useState<ISignee[]>([{ userId: undefined, title: undefined }]);
 
     if (isLoading) {
         return <Spinner />;
@@ -25,22 +33,12 @@ const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingI
         return null;
     }
 
-    const handleDownloadPDF = () => {
-        toPDF({
-            method: 'open',
-            page: {
-                margin: Margin.MEDIUM,
-                orientation: 'landscape',
-             },
-        });
-    };
-
     return (
         <>
             <div className='bg-white border border-stone-100 shadow-sm rounded-lg p-8 md:px-10 transition-shadow flex flex-col gap-6'>
                 <MeetingBasicInfo meeting={meeting as MeetingWithPropertyAngAgendaItems} />
                 <div className='flex items-center gap-2'>
-                    <Button color='primary' radius='sm' variant='bordered' onClick={handleDownloadPDF}>Download PDF</Button>
+                    <DownloadMeetingAgendaPDFButton user={userWithCompany} toPDF={toPDF} signees={signees} setSignees={setSignees} />
                     <SendMeetingInviteButton />
                 </div>
             </div>
@@ -78,7 +76,7 @@ const MeetingPageContent = ({ company, meetingId }: { company: Company, meetingI
                             </div>
                         }
                     >
-                        <MeetingAgendaDisplay company={company} meeting={meeting as MeetingWithPropertyAngAgendaItems} contentRef={targetRef} />
+                        <MeetingAgendaDisplay company={userWithCompany.company as Company} meeting={meeting as MeetingWithPropertyAngAgendaItems} contentRef={targetRef} signees={signees} />
                     </Tab>
                 </Tabs>
             </div>

@@ -11,7 +11,7 @@ const MeetingPage = async ({ params }: { params: { meetingId: string } }) => {
 
     return (
         <div className='flex flex-col gap-4 max-w-screen-xl mx-auto'>
-            <MeetingPageContent company={user.company} meetingId={params.meetingId} />
+            <MeetingPageContent userWithCompany={user} meetingId={params.meetingId} />
         </div>
     )
 }
