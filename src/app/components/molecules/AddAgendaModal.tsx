@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import Text from '../atoms/Text';
 import PropertiesDropdown from './PropertiesDropdown';
-import { onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
+import { getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 import { useTranslations } from 'next-intl';
 
 interface Props {
@@ -22,10 +22,6 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
     const today = now(getLocalTimeZone());
     const t = useTranslations('Meetings.Agenda Items');
     const [propertyId, setPropertyId] = React.useState<string>();
-
-    const getIsDateUnavailable = (date: DateValue) => {
-        return date.compare(today) < 0;
-    }
 
     const handleModalClose = () => {
         setPropertyId(undefined);
@@ -58,14 +54,18 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
         agendaTopics.forEach(agendaTopic => {
             if ((agendaTopic as HTMLInputElement).checked) {
                 const agendaTopicLocalesKey = (agendaTopic as HTMLInputElement).value;
-                if (agendaTopicLocalesKey === "acceptanceOfAnnualFinancialStatements" && target.acceptanceOfAnnualFinancialStatementsStartDate.value && target.acceptanceOfAnnualFinancialStatementsEndDate.value) {
-                    const startDate = new Date(target.acceptanceOfAnnualFinancialStatementsStartDate.value).toLocaleDateString("de-CH");
-                    const endDate = new Date(target.acceptanceOfAnnualFinancialStatementsEndDate.value).toLocaleDateString("de-CH");
-                    checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
-                } else if (agendaTopicLocalesKey == "acceptanceOfBudget" && target.acceptanceOfBudgetStartDate.value && target.acceptanceOfBudgetEndDate.value) {
-                    const startDate = new Date(target.acceptanceOfBudgetStartDate.value).toLocaleDateString("de-CH");
-                    const endDate = new Date(target.acceptanceOfBudgetEndDate.value).toLocaleDateString("de-CH");
-                    checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
+                if (agendaTopicLocalesKey === "acceptanceOfAnnualFinancialStatements") {
+                    if (target.acceptanceOfAnnualFinancialStatementsStartDate.value && target.acceptanceOfAnnualFinancialStatementsEndDate.value) {
+                        const startDate = new Date(target.acceptanceOfAnnualFinancialStatementsStartDate.value).toLocaleDateString("de-CH");
+                        const endDate = new Date(target.acceptanceOfAnnualFinancialStatementsEndDate.value).toLocaleDateString("de-CH");
+                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
+                    }
+                } else if (agendaTopicLocalesKey == "acceptanceOfBudget") {
+                    if (target.acceptanceOfBudgetStartDate.value && target.acceptanceOfBudgetEndDate.value) {
+                        const startDate = new Date(target.acceptanceOfBudgetStartDate.value).toLocaleDateString("de-CH");
+                        const endDate = new Date(target.acceptanceOfBudgetEndDate.value).toLocaleDateString("de-CH");
+                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
+                    }
                 } else {
                     checkedAgendaTopics.push(t(agendaTopicLocalesKey));
                 }
@@ -74,8 +74,6 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
         const propertyId = target.propertyId.value;
         onAddMeeting(propertyId, name, location, date, hours, minutes, checkedAgendaTopics);
     }
-
-
 
     return (
         <Modal
@@ -128,7 +126,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         showMonthAndYearPickers
                                         defaultValue={today}
                                         validationBehavior='native'
-                                        isDateUnavailable={getIsDateUnavailable}
+                                        isDateUnavailable={getIsMeetingDateUnavailable}
                                     />
                                     <div>
                                         <p className='mb-1.5 text-sm'>Duration<span className='text-danger-500'>*</span></p>

@@ -481,7 +481,7 @@ export class QueryService {
             formData.append("name", props.name);
             formData.append("location", props.location);
             formData.append("date", props.date);
-            formData.append("agendaTopics", props.agendaTopics.join(','));
+            formData.append("agendaTopics", props.agendaTopics.join(`${process.env.NEXT_PUBLIC_ARRAY_STRING_SEPARATOR}`));
 
             if (props.hours) {
                 formData.append("hours", props.hours);
@@ -550,6 +550,34 @@ export class QueryService {
             throw new Error('Failed to fetch meeting');
         } catch (error) {
             throw new Error('Failed to fetch meeting');
+        }
+    }
+
+    async updateMeeting(props: { companyId: string, meetingId: string, propertyId: string, name: string, location: string, date: string, hours: string | null, minutes: string | null, agendaTopics: string[] }): Promise<Meeting> {
+        try {
+            const formData = new FormData();
+            formData.append("propertyId", props.propertyId);
+            formData.append("name", props.name);
+            formData.append("location", props.location);
+            formData.append("date", props.date);
+            formData.append("agendaTopics", props.agendaTopics.join(`${process.env.NEXT_PUBLIC_ARRAY_STRING_SEPARATOR}`));
+
+            if (props.hours) {
+                formData.append("hours", props.hours);
+            }
+            if (props.minutes) {
+                formData.append("minutes", props.minutes);
+            }
+
+            const res = await fetch(`/api/meetings/${props.companyId}/${props.meetingId}`, { method: 'PUT', body: formData });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to update meeting');
+        } catch (error) {
+            throw new Error('Failed to update meeting');
         }
     }
 }

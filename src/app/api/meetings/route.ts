@@ -29,7 +29,6 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
 
         const utcTimestampStr = DateTime.fromISO(date).toUTC().toISO();
         const utcTimestampDate = new Date(utcTimestampStr as string);
-        console.log(utcTimestampDate)
 
         const insertResult = await db.insert(meetings).values({
             property_id: propertyId.toString(),
@@ -43,10 +42,8 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
             return new Response('Add meeting agenda failed', { status: 500 });
         }
 
-        console.log(insertResult[0])
-
         // create the agenda items individually
-        const agendaTopicsArr = agendaTopics.toString().split(',');
+        const agendaTopicsArr = agendaTopics.toString().split(process.env.NEXT_PUBLIC_ARRAY_STRING_SEPARATOR as string);
 
         for (let i = 0; i < agendaTopicsArr.length; i++) {
             const agendaItemInsertResult = await db.insert(agendaItems).values({

@@ -9,6 +9,7 @@ import MeetingAgendaDisplay from '../molecules/MeetingAgendaDisplay';
 import MeetingBasicInfo from './MeetingBasicInfo'
 import SendMeetingInviteButton from './SendMeetingInviteButton';
 import Text from '../atoms/Text';
+import UpdateMeetingAgendaForm from './UpdateMeetingAgendaForm';
 
 import { Company, MeetingWithPropertyAngAgendaItems, UserWithCompany } from '@/db/schema';
 import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
@@ -63,9 +64,8 @@ const MeetingPageContent = ({ userWithCompany, meetingId }: { userWithCompany: U
                             </div>
                         }
                     >
-                        {/* <UpdatePropertyForm companyId={companyId} property={data as PropertyWithManager} /> */}
                         <div className='px-8 md:px-10'>
-                        Update Meeting Agenda Form
+                            <UpdateMeetingAgendaForm companyId={userWithCompany.company_id as string} meeting={meeting as MeetingWithPropertyAngAgendaItems} />
                         </div>
                     </Tab>
                     <Tab
