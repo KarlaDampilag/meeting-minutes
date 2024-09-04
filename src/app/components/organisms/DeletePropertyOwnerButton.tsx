@@ -7,6 +7,7 @@ import { GoTrash } from 'react-icons/go';
 import { useDeletePropertyOwner } from '@/rq-hooks/useDeletePropertyOwner';
 import DeletePropertyOwnerModal from '../molecules/DeletePropertyOwnerModal';
 import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
+import Text from '../atoms/Text';
 
 const DeletePropertyOwnerButton = ({ propertyOwnerId, companyId, propertyId }: { propertyOwnerId: string, companyId: string, propertyId: string }) => {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
@@ -19,7 +20,7 @@ const DeletePropertyOwnerButton = ({ propertyOwnerId, companyId, propertyId }: {
     }
 
     if (isSuccess) {
-        toast.success("Successfully deleted", { toastId: "delete-property-owner" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully deleted' />, { toastId: "delete-property-owner" });
         reset();
         refetch();
         onClose();

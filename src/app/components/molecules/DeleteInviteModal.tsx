@@ -2,6 +2,7 @@
 import React from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn } from "@nextui-org/react";
 import { toast } from 'react-toastify';
+import Text from '../atoms/Text';
 
 interface Props {
     isMutationPending: boolean;
@@ -14,7 +15,7 @@ interface Props {
 const DeleteInviteModal = ({ isMutationPending, isOpen, onDelete, onClose, onOpenChange }: Props) => {
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         onDelete();
         onClose();
     }

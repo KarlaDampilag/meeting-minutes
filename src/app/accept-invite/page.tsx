@@ -3,6 +3,7 @@ import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useAcceptInvite } from '@/rq-hooks/useAcceptInvite'
+import Text from '../components/atoms/Text'
 
 const AcceptInvitePage = () => {
     const searchParams = useSearchParams();
@@ -23,7 +24,7 @@ const AcceptInvitePage = () => {
     }, [inviteId, isSuccess]);
 
     return (
-        <div className='px-5 py-2'>Please wait...</div>
+        <div className='px-5 py-2'><Text localeParent='Common' localeKey='Please wait' /></div>
     )
 }
 

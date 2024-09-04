@@ -237,7 +237,7 @@ const CompanyDetailsForm = ({ userWithCompany, onSubmit }: Props) => {
                 </>
             )}
 
-            <Button color='primary' type='submit' className='h-12 text-base mt-2 mb-4' radius='sm' isLoading={isLoading} isDisabled={isLoading}><Text localeParent='Common' localeKey='Submit' /></Button>
+            <Button color='primary' type='submit' className='h-12 text-base mt-2 mb-4' radius='sm' isLoading={isLoading} isDisabled={isLoading}><Text localeParent='Common' localeKey='Save' /></Button>
         </form>
     )
 }

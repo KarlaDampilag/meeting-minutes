@@ -118,7 +118,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
             <div className='flex items-center justify-start gap-2'>
                 <Input
                     variant='bordered'
-                    label="Total ownership shares"
+                    label={<Text localeParent='Properties' localeKey='Total ownership shares' />}
                     placeholder="900"
                     type='number'
                     name='totalOwnershipShares'

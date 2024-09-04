@@ -4,9 +4,9 @@ import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import { FaCheck } from 'react-icons/fa6';
-import { HiOutlineRefresh } from 'react-icons/hi';
 import { IoMdRefresh } from 'react-icons/io';
 import { toast } from 'react-toastify';
+import Text from '../atoms/Text';
 
 const columns = [
     { name: "COMPANY NAME", uid: "name" },
@@ -20,7 +20,7 @@ const PendingCompaniesTable = ({ companiesData, handleApprove }: { companiesData
 
     const onApproveClick = async (companyId: string, companyName: string, userId: string | undefined, firstName: string | undefined, email: string | undefined) => {
         if (companyId && userId && firstName && email) {
-            toast.info('Please wait...');
+            toast.info(<Text localeParent='Common' localeKey='Please wait' />);
             const success = await handleApprove(companyId, companyName, userId, firstName, email);
             if (success) {
                 toast.success("Approved successfully");

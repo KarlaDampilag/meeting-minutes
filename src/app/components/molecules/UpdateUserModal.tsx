@@ -29,7 +29,7 @@ const UpdateUserModal = ({ user, isUpdateUserRolePending, isOpen, onUpdateUser, 
             roleId: { value: string };
         };
         const roleId = target.roleId.value;
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         onUpdateUser(user.id, roleId);
         onClose();
     }

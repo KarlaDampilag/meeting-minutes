@@ -25,7 +25,7 @@ const UpdateSupplierModal = ({ companyId, supplier, isOpen, onClose, onOpenChang
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         const target = event.target as typeof event.target & {
             name: { value: string };
             service: { value: string };

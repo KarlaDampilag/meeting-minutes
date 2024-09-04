@@ -8,6 +8,7 @@ import { useDeleteSupplier } from '@/rq-hooks/useDeleteSupplier';
 import { useGetSuppliers } from '@/rq-hooks/useGetSuppliers';
 
 import DeleteSupplierModal from '../molecules/DeleteSupplierModal';
+import Text from '../atoms/Text';
 
 const DeleteSupplierButton = ({ supplierId, companyId, propertyId }: { supplierId: string, companyId: string, propertyId: string }) => {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
@@ -20,7 +21,7 @@ const DeleteSupplierButton = ({ supplierId, companyId, propertyId }: { supplierI
     }
 
     if (isSuccess) {
-        toast.success("Successfully deleted", { toastId: "delete-supplier" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully deleted' />, { toastId: "delete-supplier" });
         reset();
         refetch();
         onClose();

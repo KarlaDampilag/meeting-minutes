@@ -8,6 +8,7 @@ import { useGetPropertyOwners } from '@/rq-hooks/useGetPropertyOwners';
 import { Owner, Property } from '@/db/schema';
 
 import UpdatePropertyOwnerForm from './UpdatePropertyOwnerForm';
+import Text from '../atoms/Text';
 
 interface Props {
     companyId: string;
@@ -24,7 +25,7 @@ const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, 
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         const target = event.target as typeof event.target & {
             firstName: { value: string };
             lastName: { value: string };

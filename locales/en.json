@@ -16,8 +16,11 @@
     "Close": "Close",
     "Delete": "Delete",
     "Enter email": "Enter email",
+    "Please wait": "Please wait...",
     "Refresh": "Refresh",
+    "Save": "Save",
     "Submit": "Submit",
+    "Successfully deleted": "Successfully deleted",
     "Prepositions": {
       "at": "at",
       "on": "on"
@@ -78,12 +81,15 @@
     "Add Property": "Add Property",
     "Add Property button": "Add Property",
     "Basic": "Basic",
+    "Delete Property Owner": "Delete Property Owner",
+    "deletePropertyMessage": "Are you sure? Deleting a property owner is irreversible!",
     "No properties": "No properties",
     "Owners": "Owners",
     "Properties": "Properties",
     "Property": "Property",
     "Property name": "Property name",
     "Suppliers": "Suppliers",
+    "Total ownership shares": "Total ownership shares",
     "Update Property": "Update Property"
   },
   "Roles": {

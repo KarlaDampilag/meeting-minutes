@@ -15,7 +15,7 @@ interface Props {
 const DeleteUserFromCompanyModal = ({ isMutationPending, isOpen, onDeleteUserFromCompany, onClose, onOpenChange }: Props) => {
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         onDeleteUserFromCompany();
         onClose();
     }

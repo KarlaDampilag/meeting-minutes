@@ -30,7 +30,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        toast.info("Please wait...");
+        toast.info(<Text localeParent='Common' localeKey='Please wait' />);
         const target = event.target as typeof event.target & {
             name: { value: string };
             location: { value: string };

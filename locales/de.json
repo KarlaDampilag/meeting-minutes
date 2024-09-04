@@ -16,8 +16,11 @@
     "Close": "Schliessen",
     "Delete": "Löschen",
     "Enter email": "Email deines Teammitglieds",
+    "Please wait": "Bitte warten",
     "Refresh": "Aktualisieren",
+    "Save": "Speichern",
     "Submit": "Senden",
+    "Successfully deleted": "Erfolgreich gelöscht",
     "Prepositions": {
       "at": "um",
       "on": "vom"
@@ -78,12 +81,15 @@
     "Add Property": "Liegenschaft hinzufügen",
     "Add Property button": "Hinzufügen",
     "Basic": "Informationen",
+    "Delete Property Owner": "Eigentümer löschen",
+    "deletePropertyMessage": "Bist du sicher? Das Löschen eines Eigentümers kann nicht rückgängig gemacht werden.",
     "No properties": "Keine Liegenschaften",
     "Owners": "Eigentümer",
     "Properties": "Liegenschaften",
     "Property": "Liegenschaft",
     "Property name": "Name Liegenschaft",
     "Suppliers": "Lieferanten",
+    "Total ownership shares": "Total Anteile",
     "Update Property": "Update Liegenschaft"
   },
   "Roles": {
