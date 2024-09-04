@@ -66,7 +66,7 @@ const MeetingAgendaDisplay = ({ contentRef, company, meeting, signees }: { conte
             <div className='flex items-end gap-10 w-full justify-between'>
                 {signees.map((signee, index) => (
                     <div className='flex flex-col gap-0.25 w-1/2' key={index}>
-                        <UserSignature userId={signee.userId} className='max-w-52 h-auto' />
+                        <UserSignature userId={signee.userId} className='max-w-52 h-auto min-h-14' />
                         <span>Name</span>
                         <span className='font-bold'>{signee.title || 'Title'}</span>
                     </div>
