@@ -91,7 +91,7 @@ const UpdatePropertyOwnerForm = ({ property, propertyOwner, onSubmit, isPending,
             <div>
                 <hr className='mt-3 mb-7' />
                 <p className='mb-1 font-medium text-sm'>Address</p>
-                <Checkbox isSelected={addressSameAsProperty} onChange={handleCheckboxChange} size='sm' className='font-normal' name='addressSameAsProperty'>Same as property address</Checkbox>
+                <Checkbox isSelected={addressSameAsProperty} onChange={handleCheckboxChange} size='sm' className='font-normal' name='addressSameAsProperty'><Text localeParent='Properties' localeKey='Same as property address' /></Checkbox>
             </div>
 
             {!addressSameAsProperty && (
@@ -149,10 +149,10 @@ const UpdatePropertyOwnerForm = ({ property, propertyOwner, onSubmit, isPending,
 
             <div className='flex justify-end items-center gap-2'>
                 <Button color="default" variant="flat" onPress={onClose} radius='sm'>
-                    Close
+                    <Text localeParent='Common' localeKey='Close' />
                 </Button>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                    Update
+                    <Text localeParent='Common' localeKey='Save' />
                 </Button>
             </div>
         </form>

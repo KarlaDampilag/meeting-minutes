@@ -40,7 +40,7 @@ const UpdateSupplierModal = ({ companyId, supplier, isOpen, onClose, onOpenChang
     }
 
     if (isSuccess) {
-        toast.success("Successfully updated", { toastId: "update-supplier" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully updated' />, { toastId: "update-supplier" });
         reset();
         refetch();
         onClose();

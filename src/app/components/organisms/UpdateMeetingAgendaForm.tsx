@@ -67,7 +67,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
     }
 
     if (isSuccess) {
-        toast.success("Successfully updated", { toastId: "update-meeting" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully updated' />, { toastId: "update-meeting" });
         reset();
         refetch();
     }

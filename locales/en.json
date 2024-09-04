@@ -21,6 +21,7 @@
     "Save": "Save",
     "Submit": "Submit",
     "Successfully deleted": "Successfully deleted",
+    "Successfully updated": "Successfully updated",
     "Prepositions": {
       "at": "at",
       "on": "on"
@@ -88,6 +89,7 @@
     "Properties": "Properties",
     "Property": "Property",
     "Property name": "Property name",
+    "Same as property address": "Same as property address",
     "Suppliers": "Suppliers",
     "Total ownership shares": "Total ownership shares",
     "Update Property": "Update Property"

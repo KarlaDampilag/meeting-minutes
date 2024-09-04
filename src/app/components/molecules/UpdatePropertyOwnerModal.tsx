@@ -62,7 +62,7 @@ const UpdatePropertyOwnerModal = ({ companyId, property, propertyOwner, isOpen, 
     }
 
     if (isSuccess) {
-        toast.success("Successfully updated", { toastId: "update-property-owner" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully updated' />, { toastId: "update-property-owner" });
         reset();
         refetch();
         onClose();

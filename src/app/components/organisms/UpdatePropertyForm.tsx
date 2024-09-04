@@ -39,7 +39,7 @@ const UpdatePropertyForm = ({ companyId, property }: { companyId: string, proper
     }
 
     if (isSuccess) {
-        toast.success("Successfully updated", { toastId: "update-property" });
+        toast.success(<Text localeParent='Common' localeKey='Successfully updated' />, { toastId: "update-property" });
         reset();
         refetch();
     }

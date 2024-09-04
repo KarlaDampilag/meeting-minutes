@@ -86,7 +86,7 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
             <div>
                 <hr className='mt-3 mb-7' />
                 <p className='mb-1 font-medium text-sm'>Address</p>
-                <Checkbox isSelected={addressSameAsProperty} onChange={handleCheckboxChange} size='sm' className='font-normal' name='addressSameAsProperty'>Same as property address</Checkbox>
+                <Checkbox isSelected={addressSameAsProperty} onChange={handleCheckboxChange} size='sm' className='font-normal' name='addressSameAsProperty'><Text localeParent='Properties' localeKey='Same as property address' /></Checkbox>
             </div>
 
             {!addressSameAsProperty && (

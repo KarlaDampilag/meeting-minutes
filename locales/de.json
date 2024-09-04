@@ -21,6 +21,7 @@
     "Save": "Speichern",
     "Submit": "Senden",
     "Successfully deleted": "Erfolgreich gelöscht",
+    "Successfully updated": "Erfolgreich gespeichert",
     "Prepositions": {
       "at": "um",
       "on": "vom"
@@ -88,6 +89,7 @@
     "Properties": "Liegenschaften",
     "Property": "Liegenschaft",
     "Property name": "Name Liegenschaft",
+    "Same as property address": "Gleich wie Liegenschaftsadresse",
     "Suppliers": "Lieferanten",
     "Total ownership shares": "Total Anteile",
     "Update Property": "Update Liegenschaft"
