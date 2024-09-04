@@ -1,8 +1,10 @@
-import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema'
-import { useTranslations } from 'next-intl';
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl';
+
+import { Company, MeetingWithPropertyAngAgendaItems } from '@/db/schema'
 import { ISignee } from '../organisms/MeetingPageContent';
+import UserSignature from './UserSignature';
 
 const MeetingAgendaDisplay = ({ contentRef, company, meeting, signees }: { contentRef: React.RefObject<HTMLDivElement>; company: Company, meeting: MeetingWithPropertyAngAgendaItems, signees: ISignee[] }) => {
     const t = useTranslations('Meetings.Agenda Document');
@@ -59,12 +61,12 @@ const MeetingAgendaDisplay = ({ contentRef, company, meeting, signees }: { conte
 
             <hr className='mt-6 mb-14 border-stone-400' />
 
-            <p className='font-bold mb-20'>{company.name}</p>
+            <p className='font-bold mb-2'>{company.name}</p>
 
-            <div className='flex items-center gap-10 w-full justify-between'>
-                {signees.map(signee => (
-                    <div className='flex flex-col gap-0.25 w-1/2' key={signee.userId}>
-                        [signature]
+            <div className='flex items-end gap-10 w-full justify-between'>
+                {signees.map((signee, index) => (
+                    <div className='flex flex-col gap-0.25 w-1/2' key={index}>
+                        <UserSignature userId={signee.userId} className='max-w-52 h-auto' />
                         <span>Name</span>
                         <span className='font-bold'>{signee.title || 'Title'}</span>
                     </div>

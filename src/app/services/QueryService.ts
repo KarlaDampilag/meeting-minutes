@@ -26,6 +26,19 @@ export class QueryService {
         }
     }
 
+    async fetchUser(userId: string): Promise<User> {
+        try {
+            const res = await fetch(`/api/users/${userId}`);
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to fetch user');
+        } catch (error) {
+            throw new Error('Failed to fetch user');
+        }
+    }
+
     async fetchOpenInvites(companyId: string): Promise<Invite[]> {
         try {
             const res = await fetch(`/api/company/${companyId}/invites`);

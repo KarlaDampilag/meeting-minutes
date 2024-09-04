@@ -5,6 +5,27 @@ import { db } from "@/db/db";
 import { users } from "@/db/schema";
 import { getUser } from "@/utils/serverActions";
 
+// GET /api/users/:id
+export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
+    try {
+        const user = await getUser();
+
+        if (!user) {
+            return new Response('Unauthorized', { status: 401 });
+        }
+
+        const result = await db.query.users.findFirst({
+            where: eq(users.id, context.params.id)
+        });
+
+        return new Response(JSON.stringify(result), { status: 200 });
+    } catch (error) {
+        console.error('Failed to get user');
+        console.error(error);
+        return new Response('Something went wrong', { status: 500 });
+    }
+}
+
 // POST /api/users/:id
 export const POST = async (request: NextRequest, context: { params: { id: string } }) => {
     try {

@@ -52,7 +52,7 @@ const DownloadMeetingAgendaPDFModal = ({ companyId, isOpen, onClick, onClose, on
                                 <p className='mb-4'>Select team members who will sign on the document:</p>
 
                                 {signees.map((signee, index) => (
-                                    <SigneeFormRow companyId={companyId} signee={signee} setSignees={setSignees} key={signee.userId} rowIndex={index} />
+                                    <SigneeFormRow companyId={companyId} signee={signee} setSignees={setSignees} key={index} rowIndex={index} />
                                 ))}
 
                                 <Button
