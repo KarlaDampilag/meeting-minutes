@@ -11,10 +11,13 @@
     "Verification Code": "Verification Code"
   },
   "Common": {
+    "Address": "Address",
     "Choose": "Choose",
     "Continue": "Continue",
     "Close": "Close",
+    "Date": "Date",
     "Delete": "Delete",
+    "Duration": "Duration",
     "Enter email": "Enter email",
     "Please wait": "Please wait...",
     "Refresh": "Refresh",
@@ -58,7 +61,9 @@
       "acceptanceOfBudgetLabel": "Acceptance of the budget for",
       "miscellaneous": "Miscellaneous"
     },
-    "Meetings": "Meetings"
+    "Create Meeting Agenda": "Create Meeting Agenda",
+    "Meetings": "Meetings",
+    "Select Agenda Topics": "Select Agenda Topics"
   },
   "Onboarding": {
     "companyAccountExistsDescription": "Join by getting access from your admin.",
@@ -117,8 +122,12 @@
     "Team": "Team"
   },
   "User": {
+    "Email address": "Email address",
     "First name": "First name",
     "Last name": "Last name",
-    "Email address": "Email address"
+    "signatureCaptureLabel1": "Please sign inside the designated area.",
+    "signatureCaptureLabel2": "Your signature will be used for signing digital documents generated on {appName}, including meeting minutes and more.",
+    "signatureSaved": "Thank you! Your signature has been saved.",
+    "Your Signature": "Your Signature"
   }
 }

@@ -9,6 +9,7 @@ import AddAgendaModal from '../molecules/AddAgendaModal';
 import { User } from '@/db/schema';
 import { useGetProperties } from '@/rq-hooks/useGetProperties';
 import { useAddMeeting } from '@/rq-hooks/useAddMeeting';
+import Text from '../atoms/Text';
 
 const AddAgendaButton = ({ user }: { user: User }) => {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
@@ -33,7 +34,7 @@ const AddAgendaButton = ({ user }: { user: User }) => {
 
     return (
         <div className='mb-3'>
-            <Button onPress={onOpen} color="primary" variant='bordered' startContent={<IoMdAdd size={18} className='min-w-fit' />} radius='sm' className='max-w-fit text-medium'>Create Meeting Agenda</Button>
+            <Button onPress={onOpen} color="primary" variant='bordered' startContent={<IoMdAdd size={18} className='min-w-fit' />} radius='sm' className='max-w-fit text-medium'><Text localeParent='Meetings' localeKey='Create Meeting Agenda' /></Button>
             <AddAgendaModal companyId={user.company_id as string} isPending={isPending} isOpen={isOpen} onAddMeeting={handleAddMeeting} onClose={onClose} onOpenChange={onOpenChange} />
         </div>
     )

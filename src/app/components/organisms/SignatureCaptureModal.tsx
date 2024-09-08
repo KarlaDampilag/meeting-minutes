@@ -2,6 +2,7 @@
 import React from 'react'
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react';
 import SignatureCapture from '../molecules/SignatureCapture';
+import Text from '../atoms/Text';
 
 const SignatureCaptureModal = ({ onSubmit }: { onSubmit: (dataUrl: string) => Promise<boolean> }) => {
     return (
@@ -15,7 +16,7 @@ const SignatureCaptureModal = ({ onSubmit }: { onSubmit: (dataUrl: string) => Pr
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1 pb-0 ml-3">Your Signature</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 pb-0 ml-3"><Text localeParent='User' localeKey='Your Signature' /></ModalHeader>
                         <ModalBody className=''>
                             <div className='pb-5'>
                                 <SignatureCapture onSubmit={onSubmit} />

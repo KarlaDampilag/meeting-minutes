@@ -31,7 +31,6 @@ class SignatureCapture extends Component<{ onSubmit: (dataUrl: string) => Promis
         this.setState({ isLoading: true });
         const success = await this.props.onSubmit(this.ref.current?.toDataURL() as string)
         if (success) {
-            // window.location.reload();
             this.setState({ isSuccess: true });
         } else {
             this.setState({ errorMessage: 'Something went wrong, please contact support' })
@@ -44,13 +43,13 @@ class SignatureCapture extends Component<{ onSubmit: (dataUrl: string) => Promis
             <div className='flex flex-col gap-3 max-w-[500px] mx-auto'>
                 {this.state.isSuccess ? (
                     <div>
-                        <p>Thank you! Your signature has been saved.</p>
+                        <p><Text localeParent='User' localeKey='signatureSaved' /></p>
                         <Button radius='sm' color='primary' className='w-full' onClick={() => window.location.reload()}><Text localeParent='Common' localeKey='Continue' /></Button>
                     </div>
                 ) : (
                     <>
-                        <p className='mb-0'>Please sign inside the designated area.</p>
-                        <p>Your signature will be used for signing digital documents generated on {process.env.NEXT_PUBLIC_APP_NAME}, including meeting minutes and more.</p>
+                        <p className='mb-0'><Text localeParent='User' localeKey='signatureCaptureLabel1' /></p>
+                            <p><Text localeParent='User' localeKey='signatureCaptureLabel2' params={{ appName: process.env.NEXT_PUBLIC_APP_NAME }} /></p>
                         <div className='w-fit mx-auto'>
                             <ReactSignatureCanvas
                                 ref={this.ref}
@@ -59,7 +58,7 @@ class SignatureCapture extends Component<{ onSubmit: (dataUrl: string) => Promis
                         </div>
                         <div className='w-full flex flex-col items-center justify-center gap-6'>
                             <Button radius='sm' variant='bordered' onClick={this.clear} className='w-full' disabled={this.state.isLoading}>
-                                Clear
+                                <Text localeParent='Common' localeKey='Delete' />
                             </Button>
                             <Button radius='sm' variant='solid' color='primary' onClick={this.submit} className='w-full' disabled={this.state.isLoading} isLoading={this.state.isLoading}>
                                 <Text localeParent='Common' localeKey='Submit' />

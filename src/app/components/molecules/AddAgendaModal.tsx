@@ -86,7 +86,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1 pb-3">Create Meeting Agenda</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 pb-3"><Text localeParent='Meetings' localeKey='Create Meeting Agenda' /></ModalHeader>
                         <ModalBody className='gap-7 pb-5'>
                             <form onSubmit={handleFormSubmit} className='flex flex-col gap-6'>
                                 <Input
@@ -103,7 +103,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 />
                                 <Input
                                     variant='bordered'
-                                    label="Location"
+                                    label={<Text localeParent='Common' localeKey='Address' />}
                                     placeholder="Raum Nr. 5 Rue du Liseron 7, 1006 Lausanne"
                                     type='text'
                                     name='location'
@@ -116,7 +116,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <div className='flex items-center gap-6'>
                                     <DatePicker
                                         variant="bordered"
-                                        label="Date"
+                                        label={<Text localeParent='Common' localeKey='Date' />}
                                         name="date"
                                         isRequired
                                         labelPlacement='outside'
@@ -129,7 +129,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         isDateUnavailable={getIsMeetingDateUnavailable}
                                     />
                                     <div>
-                                        <p className='mb-1.5 text-sm'>Duration<span className='text-danger-500'>*</span></p>
+                                        <p className='mb-1.5 text-sm'><Text localeParent='Common' localeKey='Duration' /><span className='text-danger-500'>*</span></p>
                                         <div className='flex items-end gap-2 max-w-72'>
                                             <Input
                                                 variant='bordered'
@@ -170,7 +170,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <hr className='mt-3' />
                                 <div className='flex flex-col gap-1.5'>
                                     <CheckboxGroup
-                                        label="Select Agenda Topics"
+                                        label={<Text localeParent='Meetings' localeKey='Select Agenda Topics' />}
                                         classNames={{ label: 'text-stone-700' }}
                                     >
                                         <div className='h-8 flex items-center'>
@@ -262,7 +262,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         <Text localeParent="Common" localeKey="Close" />
                                     </Button>
                                     <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
-                                        Create Meeting Agenda
+                                        <Text localeParent='Meetings' localeKey='Create Meeting Agenda' />
                                     </Button>
                                 </div>
                             </form>
