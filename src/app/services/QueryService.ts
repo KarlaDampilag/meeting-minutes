@@ -594,4 +594,18 @@ export class QueryService {
             throw new Error('Failed to update meeting');
         }
     }
+
+    async deleteMeeting(props: { meetingId: string, companyId: string }): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/meetings/${props.companyId}/${props.meetingId}`, { method: 'DELETE' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete meeting');
+        } catch (error) {
+            throw new Error('Failed to delete meeting');
+        }
+    }
 }

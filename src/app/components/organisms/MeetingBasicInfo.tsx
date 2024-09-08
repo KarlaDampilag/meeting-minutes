@@ -34,7 +34,7 @@ const MeetingBasicInfo = ({ meeting, includeTitle }: { meeting: MeetingWithPrope
                 </div>
                 <div className='flex items-center gap-2'>
                     <LuMapPin className='min-w-fit' size={20} />
-                    <p className='mb-0 text-sm'>{meeting.location}</p>
+                    <p className='mb-0 text-sm line-clamp-1'>{meeting.location}</p>
                 </div>
             </div>
         </div>

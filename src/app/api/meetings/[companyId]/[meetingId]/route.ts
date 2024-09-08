@@ -108,3 +108,25 @@ export const PUT = async (request: NextRequest, context: { params: { companyId: 
         return new Response('Something went wrong', { status: 500 });
     }
 }
+
+// DELETE /api/meetings/:companyId/:meetingId
+export const DELETE = async (request: NextRequest, context: { params: { companyId: string, meetingId: string } }) => {
+    try {
+        const user = await getUser();
+
+        if (!user) {
+            return new Response('Unauthorized', { status: 401 });
+        }
+
+        const result = await db
+            .delete(meetings)
+            .where(eq(meetings.id, context.params.meetingId))
+            .returning();
+
+        return new Response(JSON.stringify(result), { status: 200 });
+    } catch (error) {
+        console.error('Failed to delete meeting');
+        console.error(error);
+        return new Response('Something went wrong', { status: 500 });
+    }
+}
