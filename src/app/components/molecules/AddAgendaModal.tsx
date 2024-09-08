@@ -9,6 +9,16 @@ import PropertiesDropdown from './PropertiesDropdown';
 import { getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 import { useTranslations } from 'next-intl';
 
+const agendaItemNameKeys = [
+    "welcomingDeterminingQuorum",
+    "electionOfResponsiblePerson",
+    "approvalOfLastYearsMinutes",
+    "acceptanceOfAnnualFinancialStatements",
+    "renewalFund",
+    "acceptanceOfBudget",
+    "miscellaneous"
+];
+
 interface Props {
     companyId: string;
     isPending: boolean;
@@ -22,6 +32,11 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
     const today = now(getLocalTimeZone());
     const t = useTranslations('Meetings.Agenda Items');
     const [propertyId, setPropertyId] = React.useState<string>();
+
+    const firstDayPreviousYear = today.copy().subtract({ years: 1 }).set({ day: 1, month: 1 });
+    const lastDayPreviousYear = today.copy().subtract({ years: 1 }).set({ day: 31, month: 12 });
+    const firstDayCurrentYear = today.copy().set({ day: 1, month: 1 });
+    const lastDayCurrentYear = today.copy().set({ day: 31, month: 12 });
 
     const handleModalClose = () => {
         setPropertyId(undefined);
@@ -81,7 +96,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
             onOpenChange={onOpenChange}
             onClose={handleModalClose}
             placement="top-center"
-            size='3xl'
+            size='4xl'
         >
             <ModalContent>
                 {(onClose) => (
@@ -98,7 +113,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                     isRequired
                                     labelPlacement='outside'
                                     radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
                                     validationBehavior='native'
                                 />
                                 <Input
@@ -110,7 +125,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                     isRequired
                                     labelPlacement='outside'
                                     radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
                                     validationBehavior='native'
                                 />
                                 <div className='flex items-center gap-6'>
@@ -172,6 +187,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                     <CheckboxGroup
                                         label={<Text localeParent='Meetings' localeKey='Select Agenda Topics' />}
                                         classNames={{ label: 'text-stone-700' }}
+                                        defaultValue={agendaItemNameKeys}
                                     >
                                         <div className='h-8 flex items-center'>
                                             <Checkbox size='sm' className='font-normal' name='agendaTopics' value='welcomingDeterminingQuorum' aria-label='Welcoming and determining the quorum'>
@@ -201,6 +217,8 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                     name='acceptanceOfAnnualFinancialStatementsStartDate'
                                                     aria-label='Start date for Acceptance of the annual financial statements'
                                                     showMonthAndYearPickers
+                                                    defaultValue={firstDayPreviousYear}
+                                                    hideTimeZone
                                                 />
                                             </div>
                                             <span>-</span>
@@ -213,6 +231,8 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                     name='acceptanceOfAnnualFinancialStatementsEndDate'
                                                     aria-label='End date for Acceptance of the annual financial statements'
                                                     showMonthAndYearPickers
+                                                    defaultValue={lastDayPreviousYear}
+                                                    hideTimeZone
                                                 />
                                             </div>
                                         </div>
@@ -234,6 +254,8 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                     name='acceptanceOfBudgetStartDate'
                                                     aria-label='Start date for Acceptance of the budget'
                                                     showMonthAndYearPickers
+                                                    defaultValue={firstDayCurrentYear}
+                                                    hideTimeZone
                                                 />
                                             </div>
                                             <span>-</span>
@@ -246,6 +268,8 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                     name='acceptanceOfBudgetEndDate'
                                                     aria-label='End date for Acceptance of the budget'
                                                     showMonthAndYearPickers
+                                                    defaultValue={lastDayCurrentYear}
+                                                    hideTimeZone
                                                 />
                                             </div>
                                         </div>
