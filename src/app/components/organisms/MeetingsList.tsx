@@ -6,7 +6,6 @@ import { useGetMeetings } from '@/rq-hooks/useGetMeetings';
 import { UserWithCompany } from '@/db/schema';
 
 import MeetingCard from '../molecules/MeetingCard';
-import Text from '../atoms/Text';
 
 const MeetingsList = ({ userWithCompany, propertyId, searchTerm }: { userWithCompany: UserWithCompany, propertyId: string | undefined, searchTerm: string | undefined }) => {
     const { data, isLoading, isRefetching, isFetched } = useGetMeetings({ companyId: userWithCompany.company_id, propertyId, searchTerm });
@@ -18,7 +17,7 @@ const MeetingsList = ({ userWithCompany, propertyId, searchTerm }: { userWithCom
 
         return (
             <div className='flex flex-wrap gap-4 items-stretch'>
-                {data?.map(meeting => <MeetingCard meeting={meeting} key={meeting.id} />)}
+                {data?.map(meeting => <MeetingCard meeting={meeting} companyId={userWithCompany.company_id as string} key={meeting.id} />)}
             </div>
         )
     }
