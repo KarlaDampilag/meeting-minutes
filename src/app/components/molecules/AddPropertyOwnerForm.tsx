@@ -73,7 +73,6 @@ const AddPropertyOwnerForm = ({ onSubmit, isPending, onClose }: Props) => {
                 placeholder="Enter owned parts"
                 type='number'
                 min="1"
-                max="100"
                 name="ownedParts"
                 // isRequired
                 labelPlacement='outside'

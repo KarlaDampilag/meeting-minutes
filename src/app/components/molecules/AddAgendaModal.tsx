@@ -145,6 +145,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                 endContent="hours"
                                                 validationBehavior='native'
                                                 validate={validateNumberPreventNegative}
+                                                defaultValue='1'
                                             />
                                             <Input
                                                 variant='bordered'
@@ -160,6 +161,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                 endContent="minutes"
                                                 validationBehavior='native'
                                                 validate={validateNumberPreventNegative}
+                                                defaultValue='0'
                                             />
                                         </div>
                                     </div>

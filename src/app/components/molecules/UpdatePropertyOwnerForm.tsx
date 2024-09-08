@@ -79,7 +79,6 @@ const UpdatePropertyOwnerForm = ({ property, propertyOwner, onSubmit, isPending,
                 placeholder="Enter owned parts"
                 type='number'
                 min="1"
-                max="100"
                 name='ownedParts'
                 labelPlacement='outside'
                 radius='sm'
