@@ -8,7 +8,7 @@ const PropertyAddressAndManager = ({ property }: { property: PropertyWithManager
         <div className='flex flex-col gap-3'>
             <div className='flex items-center gap-2'>
                 <LuMapPin className='min-w-fit' size={20} />
-                <p className='mb-0 text-sm'>{property.address?.street}, {property.address?.city}, {property.address?.country}</p>
+                <p className='mb-0 text-sm line-clamp-1'>{property.address?.street}, {property.address?.city}, {property.address?.country}</p>
             </div>
             <div className='flex items-center gap-2'>
                 <LuUserSquare2 className='min-w-fit' size={19} />

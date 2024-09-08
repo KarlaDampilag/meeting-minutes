@@ -302,6 +302,20 @@ export class QueryService {
         }
     }
 
+    async deleteProperty(props: { propertyId: string, companyId: string }): Promise<boolean> {
+        try {
+            const res = await fetch(`/api/properties/${props.companyId}/${props.propertyId}`, { method: 'DELETE' });
+
+            if (res.status === 200) {
+                const data = await res.json()
+                return data;
+            }
+            throw new Error('Failed to delete property');
+        } catch (error) {
+            throw new Error('Failed to delete property');
+        }
+    }
+
     async addPropertyOwner(props: { companyId: string, propertyId: string, firstName: string, lastName: string, telephone: string | null, email: string | null, ownedParts: number | null, street: string | null, city: string | null, zipCode: string | null, country: string | null }): Promise<Owner> {
         try {
             const formData = new FormData();
