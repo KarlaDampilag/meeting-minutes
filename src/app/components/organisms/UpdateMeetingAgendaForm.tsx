@@ -4,7 +4,7 @@ import React from 'react'
 import { Button, cn, DatePicker, Input } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { IoAdd, IoChevronDown, IoChevronUp } from 'react-icons/io5';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import PropertiesDropdown from '../molecules/PropertiesDropdown';
@@ -78,6 +78,10 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
         const updatedItems = [...agendaItems];
         updatedItems.splice(index, 1);
         setAgendaItems(updatedItems);
+    }
+
+    const addItem = () => {
+        setAgendaItems([...agendaItems, ""]);
     }
 
     return (
@@ -167,7 +171,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                 <label><Text localeParent='Meetings' localeKey='Agenda Topics' /></label>
                 {agendaItems.map((item, index) => {
                     return (
-                        <div className='flex items-center gap-3' key={item}>
+                        <div className='flex items-center gap-3' key={index}>
                             <div className='flex items-center gap-1 w-fit'>
                                 <span onClick={() => moveItemUp(index)} className={cn('border px-2 py-1.5 rounded-md', { 'cursor-pointer': index > 0, 'cursor-not-allowed': index === 0 })}>
                                     <IoChevronUp />
@@ -176,7 +180,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                     <IoChevronDown />
                                 </span>
                             </div>
-                            <div className='agenda-topic-input-row w-full max-w-lg'>
+                            <div className='agenda-topic-input-row w-full max-w-md'>
                                 <Input
                                     variant='bordered'
                                     aria-label=""
@@ -191,7 +195,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                     value={item}
                                     onChange={(e) => {
                                         const updatedItems = [...agendaItems];
-                                        (updatedItems as any)[index] = e.target.value;  // Update agendaItems state
+                                        (updatedItems as any)[index] = e.target.value; 
                                         setAgendaItems(updatedItems);
                                     }}
                                 />
@@ -203,6 +207,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                     )
                 })}
             </div>
+            <Button variant='bordered' radius='sm' color='primary' startContent={<IoAdd />} onClick={addItem} className='max-w-xl'>Add Agenda Topic</Button>
 
             <div className='flex justify-start items-center gap-2'>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>
