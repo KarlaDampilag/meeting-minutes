@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@nextui-org/react'
-import { RiPencilFill } from 'react-icons/ri'
+import { RxExternalLink } from 'react-icons/rx'
 
 import { PropertyWithManager } from '@/db/schema'
 
@@ -24,7 +24,7 @@ const PropertyCard = ({ property }: { property: PropertyWithManager }) => {
                 </div>
             </div>
             <div className='mt-7 flex items-center gap-2 w-full justify-between'>
-                <Button startContent={<RiPencilFill size={18} />} variant='solid' color='primary' size='sm' radius='sm' onClick={() => router.push(`/dashboard/properties/${property.id}`)}>Edit</Button>
+                <Button startContent={<RxExternalLink size={18} />} variant='solid' color='primary' size='sm' radius='sm' onClick={() => router.push(`/dashboard/properties/${property.id}`)}>Details</Button>
                 <DeletePropertyButton property={property} />
             </div>
         </Card>

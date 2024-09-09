@@ -55,3 +55,5 @@ export const getCalendarDateFromDate = (date: Date, options?: { includeTime?: bo
         return calendarDate;
     }
 }
+
+export const getAgendaItemHasDates = (key: string) => key === 'acceptanceOfAnnualFinancialStatements' || key === 'acceptanceOfBudget';

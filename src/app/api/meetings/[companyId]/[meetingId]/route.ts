@@ -23,7 +23,9 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
             ),
             with: {
                 property: true,
-                agendaItems: true
+                agendaItems: {
+                    orderBy: (agendaItems, { asc }) => [asc(agendaItems.order)]
+                }
             }
         });
 
@@ -93,7 +95,8 @@ export const PUT = async (request: NextRequest, context: { params: { companyId: 
         for (let i = 0; i < agendaTopicsArr.length; i++) {
             const agendaItemInsertResult = await db.insert(agendaItems).values({
                 meeting_id: result[0].id,
-                name: agendaTopicsArr[i]
+                name: agendaTopicsArr[i],
+                order: i + 1
             }).returning();
 
             if (!agendaItemInsertResult || agendaItemInsertResult.length === 0) {

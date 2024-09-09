@@ -3,40 +3,6 @@ import { useTranslations } from 'next-intl';
 import { MeetingWithPropertyAngAgendaItems } from '@/db/schema';
 import { getCalendarDateFromDate } from '@/utils/utils';
 
-export const useDefaultCheckedAgendaItems = (meeting: MeetingWithPropertyAngAgendaItems): string[] => {
-    const t = useTranslations('Meetings.Agenda Items');
-
-    const agendaItemNameKeys = [
-        "welcomingDeterminingQuorum",
-        "electionOfResponsiblePerson",
-        "approvalOfLastYearsMinutes",
-        "acceptanceOfAnnualFinancialStatementsLabel",
-        "renewalFund",
-        "acceptanceOfBudgetLabel",
-        "miscellaneous"
-    ];
-
-    const checkedAgendaItemsNameKeys: string[] = [];
-
-    for (let i = 0; i < agendaItemNameKeys.length; i++) {
-        const agendaItemNameKey = agendaItemNameKeys[i];
-        const agendaItemName = t(agendaItemNameKey);
-
-        const meetingHasAgendaItem = meeting.agendaItems.some(agendaItem => agendaItem.name.includes(agendaItemName));
-        if (meetingHasAgendaItem) {
-            if (agendaItemNameKey === "acceptanceOfAnnualFinancialStatementsLabel") {
-                checkedAgendaItemsNameKeys.push("acceptanceOfAnnualFinancialStatements");
-            } else if (agendaItemNameKey === "acceptanceOfBudgetLabel") {
-                checkedAgendaItemsNameKeys.push("acceptanceOfBudget");
-            } else {
-                checkedAgendaItemsNameKeys.push(agendaItemNameKey);
-            }
-        }
-    }
-
-    return checkedAgendaItemsNameKeys;
-};
-
 export const useStartDateFromMeetingByAgendaNameKey = (meeting: MeetingWithPropertyAngAgendaItems, agendaItemNameKey: string, execute: boolean) => {
     const t = useTranslations('Meetings.Agenda Items');
 

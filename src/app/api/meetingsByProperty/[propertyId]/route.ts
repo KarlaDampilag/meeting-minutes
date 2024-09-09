@@ -62,7 +62,7 @@ export const GET = async (request: NextRequest, context: { params: { propertyId:
                         eq(meetings.property_id, context.params.propertyId),
                         eq(properties.company_id, user.company_id)
                     )
-                )
+            )
         }
 
         return new Response(JSON.stringify(result), { status: 200 });

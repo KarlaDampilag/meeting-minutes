@@ -148,7 +148,8 @@ export const agendaItems = pgTable('agendaItems', {
     name: varchar('name', { length: 256 }).notNull(),
     meeting_id: uuid('meeting_id').references(() => meetings.id).notNull(),
     description: text('description'),
-    created_at: timestamp('created_at').defaultNow()
+    created_at: timestamp('created_at').defaultNow(),
+    order: integer('order').notNull()
 });
 
 export const agendaItemsRelations = relations(agendaItems, ({ one }) => ({

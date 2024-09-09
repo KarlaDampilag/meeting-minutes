@@ -61,9 +61,8 @@
       "acceptanceOfBudgetLabel": "Acceptance of the budget for",
       "miscellaneous": "Miscellaneous"
     },
-    "Create Meeting Agenda": "Create Meeting Agenda",
-    "Meetings": "Meetings",
-    "Select Agenda Topics": "Select Agenda Topics"
+    "Agenda Topics": "Agenda Topics",
+    "Create Meeting Agenda": "Create Meeting Agenda"
   },
   "Onboarding": {
     "companyAccountExistsDescription": "Join by getting access from your admin.",

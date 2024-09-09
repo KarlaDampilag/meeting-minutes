@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@nextui-org/react'
-import { RiPencilFill } from 'react-icons/ri'
+import { RxExternalLink } from 'react-icons/rx'
 
 import Card from '../atoms/Card'
 import DeleteMeetingButton from './DeleteMeetingButton';
@@ -23,7 +23,7 @@ const MeetingCard = ({ companyId, meeting }: { companyId: string, meeting: Meeti
                 <MeetingBasicInfo meeting={meeting} />
             </div>
             <div className='mt-7 flex items-center gap-2 w-full justify-between'>
-                <Button startContent={<RiPencilFill size={18} />} variant='solid' color='primary' size='sm' radius='sm' onClick={() => router.push(`/dashboard/meetings/${meeting.id}`)}>Edit</Button>
+                <Button startContent={<RxExternalLink size={18} />} variant='solid' color='primary' size='sm' radius='sm' onClick={() => router.push(`/dashboard/meetings/${meeting.id}`)}>Details</Button>
                 <DeleteMeetingButton meeting={meeting} companyId={companyId} />
             </div>
         </Card>

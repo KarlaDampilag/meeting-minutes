@@ -1,23 +1,15 @@
 'use client'
 import React from 'react'
-import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, Input, DatePicker, Checkbox, DateValue, CheckboxGroup } from "@nextui-org/react";
-import { now, getLocalTimeZone } from "@internationalized/date";
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, cn, Input, DatePicker } from "@nextui-org/react";
+import { now, today, getLocalTimeZone } from "@internationalized/date";
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 
 import Text from '../atoms/Text';
 import PropertiesDropdown from './PropertiesDropdown';
-import { getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
-import { useTranslations } from 'next-intl';
 
-const agendaItemNameKeys = [
-    "welcomingDeterminingQuorum",
-    "electionOfResponsiblePerson",
-    "approvalOfLastYearsMinutes",
-    "acceptanceOfAnnualFinancialStatements",
-    "renewalFund",
-    "acceptanceOfBudget",
-    "miscellaneous"
-];
+import {  getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 
 interface Props {
     companyId: string;
@@ -29,17 +21,40 @@ interface Props {
 }
 
 const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, onOpenChange }: Props) => {
-    const today = now(getLocalTimeZone());
+    const todayWithTime = now(getLocalTimeZone());
+    const todayDate = today(getLocalTimeZone());
+    const firstDayPreviousYear = todayDate.copy().subtract({ years: 1 }).set({ day: 1, month: 1 });
+    const lastDayPreviousYear = todayDate.copy().subtract({ years: 1 }).set({ day: 31, month: 12 });
+    const firstDayCurrentYear = todayDate.copy().set({ day: 1, month: 1 });
+    const lastDayCurrentYear = todayDate.copy().set({ day: 31, month: 12 });
     const t = useTranslations('Meetings.Agenda Items');
-    const [propertyId, setPropertyId] = React.useState<string>();
 
-    const firstDayPreviousYear = today.copy().subtract({ years: 1 }).set({ day: 1, month: 1 });
-    const lastDayPreviousYear = today.copy().subtract({ years: 1 }).set({ day: 31, month: 12 });
-    const firstDayCurrentYear = today.copy().set({ day: 1, month: 1 });
-    const lastDayCurrentYear = today.copy().set({ day: 31, month: 12 });
+    const getDefaultTopicValue = (key: string) => {
+        switch (key) {
+            case 'acceptanceOfAnnualFinancialStatements':
+                return t(key, { startDate: new Date(firstDayPreviousYear.toString()).toLocaleDateString("de-CH"), endDate: new Date(lastDayPreviousYear.toString()).toLocaleDateString("de-CH") });
+            case 'acceptanceOfBudget':
+                return t(key, { startDate: new Date(firstDayCurrentYear.toString()).toLocaleDateString("de-CH"), endDate: new Date(lastDayCurrentYear.toString()).toLocaleDateString("de-CH") })
+            default:
+                return t(key);
+        }
+    };
+
+    const defaultAgendaItems = [
+        getDefaultTopicValue("welcomingDeterminingQuorum"),
+        getDefaultTopicValue("electionOfResponsiblePerson"),
+        getDefaultTopicValue("approvalOfLastYearsMinutes"),
+        getDefaultTopicValue("acceptanceOfAnnualFinancialStatements"),
+        getDefaultTopicValue("renewalFund"),
+        getDefaultTopicValue("acceptanceOfBudget"),
+        getDefaultTopicValue("miscellaneous"),
+    ];
+    const [agendaItems, setAgendaItems] = React.useState<string[]>(defaultAgendaItems);
+    const [propertyId, setPropertyId] = React.useState<string>();
 
     const handleModalClose = () => {
         setPropertyId(undefined);
+        setAgendaItems(defaultAgendaItems);
         onClose();
     }
 
@@ -64,31 +79,23 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
         const date = target.date.value;
         const hours = target.hours.value;
         const minutes = target.minutes.value;
-        const agendaTopics = target.agendaTopics;
-        const checkedAgendaTopics: string[] = [];
-        agendaTopics.forEach(agendaTopic => {
-            if ((agendaTopic as HTMLInputElement).checked) {
-                const agendaTopicLocalesKey = (agendaTopic as HTMLInputElement).value;
-                if (agendaTopicLocalesKey === "acceptanceOfAnnualFinancialStatements") {
-                    if (target.acceptanceOfAnnualFinancialStatementsStartDate.value && target.acceptanceOfAnnualFinancialStatementsEndDate.value) {
-                        const startDate = new Date(target.acceptanceOfAnnualFinancialStatementsStartDate.value).toLocaleDateString("de-CH");
-                        const endDate = new Date(target.acceptanceOfAnnualFinancialStatementsEndDate.value).toLocaleDateString("de-CH");
-                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
-                    }
-                } else if (agendaTopicLocalesKey == "acceptanceOfBudget") {
-                    if (target.acceptanceOfBudgetStartDate.value && target.acceptanceOfBudgetEndDate.value) {
-                        const startDate = new Date(target.acceptanceOfBudgetStartDate.value).toLocaleDateString("de-CH");
-                        const endDate = new Date(target.acceptanceOfBudgetEndDate.value).toLocaleDateString("de-CH");
-                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
-                    }
-                } else {
-                    checkedAgendaTopics.push(t(agendaTopicLocalesKey));
-                }
-            }
-        });
         const propertyId = target.propertyId.value;
-        onAddMeeting(propertyId, name, location, date, hours, minutes, checkedAgendaTopics);
+        onAddMeeting(propertyId, name, location, date, hours, minutes, agendaItems);
     }
+
+    const moveItemUp = (index: number) => {
+        if (index === 0) return; // Already at the top
+        const updatedItems = [...agendaItems];
+        [updatedItems[index - 1], updatedItems[index]] = [updatedItems[index], updatedItems[index - 1]];
+        setAgendaItems(updatedItems);
+    };
+
+    const moveItemDown = (index: number) => {
+        if (index === agendaItems.length - 1) return; // Already at the bottom
+        const updatedItems = [...agendaItems];
+        [updatedItems[index + 1], updatedItems[index]] = [updatedItems[index], updatedItems[index + 1]];
+        setAgendaItems(updatedItems);
+    };
 
     return (
         <Modal
@@ -96,7 +103,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
             onOpenChange={onOpenChange}
             onClose={handleModalClose}
             placement="top-center"
-            size='4xl'
+            size='5xl'
         >
             <ModalContent>
                 {(onClose) => (
@@ -139,7 +146,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         classNames={{ base: 'max-w-64 datepicker' }}
                                         hideTimeZone
                                         showMonthAndYearPickers
-                                        defaultValue={today}
+                                        defaultValue={todayWithTime}
                                         validationBehavior='native'
                                         isDateUnavailable={getIsMeetingDateUnavailable}
                                     />
@@ -183,102 +190,42 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 </div>
                                 <PropertiesDropdown companyId={companyId} selectedId={propertyId} onChange={setPropertyId} labelPlacement='outside' className='' />
                                 <hr className='mt-3' />
-                                <div className='flex flex-col gap-1.5'>
-                                    <CheckboxGroup
-                                        label={<Text localeParent='Meetings' localeKey='Select Agenda Topics' />}
-                                        classNames={{ label: 'text-stone-700' }}
-                                        defaultValue={agendaItemNameKeys}
-                                    >
-                                        <div className='h-8 flex items-center'>
-                                            <Checkbox size='sm' className='font-normal' name='agendaTopics' value='welcomingDeterminingQuorum' aria-label='Welcoming and determining the quorum'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='welcomingDeterminingQuorum' />
-                                            </Checkbox>
-                                        </div>
-                                        <div className='h-8 flex items-center'>
-                                            <Checkbox size='sm' className='font-normal' name='agendaTopics' value='electionOfResponsiblePerson' aria-label='Election of the person responsible for the minutes'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='electionOfResponsiblePerson' />
-                                            </Checkbox>
-                                        </div>
-                                        <div className='h-8 flex items-center'>
-                                            <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='approvalOfLastYearsMinutes' aria-label="Approval of the last year's minutes">
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='approvalOfLastYearsMinutes' />
-                                            </Checkbox>
-                                        </div>
-                                        <div className='flex items-center gap-1.5 flex-wrap'>
-                                            <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfAnnualFinancialStatements' aria-label='Acceptance of the annual financial statements'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfAnnualFinancialStatementsLabel' />
-                                            </Checkbox>
-                                            <div className='inline-block'>
-                                                <DatePicker
-                                                    variant='bordered'
-                                                    radius='sm'
-                                                    size='sm'
-                                                    classNames={{ base: 'datepicker' }}
-                                                    name='acceptanceOfAnnualFinancialStatementsStartDate'
-                                                    aria-label='Start date for Acceptance of the annual financial statements'
-                                                    showMonthAndYearPickers
-                                                    defaultValue={firstDayPreviousYear}
-                                                    hideTimeZone
-                                                />
+                                <div className='flex flex-col gap-6'>
+                                    <label><Text localeParent='Meetings' localeKey='Agenda Topics' /></label>
+                                    {agendaItems.map((item, index) => {
+                                        return (
+                                            <div className='flex items-center gap-3' key={item}>
+                                                <div className='flex items-center gap-1 w-fit'>
+                                                    <span onClick={() => moveItemUp(index)} className={cn('border px-2 py-1.5 rounded-md', { 'cursor-pointer': index > 0, 'cursor-not-allowed': index === 0 })}>
+                                                        <IoChevronUp />
+                                                    </span>
+                                                    <span onClick={() => moveItemDown(index)} className={cn('border px-2 py-1.5 rounded-md', { 'cursor-pointer': index < agendaItems.length - 1, 'cursor-not-allowed': index === agendaItems.length - 1 })}>
+                                                        <IoChevronDown />
+                                                    </span>
+                                                </div>
+                                                <div className='agenda-topic-input-row w-full max-w-lg'>
+                                                    <Input
+                                                        variant='bordered'
+                                                        aria-label=""
+                                                        type='text'
+                                                        name={`agendaItem-${index + 1}`}
+                                                        isRequired
+                                                        labelPlacement='outside'
+                                                        radius='sm'
+                                                        classNames={{ inputWrapper: 'border border-gray-300' }}
+                                                        fullWidth
+                                                        validationBehavior='native'
+                                                        value={item}
+                                                        onChange={(e) => {
+                                                            const updatedItems = [...agendaItems];
+                                                            updatedItems[index] = e.target.value;
+                                                            setAgendaItems(updatedItems);
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
-                                            <span>-</span>
-                                            <div className='inline-block'>
-                                                <DatePicker
-                                                    variant='bordered'
-                                                    radius='sm'
-                                                    size='sm'
-                                                    classNames={{ base: 'datepicker' }}
-                                                    name='acceptanceOfAnnualFinancialStatementsEndDate'
-                                                    aria-label='End date for Acceptance of the annual financial statements'
-                                                    showMonthAndYearPickers
-                                                    defaultValue={lastDayPreviousYear}
-                                                    hideTimeZone
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className='h-8 flex items-center'>
-                                            <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='renewalFund' aria-label='Renewal fund'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='renewalFund' />
-                                            </Checkbox>
-                                        </div>
-                                        <div className='flex items-center gap-1.5 flex-wrap'>
-                                            <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfBudget' aria-label='Acceptance of the budget'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfBudgetLabel' />
-                                            </Checkbox>
-                                            <div className='inline-block'>
-                                                <DatePicker
-                                                    variant='bordered'
-                                                    radius='sm'
-                                                    size='sm'
-                                                    classNames={{ base: 'datepicker' }}
-                                                    name='acceptanceOfBudgetStartDate'
-                                                    aria-label='Start date for Acceptance of the budget'
-                                                    showMonthAndYearPickers
-                                                    defaultValue={firstDayCurrentYear}
-                                                    hideTimeZone
-                                                />
-                                            </div>
-                                            <span>-</span>
-                                            <div className='inline-block'>
-                                                <DatePicker
-                                                    variant='bordered'
-                                                    radius='sm'
-                                                    size='sm'
-                                                    classNames={{ base: 'datepicker' }}
-                                                    name='acceptanceOfBudgetEndDate'
-                                                    aria-label='End date for Acceptance of the budget'
-                                                    showMonthAndYearPickers
-                                                    defaultValue={lastDayCurrentYear}
-                                                    hideTimeZone
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className='h-8 flex items-center'>
-                                            <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='miscellaneous' aria-label='Miscellaneous'>
-                                                <Text localeParent='Meetings.Agenda Items' localeKey='miscellaneous' />
-                                            </Checkbox>
-                                        </div>
-                                    </CheckboxGroup>
+                                        )
+                                    })}
                                 </div>
 
                                 <div className='flex justify-start items-center gap-2'>

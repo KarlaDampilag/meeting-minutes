@@ -48,7 +48,8 @@ export const POST = async (request: NextRequest, context: { params: { companyId:
         for (let i = 0; i < agendaTopicsArr.length; i++) {
             const agendaItemInsertResult = await db.insert(agendaItems).values({
                 meeting_id: insertResult[0].id,
-                name: agendaTopicsArr[i]
+                name: agendaTopicsArr[i],
+                order: i + 1
             }).returning();
 
             if (!agendaItemInsertResult || agendaItemInsertResult.length === 0) {

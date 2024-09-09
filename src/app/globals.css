@@ -110,3 +110,11 @@ a {
 .signature-canvas {
     @apply border border-neutral-300;
 }
+
+.agenda-topic-input-row {
+    @apply h-8 flex items-center;
+}
+
+.agenda-topic-input-row-with-dates {
+    @apply gap-1.5 flex-wrap flex items-center;
+}

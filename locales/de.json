@@ -61,9 +61,9 @@
       "acceptanceOfBudgetLabel": "Abname des Budgets vom",
       "miscellaneous": "Verschiedenes, Mitteilungen"
     },
+    "Agenda Topics": "Agenda Punkte",
     "Create Meeting Agenda": "Einladung erstellen",
-    "Meetings": "Versammlungen",
-    "Select Agenda Topics": "Agenda Punkte"
+    "Meetings": "Versammlungen"
   },
   "Onboarding": {
     "companyAccountExistsDescription": "Beitreten, indem du Zugriff von deinem Admin erhältst.",

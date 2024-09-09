@@ -1,7 +1,7 @@
 
 'use client'
 import React from 'react'
-import { Button, Checkbox, CheckboxGroup, cn, DatePicker, Input } from '@nextui-org/react';
+import { Button, cn, DatePicker, Input } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 
@@ -12,13 +12,14 @@ import { MeetingWithPropertyAngAgendaItems } from '@/db/schema';
 import { getCalendarDateFromDate, getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 import { useUpdateMeeting } from '@/rq-hooks/useUpdateMeeting';
 import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
-import { useDefaultCheckedAgendaItems, useStartDateFromMeetingByAgendaNameKey, useEndDateFromMeetingByAgendaNameKey } from '@/custom-hooks/customHooks';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 
 const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, meeting: MeetingWithPropertyAngAgendaItems }) => {
     const t = useTranslations('Meetings.Agenda Items');
     const { mutate, isPending, isSuccess, isError, reset } = useUpdateMeeting({ meetingId: meeting.id });
     const { refetch } = useGetMeeting({ meetingId: meeting.id, companyId });
     const [propertyId, setPropertyId] = React.useState<string>(meeting.property_id);
+    const [agendaItems, setAgendaItems] = React.useState<string[]>(meeting.agendaItems.map(item => item.name));
 
     const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
@@ -39,31 +40,9 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
         const location = target.location.value;
         const date = target.date.value;
         const hours = target.hours.value;
-        const minutes = target.minutes.value;
-        const agendaTopics = target.agendaTopics;
-        const checkedAgendaTopics: string[] = [];
-        agendaTopics.forEach(agendaTopic => {
-            if ((agendaTopic as HTMLInputElement).checked) {
-                const agendaTopicLocalesKey = (agendaTopic as HTMLInputElement).value;
-                if (agendaTopicLocalesKey === "acceptanceOfAnnualFinancialStatements") {
-                    if (target.acceptanceOfAnnualFinancialStatementsStartDate.value && target.acceptanceOfAnnualFinancialStatementsEndDate.value) {
-                        const startDate = new Date(target.acceptanceOfAnnualFinancialStatementsStartDate.value).toLocaleDateString("de-CH");
-                        const endDate = new Date(target.acceptanceOfAnnualFinancialStatementsEndDate.value).toLocaleDateString("de-CH");
-                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
-                    }
-                } else if (agendaTopicLocalesKey == "acceptanceOfBudget") {
-                    if (target.acceptanceOfBudgetStartDate.value && target.acceptanceOfBudgetEndDate.value) {
-                        const startDate = new Date(target.acceptanceOfBudgetStartDate.value).toLocaleDateString("de-CH");
-                        const endDate = new Date(target.acceptanceOfBudgetEndDate.value).toLocaleDateString("de-CH");
-                        checkedAgendaTopics.push(t(agendaTopicLocalesKey, { startDate, endDate }));
-                    }
-                } else {
-                    checkedAgendaTopics.push(t(agendaTopicLocalesKey));
-                }
-            }
-        });
+        const minutes = target.minutes.value;  
         const propertyId = target.propertyId.value;
-        mutate({ companyId, meetingId: meeting.id, propertyId, name, location, date, hours, minutes, agendaTopics: checkedAgendaTopics });
+        mutate({ companyId, meetingId: meeting.id, propertyId, name, location, date, hours, minutes, agendaTopics: agendaItems });
     }
 
     if (isSuccess) {
@@ -80,10 +59,19 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
 
     const [hours, minutes, seconds] = meeting.duration.split(":").map(String);
 
-    const checkedAgendaItems = useDefaultCheckedAgendaItems(meeting);
-    console.log(checkedAgendaItems)
+    const moveItemUp = (index: number) => {
+        if (index === 0) return; // Already at the top
+        const updatedItems = [...agendaItems];
+        [updatedItems[index - 1], updatedItems[index]] = [updatedItems[index], updatedItems[index - 1]];
+        setAgendaItems(updatedItems);
+    };
 
-    console.log(checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))
+    const moveItemDown = (index: number) => {
+        if (index === agendaItems.length - 1) return; // Already at the bottom
+        const updatedItems = [...agendaItems];
+        [updatedItems[index + 1], updatedItems[index]] = [updatedItems[index], updatedItems[index + 1]];
+        setAgendaItems(updatedItems);
+    };
 
     return (
         <form onSubmit={handleFormSubmit} className='flex flex-col gap-6'>
@@ -96,7 +84,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                 isRequired
                 labelPlacement='outside'
                 radius='sm'
-                classNames={{ inputWrapper: 'border border-gray-300' }}
+                classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
                 validationBehavior='native'
                 defaultValue={meeting.name}
             />
@@ -109,7 +97,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                 isRequired
                 labelPlacement='outside'
                 radius='sm'
-                classNames={{ inputWrapper: 'border border-gray-300' }}
+                classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
                 validationBehavior='native'
                 defaultValue={meeting.location}
             />
@@ -168,98 +156,42 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
             </div>
             <PropertiesDropdown companyId={companyId} selectedId={propertyId} onChange={setPropertyId} labelPlacement='outside' className='' />
             <hr className='mt-3' />
-            <div className='flex flex-col gap-1.5'>
-                <CheckboxGroup
-                    label="Select Agenda Topics"
-                    classNames={{ label: 'text-stone-700' }}
-                    defaultValue={checkedAgendaItems}
-                >
-                    <div className='h-8 flex items-center'>
-                        <Checkbox size='sm' className='font-normal' name='agendaTopics' value='welcomingDeterminingQuorum' aria-label='Welcoming and determining the quorum'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='welcomingDeterminingQuorum' />
-                        </Checkbox>
-                    </div>
-                    <div className='h-8 flex items-center'>
-                        <Checkbox size='sm' className='font-normal' name='agendaTopics' value='electionOfResponsiblePerson' aria-label='Election of the person responsible for the minutes'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='electionOfResponsiblePerson' />
-                        </Checkbox>
-                    </div>
-                    <div className='h-8 flex items-center'>
-                        <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='approvalOfLastYearsMinutes' aria-label="Approval of the last year's minutes">
-                            <Text localeParent='Meetings.Agenda Items' localeKey='approvalOfLastYearsMinutes' />
-                        </Checkbox>
-                    </div>
-                    <div className='flex items-center gap-1.5 flex-wrap'>
-                        <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfAnnualFinancialStatements' aria-label='Acceptance of the annual financial statements'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfAnnualFinancialStatementsLabel' />
-                        </Checkbox>
-                        <div className='inline-block'>
-                            <DatePicker
-                                variant='bordered'
-                                radius='sm'
-                                size='sm'
-                                classNames={{ base: 'datepicker' }}
-                                name='acceptanceOfAnnualFinancialStatementsStartDate'
-                                aria-label='Start date for Acceptance of the annual financial statements'
-                                showMonthAndYearPickers
-                                defaultValue={useStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements', checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))}
-                            />
+            <div className='flex flex-col gap-6'>
+                <label><Text localeParent='Meetings' localeKey='Agenda Topics' /></label>
+                {agendaItems.map((item, index) => {
+                    return (
+                        <div className='flex items-center gap-3' key={item}>
+                            <div className='flex items-center gap-1 w-fit'>
+                                <span onClick={() => moveItemUp(index)} className={cn('border px-2 py-1.5 rounded-md', { 'cursor-pointer': index > 0, 'cursor-not-allowed': index === 0 })}>
+                                    <IoChevronUp />
+                                </span>
+                                <span onClick={() => moveItemDown(index)} className={cn('border px-2 py-1.5 rounded-md', { 'cursor-pointer': index < agendaItems.length - 1, 'cursor-not-allowed': index === agendaItems.length - 1 })}>
+                                    <IoChevronDown />
+                                </span>
+                            </div>
+                            <div className='agenda-topic-input-row w-full max-w-lg'>
+                                <Input
+                                    variant='bordered'
+                                    aria-label=""
+                                    type='text'
+                                    name={`agendaItem-${index + 1}`}
+                                    isRequired
+                                    labelPlacement='outside'
+                                    radius='sm'
+                                    classNames={{ inputWrapper: 'border border-gray-300' }}
+                                    fullWidth
+                                    validationBehavior='native'
+                                    value={item}
+                                    onChange={(e) => {
+                                        const updatedItems = [...agendaItems];
+                                        (updatedItems as any)[index] = e.target.value;  // Update agendaItems state
+                                        setAgendaItems(updatedItems);
+                                    }}
+                                />
+                            </div>
                         </div>
-                        <span>-</span>
-                        <div className='inline-block'>
-                            <DatePicker
-                                variant='bordered'
-                                radius='sm'
-                                size='sm'
-                                classNames={{ base: 'datepicker' }}
-                                name='acceptanceOfAnnualFinancialStatementsEndDate'
-                                aria-label='End date for Acceptance of the annual financial statements'
-                                showMonthAndYearPickers
-                                defaultValue={useEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfAnnualFinancialStatements', checkedAgendaItems.includes('acceptanceOfAnnualFinancialStatements'))}
-                            />
-                        </div>
-                    </div>
-                    <div className='h-8 flex items-center'>
-                        <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='renewalFund' aria-label='Renewal fund'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='renewalFund' />
-                        </Checkbox>
-                    </div>
-                    <div className='flex items-center gap-1.5 flex-wrap'>
-                        <Checkbox size='sm' className='font-normal' name='agendaTopics' value='acceptanceOfBudget' aria-label='Acceptance of the budget'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='acceptanceOfBudgetLabel' />
-                        </Checkbox>
-                        <div className='inline-block'>
-                            <DatePicker
-                                variant='bordered'
-                                radius='sm'
-                                size='sm'
-                                classNames={{ base: 'datepicker' }}
-                                name='acceptanceOfBudgetStartDate'
-                                aria-label='Start date for Acceptance of the budget'
-                                showMonthAndYearPickers
-                                defaultValue={useStartDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget', checkedAgendaItems.includes('acceptanceOfBudget'))}
-                            />
-                        </div>
-                        <span>-</span>
-                        <div className='inline-block'>
-                            <DatePicker
-                                variant='bordered'
-                                radius='sm'
-                                size='sm'
-                                classNames={{ base: 'datepicker' }}
-                                name='acceptanceOfBudgetEndDate'
-                                aria-label='End date for Acceptance of the budget'
-                                showMonthAndYearPickers
-                                defaultValue={useEndDateFromMeetingByAgendaNameKey(meeting, 'acceptanceOfBudget', checkedAgendaItems.includes('acceptanceOfBudget'))}
-                            />
-                        </div>
-                    </div>
-                    <div className='h-8 flex items-center'>
-                        <Checkbox size='sm' className='font-normal h-10' name='agendaTopics' value='miscellaneous' aria-label='Miscellaneous'>
-                            <Text localeParent='Meetings.Agenda Items' localeKey='miscellaneous' />
-                        </Checkbox>
-                    </div>
-                </CheckboxGroup>
+                    )
+                })}
             </div>
 
             <div className='flex justify-start items-center gap-2'>

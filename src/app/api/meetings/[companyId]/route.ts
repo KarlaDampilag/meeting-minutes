@@ -42,7 +42,7 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
                             ilike(meetings.name, `%${searchTerm}%`)
                         )
                     )
-                )
+            )
         } else {
             result = await db
                 .select({
@@ -62,7 +62,7 @@ export const GET = async (request: NextRequest, context: { params: { companyId: 
                         eq(properties.company_id, context.params.companyId),
                         eq(properties.company_id, user.company_id),
                     )
-                )
+            )
         }
 
         return new Response(JSON.stringify(result), { status: 200 });
