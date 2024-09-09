@@ -4,6 +4,8 @@ import React from 'react'
 import { Button, cn, DatePicker, Input } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 import PropertiesDropdown from '../molecules/PropertiesDropdown';
 import Text from '../atoms/Text';
@@ -12,7 +14,6 @@ import { MeetingWithPropertyAngAgendaItems } from '@/db/schema';
 import { getCalendarDateFromDate, getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
 import { useUpdateMeeting } from '@/rq-hooks/useUpdateMeeting';
 import { useGetMeeting } from '@/rq-hooks/useGetMeeting';
-import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 
 const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, meeting: MeetingWithPropertyAngAgendaItems }) => {
     const t = useTranslations('Meetings.Agenda Items');
@@ -40,7 +41,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
         const location = target.location.value;
         const date = target.date.value;
         const hours = target.hours.value;
-        const minutes = target.minutes.value;  
+        const minutes = target.minutes.value;
         const propertyId = target.propertyId.value;
         mutate({ companyId, meetingId: meeting.id, propertyId, name, location, date, hours, minutes, agendaTopics: agendaItems });
     }
@@ -72,6 +73,12 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
         [updatedItems[index + 1], updatedItems[index]] = [updatedItems[index], updatedItems[index + 1]];
         setAgendaItems(updatedItems);
     };
+
+    const removeItem = (index: number) => {
+        const updatedItems = [...agendaItems];
+        updatedItems.splice(index, 1);
+        setAgendaItems(updatedItems);
+    }
 
     return (
         <form onSubmit={handleFormSubmit} className='flex flex-col gap-6'>
@@ -189,6 +196,9 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                                     }}
                                 />
                             </div>
+                            <span onClick={() => removeItem(index)} className='rotate-45 cursor-pointer'>
+                                <AiOutlinePlus />
+                            </span>
                         </div>
                     )
                 })}

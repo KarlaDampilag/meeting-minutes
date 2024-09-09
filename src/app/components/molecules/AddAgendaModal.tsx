@@ -9,7 +9,8 @@ import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 import Text from '../atoms/Text';
 import PropertiesDropdown from './PropertiesDropdown';
 
-import {  getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
+import { getIsMeetingDateUnavailable, onKeyDownPreventPeriodInput, validateNumberPreventNegative } from '@/utils/utils';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 interface Props {
     companyId: string;
@@ -97,13 +98,19 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
         setAgendaItems(updatedItems);
     };
 
+    const removeItem = (index: number) => {
+        const updatedItems = [...agendaItems];
+        updatedItems.splice(index, 1);
+        setAgendaItems(updatedItems);
+    }
+
     return (
         <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             onClose={handleModalClose}
             placement="top-center"
-            size='5xl'
+            size='2xl'
         >
             <ModalContent>
                 {(onClose) => (
@@ -120,7 +127,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                     isRequired
                                     labelPlacement='outside'
                                     radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
+                                    classNames={{ inputWrapper: 'border border-gray-300' }}
                                     validationBehavior='native'
                                 />
                                 <Input
@@ -132,7 +139,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                     isRequired
                                     labelPlacement='outside'
                                     radius='sm'
-                                    classNames={{ inputWrapper: 'border border-gray-300', base: 'max-w-lg' }}
+                                    classNames={{ inputWrapper: 'border border-gray-300' }}
                                     validationBehavior='native'
                                 />
                                 <div className='flex items-center gap-6'>
@@ -223,6 +230,9 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                                         }}
                                                     />
                                                 </div>
+                                                <span onClick={() => removeItem(index)} className='rotate-45 cursor-pointer'>
+                                                    <AiOutlinePlus />
+                                                </span>
                                             </div>
                                         )
                                     })}
