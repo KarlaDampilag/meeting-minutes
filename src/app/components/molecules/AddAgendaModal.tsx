@@ -30,6 +30,8 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
     const lastDayCurrentYear = todayDate.copy().set({ day: 31, month: 12 });
     const t = useTranslations('Meetings.Agenda Items');
 
+    console.log(todayWithTime)
+
     const getDefaultTopicValue = (key: string) => {
         switch (key) {
             case 'acceptanceOfAnnualFinancialStatements':
@@ -125,7 +127,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <Input
                                     variant='bordered'
                                     label="Agenda name"
-                                    placeholder="XYZ meeting agenda"
+                                    placeholder=" "
                                     type='text'
                                     name='name'
                                     isRequired
@@ -137,7 +139,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <Input
                                     variant='bordered'
                                     label={<Text localeParent='Common' localeKey='Address' />}
-                                    placeholder="Raum Nr. 5 Rue du Liseron 7, 1006 Lausanne"
+                                    placeholder=" "
                                     type='text'
                                     name='location'
                                     isRequired
@@ -160,6 +162,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         defaultValue={todayWithTime}
                                         validationBehavior='native'
                                         isDateUnavailable={getIsMeetingDateUnavailable}
+                                        hourCycle={24}
                                     />
                                     <div>
                                         <p className='mb-1.5 text-sm'><Text localeParent='Common' localeKey='Duration' /><span className='text-danger-500'>*</span></p>
@@ -167,7 +170,6 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                             <Input
                                                 variant='bordered'
                                                 aria-label="hours"
-                                                placeholder="0"
                                                 type='number'
                                                 name='hours'
                                                 isRequired
@@ -183,7 +185,6 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                             <Input
                                                 variant='bordered'
                                                 aria-label="minutes"
-                                                placeholder="0"
                                                 type='number'
                                                 name='minutes'
                                                 isRequired
@@ -241,7 +242,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                         )
                                     })}
                                 </div>
-                                <Button variant='bordered' radius='sm' color='primary' startContent={<IoAdd />} onClick={addItem}>Add Agenda Topic</Button>
+                                <Button variant='bordered' radius='sm' color='primary' startContent={<IoAdd />} onClick={addItem}><Text localeParent='Meetings' localeKey='Add Agenda Topic' /></Button>
 
                                 <div className='flex justify-start items-center gap-2'>
                                     <Button color="default" variant="flat" onPress={onClose} radius='sm'>

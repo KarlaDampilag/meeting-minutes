@@ -12,7 +12,7 @@ export default function Providers(props: React.PropsWithChildren) {
         <>
             <ReactQueryProvider>
                 <ClerkProvider localization={deDE}>
-                        <NextUIProvider>
+                        <NextUIProvider locale="de-DE">
                             {props.children}
                             <ToastContainer />
                         </NextUIProvider>

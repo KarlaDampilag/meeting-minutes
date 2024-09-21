@@ -89,7 +89,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
             <Input
                 variant='bordered'
                 label="Agenda name"
-                placeholder="XYZ meeting agenda"
+                placeholder=" "
                 type='text'
                 name='name'
                 isRequired
@@ -102,7 +102,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
             <Input
                 variant='bordered'
                 label="Location"
-                placeholder="Raum Nr. 5 Rue du Liseron 7, 1006 Lausanne"
+                placeholder=" "
                 type='text'
                 name='location'
                 isRequired
@@ -126,6 +126,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                     defaultValue={calendarDateTime}
                     validationBehavior='native'
                     isDateUnavailable={getIsMeetingDateUnavailable}
+                    hourCycle={24}
                 />
                 <div>
                     <p className='mb-1.5 text-sm'>Duration<span className='text-danger-500'>*</span></p>
@@ -133,7 +134,6 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                         <Input
                             variant='bordered'
                             aria-label="hours"
-                            placeholder="0"
                             type='number'
                             name='hours'
                             isRequired
@@ -149,7 +149,6 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                         <Input
                             variant='bordered'
                             aria-label="minutes"
-                            placeholder="0"
                             type='number'
                             name='minutes'
                             isRequired
@@ -207,7 +206,7 @@ const UpdateMeetingAgendaForm = ({ companyId, meeting }: { companyId: string, me
                     )
                 })}
             </div>
-            <Button variant='bordered' radius='sm' color='primary' startContent={<IoAdd />} onClick={addItem} className='max-w-xl'>Add Agenda Topic</Button>
+            <Button variant='bordered' radius='sm' color='primary' startContent={<IoAdd />} onClick={addItem} className='max-w-xl'><Text localeParent='Meetings' localeKey='Add Agenda Topic' /></Button>
 
             <div className='flex justify-start items-center gap-2'>
                 <Button type='submit' color={isPending ? "default" : "primary"} isLoading={isPending} isDisabled={isPending} className={cn({ "cursor-not-allowed": isPending })} radius='sm'>

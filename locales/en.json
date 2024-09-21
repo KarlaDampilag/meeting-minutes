@@ -47,6 +47,7 @@
     "Dashboard": "Dashboard"
   },
   "Meetings": {
+    "Add Agenda Topic": "Add Agenda Topic",
     "Agenda Document": {
       "intro": "the ordinary owners' meeting of the condominium ownership association on {date} in {location}"
     },
