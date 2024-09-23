@@ -118,3 +118,11 @@ a {
 .agenda-topic-input-row-with-dates {
     @apply gap-1.5 flex-wrap flex items-center;
 }
+
+.modal-wrapper {
+    @apply max-h-screen overflow-hidden p-4;
+
+    > * {
+        @apply max-h-full overflow-y-auto;
+    }
+}

@@ -117,6 +117,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
             onClose={handleModalClose}
             placement="top-center"
             size='2xl'
+            classNames={{ wrapper: 'modal-wrapper' }}
         >
             <ModalContent>
                 {(onClose) => (
@@ -127,7 +128,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <Input
                                     variant='bordered'
                                     label="Agenda name"
-                                    placeholder=" "
+                                    placeholder="XYZ meeting agenda"
                                     type='text'
                                     name='name'
                                     isRequired
@@ -139,7 +140,7 @@ const AddAgendaModal = ({ companyId, isPending, isOpen, onAddMeeting, onClose, o
                                 <Input
                                     variant='bordered'
                                     label={<Text localeParent='Common' localeKey='Address' />}
-                                    placeholder=" "
+                                    placeholder="Raum Nr. 5 Rue du Liseron 7, 1006 Lausanne"
                                     type='text'
                                     name='location'
                                     isRequired
